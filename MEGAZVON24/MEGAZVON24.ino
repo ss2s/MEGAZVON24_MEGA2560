@@ -26,30 +26,30 @@
 // РАСПИНОВКА КОЛОКОЛОВ:
 // для настройки изменять последнюю цифру(номер пина Arduino к которому подключен ударный механизм(язычек))
 // значение идущее за #define является именем колокола. к которому нужно обращатся в программе для создания мелодий.
-#define DEF_PIN_K1 1  // 1 колокол (реле 1)
-#define DEF_PIN_K2 2  // 2 колокол (реле 2)
-#define DEF_PIN_K3 3  // 3 колокол (реле 3)
-#define DEF_PIN_K4 34  // 4 колокол (реле 4)
-#define DEF_PIN_K5 35  // 5 колокол (реле 5)
-#define DEF_PIN_K6 36  // 6 колокол (реле 6)
-#define DEF_PIN_K7 37  // 7 колокол (реле 7)
-#define DEF_PIN_K8 38  // 8 колокол (реле 8)
-#define DEF_PIN_K9 39  // 9 колокол (реле 9)
-#define DEF_PIN_K10 40  // 10 колокол (реле 10)
-#define DEF_PIN_K11 11  // 11 колокол (реле 11)
-#define DEF_PIN_K12 12  // 12 колокол (реле 12)
-#define DEF_PIN_K13 13  // 13 колокол (реле 13)
-#define DEF_PIN_K14 14  // 14 колокол (реле 14)
-#define DEF_PIN_K15 15  // 15 колокол (реле 15)
-#define DEF_PIN_K16 16  // 16 колокол (реле 16)
-#define DEF_PIN_K17 17  // 17 колокол (реле 17)
-#define DEF_PIN_K18 18  // 18 колокол (реле 18)
-#define DEF_PIN_K19 19  // 19 колокол (реле 19)
-#define DEF_PIN_K20 20  // 20 колокол (реле 20)
-#define DEF_PIN_K21 21  // 21 колокол (реле 21)
-#define DEF_PIN_K22 22  // 22 колокол (реле 22)
-#define DEF_PIN_K23 23  // 23 колокол (реле 23)
-#define DEF_PIN_K24 24  // 24 колокол (реле 24)
+#define NOTA_K1 1  // 1 колокол (реле 1)
+#define NOTA_K2 2  // 2 колокол (реле 2)
+#define NOTA_K3 3  // 3 колокол (реле 3)
+#define NOTA_K4 34  // 4 колокол (реле 4)
+#define NOTA_K5 35  // 5 колокол (реле 5)
+#define NOTA_K6 36  // 6 колокол (реле 6)
+#define NOTA_K7 37  // 7 колокол (реле 7)
+#define NOTA_K8 38  // 8 колокол (реле 8)
+#define NOTA_K9 39  // 9 колокол (реле 9)
+#define NOTA_K10 40  // 10 колокол (реле 10)
+#define NOTA_K11 11  // 11 колокол (реле 11)
+#define NOTA_K12 12  // 12 колокол (реле 12)
+#define NOTA_K13 13  // 13 колокол (реле 13)
+#define NOTA_K14 14  // 14 колокол (реле 14)
+#define NOTA_K15 15  // 15 колокол (реле 15)
+#define NOTA_K16 16  // 16 колокол (реле 16)
+#define NOTA_K17 17  // 17 колокол (реле 17)
+#define NOTA_K18 18  // 18 колокол (реле 18)
+#define NOTA_K19 19  // 19 колокол (реле 19)
+#define NOTA_K20 20  // 20 колокол (реле 20)
+#define NOTA_K21 21  // 21 колокол (реле 21)
+#define NOTA_K22 22  // 22 колокол (реле 22)
+#define NOTA_K23 23  // 23 колокол (реле 23)
+#define NOTA_K24 24  // 24 колокол (реле 24)
 
 // РАСПИНОВКА КОМПЛЕКТУЮЩИХ:
 
@@ -110,9 +110,9 @@ byte key(){  // 1-723, 2-482, 3-133, 4-310, 5-0;
 
 // функция нота,принимает три параметра через запятую(имя колокола, время звучания ноты, время до вызова следующей ноты)
 // по умолчанию: колокол 1, время звучания ноты 300мс, таймаут между нотами 3000мс
-// пример использования функции:[nota(DEF_PIN_K7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
+// пример использования функции:[nota(NOTA_K7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
 
-int nota(byte _kolokol = DEF_PIN_K1,
+int nota(byte _kolokol = NOTA_K1,
 unsigned int _timeOfBlowToTheBell = DEF_TIME_OF_BLOW_TO_THE_BELL,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
@@ -130,11 +130,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 // мелодия EX пример мелодии
 void melodiaEX(){
 
-	nota(DEF_PIN_K11, 250, 2000);  // 1 нота, реле 11 (время включения реле 250мс, задержка до следующей ноты 2000мс)
-	nota(DEF_PIN_K3, 280, 2000);   // 2 нота, реле 3 (время включения реле 280мс, задержка до следующей ноты 2000мс)
-	nota(DEF_PIN_K2, 250, 3000);   // 3 нота, реле 2 (время включения реле 250мс, задержка до следующей ноты 3000мс)
-	nota(DEF_PIN_K12, 300, 5000);  // 4 нота, реле 12 (время включения реле 300мс, задержка до следующей ноты 5000мс)
-	nota(DEF_PIN_K1, 300, 2000);   // 5 нота, реле 1 (время включения реле 300мс, задержка до следующей ноты 2000мс)
+	nota(NOTA_K11, 250, 2000);  // 1 нота, реле 11 (время включения реле 250мс, задержка до следующей ноты 2000мс)
+	nota(NOTA_K3, 280, 2000);   // 2 нота, реле 3 (время включения реле 280мс, задержка до следующей ноты 2000мс)
+	nota(NOTA_K2, 250, 3000);   // 3 нота, реле 2 (время включения реле 250мс, задержка до следующей ноты 3000мс)
+	nota(NOTA_K12, 300, 5000);  // 4 нота, реле 12 (время включения реле 300мс, задержка до следующей ноты 5000мс)
+	nota(NOTA_K1, 300, 2000);   // 5 нота, реле 1 (время включения реле 300мс, задержка до следующей ноты 2000мс)
 }
 
 // мелодия1
@@ -214,33 +214,33 @@ void setup() {
   	lcd.createChar(0, customCharBell);
 
 	// инициализация колоколов
-	pinMode(DEF_PIN_K1, OUTPUT);
-	pinMode(DEF_PIN_K2, OUTPUT);
-	pinMode(DEF_PIN_K3, OUTPUT);
-	pinMode(DEF_PIN_K4, OUTPUT);
-	pinMode(DEF_PIN_K5, OUTPUT);
-	pinMode(DEF_PIN_K6, OUTPUT);
-	pinMode(DEF_PIN_K7, OUTPUT);
-	pinMode(DEF_PIN_K8, OUTPUT);
-	pinMode(DEF_PIN_K9, OUTPUT);
-	pinMode(DEF_PIN_K10, OUTPUT);
-	pinMode(DEF_PIN_K11, OUTPUT);
-	pinMode(DEF_PIN_K12, OUTPUT);
-	pinMode(DEF_PIN_K13, OUTPUT);
-	pinMode(DEF_PIN_K14, OUTPUT);
-	pinMode(DEF_PIN_K15, OUTPUT);
-	pinMode(DEF_PIN_K16, OUTPUT);
-	pinMode(DEF_PIN_K17, OUTPUT);
-	pinMode(DEF_PIN_K18, OUTPUT);
-	pinMode(DEF_PIN_K19, OUTPUT);
-	pinMode(DEF_PIN_K20, OUTPUT);
-	pinMode(DEF_PIN_K21, OUTPUT);
-	pinMode(DEF_PIN_K22, OUTPUT);
-	pinMode(DEF_PIN_K23, OUTPUT);
-	pinMode(DEF_PIN_K24, OUTPUT);
+	pinMode(NOTA_K1, OUTPUT);
+	pinMode(NOTA_K2, OUTPUT);
+	pinMode(NOTA_K3, OUTPUT);
+	pinMode(NOTA_K4, OUTPUT);
+	pinMode(NOTA_K5, OUTPUT);
+	pinMode(NOTA_K6, OUTPUT);
+	pinMode(NOTA_K7, OUTPUT);
+	pinMode(NOTA_K8, OUTPUT);
+	pinMode(NOTA_K9, OUTPUT);
+	pinMode(NOTA_K10, OUTPUT);
+	pinMode(NOTA_K11, OUTPUT);
+	pinMode(NOTA_K12, OUTPUT);
+	pinMode(NOTA_K13, OUTPUT);
+	pinMode(NOTA_K14, OUTPUT);
+	pinMode(NOTA_K15, OUTPUT);
+	pinMode(NOTA_K16, OUTPUT);
+	pinMode(NOTA_K17, OUTPUT);
+	pinMode(NOTA_K18, OUTPUT);
+	pinMode(NOTA_K19, OUTPUT);
+	pinMode(NOTA_K20, OUTPUT);
+	pinMode(NOTA_K21, OUTPUT);
+	pinMode(NOTA_K22, OUTPUT);
+	pinMode(NOTA_K23, OUTPUT);
+	pinMode(NOTA_K24, OUTPUT);
 
 	// инициализация комплектующих
-	pinMode(DEF_PIN_K24, OUTPUT);
+	pinMode(NOTA_K24, OUTPUT);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
