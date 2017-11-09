@@ -22,30 +22,30 @@
 // РАСПИНОВКА КОЛОКОЛОВ:
 // для настройки изменять последнюю цифру(номер пина Arduino к которому подключен ударный механизм(язычек))
 // значение идущее за #define является именем колокола. к которому нужно обращатся в программе для создания мелодий.
-#define DEF_PIN_K1 1
-#define DEF_PIN_K2 2
-#define DEF_PIN_K3 3
-#define DEF_PIN_K4 34
-#define DEF_PIN_K5 35
-#define DEF_PIN_K6 36
-#define DEF_PIN_K7 37
-#define DEF_PIN_K8 38
-#define DEF_PIN_K9 39
-#define DEF_PIN_K10 40
-#define DEF_PIN_K11 11
-#define DEF_PIN_K12 12
-#define DEF_PIN_K13 13
-#define DEF_PIN_K14 14
-#define DEF_PIN_K15 15
-#define DEF_PIN_K16 16
-#define DEF_PIN_K17 17
-#define DEF_PIN_K18 18
-#define DEF_PIN_K19 19
-#define DEF_PIN_K20 20
-#define DEF_PIN_K21 21
-#define DEF_PIN_K22 22
-#define DEF_PIN_K23 23
-#define DEF_PIN_K24 24
+#define DEF_PIN_K1 1  // 1 колокол (реле 1)
+#define DEF_PIN_K2 2  // 2 колокол (реле 2)
+#define DEF_PIN_K3 3  // 3 колокол (реле 3)
+#define DEF_PIN_K4 34  // 4 колокол (реле 4)
+#define DEF_PIN_K5 35  // 5 колокол (реле 5)
+#define DEF_PIN_K6 36  // 6 колокол (реле 6)
+#define DEF_PIN_K7 37  // 7 колокол (реле 7)
+#define DEF_PIN_K8 38  // 8 колокол (реле 8)
+#define DEF_PIN_K9 39  // 9 колокол (реле 9)
+#define DEF_PIN_K10 40  // 10 колокол (реле 10)
+#define DEF_PIN_K11 11  // 11 колокол (реле 11)
+#define DEF_PIN_K12 12  // 12 колокол (реле 12)
+#define DEF_PIN_K13 13  // 13 колокол (реле 13)
+#define DEF_PIN_K14 14  // 14 колокол (реле 14)
+#define DEF_PIN_K15 15  // 15 колокол (реле 15)
+#define DEF_PIN_K16 16  // 16 колокол (реле 16)
+#define DEF_PIN_K17 17  // 17 колокол (реле 17)
+#define DEF_PIN_K18 18  // 18 колокол (реле 18)
+#define DEF_PIN_K19 19  // 19 колокол (реле 19)
+#define DEF_PIN_K20 20  // 20 колокол (реле 20)
+#define DEF_PIN_K21 21  // 21 колокол (реле 21)
+#define DEF_PIN_K22 22  // 22 колокол (реле 22)
+#define DEF_PIN_K23 23  // 23 колокол (реле 23)
+#define DEF_PIN_K24 24  // 24 колокол (реле 24)
 
 // РАСПИНОВКА КОМПЛЕКТУЮЩИХ:
 
