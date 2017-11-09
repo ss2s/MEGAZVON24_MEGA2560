@@ -107,7 +107,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 // функция мелодия состоит из последовательных вызовов функции нота. по сути является определенной мелодией
 
 // мелодия EX пример мелодии
-int melodiaEX(){
+void melodiaEX(){
 
 	nota(DEF_PIN_K11, 250, 2000);  // 1 нота, реле 11 (время включения реле 250мс, задержка до следующей ноты 2000мс)
 	nota(DEF_PIN_K3, 280, 2000);   // 2 нота, реле 3 (время включения реле 280мс, задержка до следующей ноты 2000мс)
@@ -117,25 +117,25 @@ int melodiaEX(){
 }
 
 // мелодия1
-int melodia1(){}
+void melodia1(){}
 // мелодия2
-int melodia2(){}
+void melodia2(){}
 // мелодия3
-int melodia3(){}
+void melodia3(){}
 // мелодия4
-int melodia4(){}
+void melodia4(){}
 // мелодия5
-int melodia5(){}
+void melodia5(){}
 // мелодия6
-int melodia6(){}
+void melodia6(){}
 // мелодия7
-int melodia7(){}
+void melodia7(){}
 // мелодия8
-int melodia8(){}
+void melodia8(){}
 // мелодия9
-int melodia9(){}
+void melodia9(){}
 // мелодия10
-int melodia10(){}
+void melodia10(){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
