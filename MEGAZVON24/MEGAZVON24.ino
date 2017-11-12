@@ -463,6 +463,8 @@ void setup() {
 
 	// инициализация комплектующих
 
+	
+
     // терморегулятор
 	#if DEF_PODOGREV_ENABLE != 0
 	pinMode(DEF_TERMO_RELE_PIN, OUTPUT);
