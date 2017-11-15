@@ -28,7 +28,9 @@
 
 // ТЕХНИЧЕСКИЙ РАЗДЕЛ:
 
-// НАСТРОЙКИ ВРЕМЕННЫХ ЗАДЕРЖЕК ПО УМОЛЧАНИЮ: настройки вынесены в отдельный файл "MELODIA_ZVONA.h"
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//  ВРЕМЕННЫЕ ЗАДЕРЖЕКИ ПО УМОЛЧАНИЮ: настройки вынесены в отдельный файл "MELODIA_ZVONA.h"
 
 // для каждой ноты в отдельности, 2 набор нот
 // настройка в файле "MELODIA_ZVONA.h"
@@ -58,103 +60,18 @@ unsigned long timtOfBlowUnicNota_23 = DEF_TIME_OF_BLOW_UNIC_NOTA_23;   // ВРЕ
 unsigned long timtOfBlowUnicNota_24 = DEF_TIME_OF_BLOW_UNIC_NOTA_24;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 24 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ТЕХНИЧЕСКИЙ РАЗДЕЛ:
+// функция макс возвращает большее из двух чисел
+unsigned long maxNumber(unsigned long _a, unsigned long _b){
 
-// 1 НАБОР НОТ
-// функция нота,принимает три параметра через запятую(имя колокола, время звучания ноты, время до вызова следующей ноты)
-// по умолчанию: колокол 1, время звучания ноты 300мс, таймаут между нотами 3000мс
-// пример использования функции:[nota(RELE_K7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
-
-int nota(int _kolokol = RELE_K1,
-unsigned long _timeOfBlowToTheBell = DEF_TIME_OF_BLOW_TO_THE_BELL,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
-
-	digitalWrite(_kolokol, HHH);
-	delay(_timeOfBlowToTheBell);
-	digitalWrite(_kolokol, LLL);
-	delay(_delayUntilNextNota);
+	unsigned long maxN = 0;
+	if (_a>_b){
+		maxN = _a;
+	}else{
+		maxN = _b;
+	}
+	return maxN;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// 2 НАБОР НОТ
-// НОТЫ ПО УМОЛЧАНИЮ: для каждой ноты можно настроить время работы реле по умолчанию
-// задается в настройках вверху скетча
-// функция нота по умолчанию,принимает один параметр (время до вызова следующей ноты)
-
-void nota1(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота1 
-	nota(RELE_K1, timtOfBlowUnicNota_1, _delayUntilNextNota);}
-
-void nota2(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота2 
-	nota(RELE_K2, timtOfBlowUnicNota_2, _delayUntilNextNota);}
-
-void nota3(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота3 
-	nota(RELE_K3, timtOfBlowUnicNota_3, _delayUntilNextNota);}
-
-void nota4(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота4 
-	nota(RELE_K4, timtOfBlowUnicNota_4, _delayUntilNextNota);}
-
-void nota5(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота5 
-	nota(RELE_K5, timtOfBlowUnicNota_5, _delayUntilNextNota);}
-
-void nota6(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота6 
-	nota(RELE_K6, timtOfBlowUnicNota_6, _delayUntilNextNota);}
-
-void nota7(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота7 
-	nota(RELE_K7, timtOfBlowUnicNota_7, _delayUntilNextNota);}
-
-void nota8(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота8 
-	nota(RELE_K8, timtOfBlowUnicNota_8, _delayUntilNextNota);}
-
-void nota9(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота9 
-	nota(RELE_K9, timtOfBlowUnicNota_9, _delayUntilNextNota);}
-
-void nota10(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота10 
-	nota(RELE_K10, timtOfBlowUnicNota_10, _delayUntilNextNota);}
-
-void nota11(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота11 
-	nota(RELE_K11, timtOfBlowUnicNota_11, _delayUntilNextNota);}
-
-void nota12(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота12 
-	nota(RELE_K12, timtOfBlowUnicNota_12, _delayUntilNextNota);}
-
-void nota13(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота13 
-	nota(RELE_K13, timtOfBlowUnicNota_13, _delayUntilNextNota);}
-
-void nota14(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота14 
-	nota(RELE_K14, timtOfBlowUnicNota_14, _delayUntilNextNota);}
-
-void nota15(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота15 
-	nota(RELE_K15, timtOfBlowUnicNota_15, _delayUntilNextNota);}
-
-void nota16(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота16 
-	nota(RELE_K16, timtOfBlowUnicNota_16, _delayUntilNextNota);}
-
-void nota17(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота17 
-	nota(RELE_K17, timtOfBlowUnicNota_17, _delayUntilNextNota);}
-
-void nota18(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота18 
-	nota(RELE_K18, timtOfBlowUnicNota_18, _delayUntilNextNota);}
-
-void nota19(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота19 
-	nota(RELE_K19, timtOfBlowUnicNota_19, _delayUntilNextNota);}
-
-void nota20(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота20 
-	nota(RELE_K20, timtOfBlowUnicNota_20, _delayUntilNextNota);}
-
-void nota21(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота21 
-	nota(RELE_K21, timtOfBlowUnicNota_21, _delayUntilNextNota);}
-
-void nota22(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота22 
-	nota(RELE_K22, timtOfBlowUnicNota_22, _delayUntilNextNota);}
-
-void nota23(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота23 
-	nota(RELE_K23, timtOfBlowUnicNota_23, _delayUntilNextNota);}
-
-void nota24(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота24 
-	nota(RELE_K24, timtOfBlowUnicNota_24, _delayUntilNextNota);}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -408,6 +325,190 @@ unsigned long findNotaDelayForKolokolNumber(int _kolokolNumber = 0){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// функция подбора задержки к колоколу по его имени
+unsigned long findNotaDelayForKolokolName(int _kolokolName = 0){
+	unsigned long fDelay = DEF_TIME_OF_BLOW_TO_THE_BELL;
+
+	switch(_kolokolName){
+		case RELE_K1:
+		fDelay = timtOfBlowUnicNota_1;
+		break;
+		case RELE_K2:
+		fDelay = timtOfBlowUnicNota_2;
+		break;
+		case RELE_K3:
+		fDelay = timtOfBlowUnicNota_3;
+		break;
+		case RELE_K4:
+		fDelay = timtOfBlowUnicNota_4;
+		break;
+		case RELE_K5:
+		fDelay = timtOfBlowUnicNota_5;
+		break;
+		case RELE_K6:
+		fDelay = timtOfBlowUnicNota_6;
+		break;
+		case RELE_K7:
+		fDelay = timtOfBlowUnicNota_7;
+		break;
+		case RELE_K8:
+		fDelay = timtOfBlowUnicNota_8;
+		break;
+		case RELE_K9:
+		fDelay = timtOfBlowUnicNota_9;
+		break;
+		case RELE_K10:
+		fDelay = timtOfBlowUnicNota_10;
+		break;
+		case RELE_K11:
+		fDelay = timtOfBlowUnicNota_11;
+		break;
+		case RELE_K12:
+		fDelay = timtOfBlowUnicNota_12;
+		break;
+		case RELE_K13:
+		fDelay = timtOfBlowUnicNota_13;
+		break;
+		case RELE_K14:
+		fDelay = timtOfBlowUnicNota_14;
+		break;
+		case RELE_K15:
+		fDelay = timtOfBlowUnicNota_15;
+		break;
+		case RELE_K16:
+		fDelay = timtOfBlowUnicNota_16;
+		break;
+		case RELE_K17:
+		fDelay = timtOfBlowUnicNota_17;
+		break;
+		case RELE_K18:
+		fDelay = timtOfBlowUnicNota_18;
+		break;
+		case RELE_K19:
+		fDelay = timtOfBlowUnicNota_19;
+		break;
+		case RELE_K20:
+		fDelay = timtOfBlowUnicNota_20;
+		break;
+		case RELE_K21:
+		fDelay = timtOfBlowUnicNota_21;
+		break;
+		case RELE_K22:
+		fDelay = timtOfBlowUnicNota_22;
+		break;
+		case RELE_K23:
+		fDelay = timtOfBlowUnicNota_23;
+		break;
+		case RELE_K24:
+		fDelay = timtOfBlowUnicNota_24;
+		break;
+	}
+	return fDelay;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ТЕХНИЧЕСКИЙ РАЗДЕЛ:
+
+// 1 НАБОР НОТ
+// функция нота,принимает три параметра через запятую(имя колокола, время звучания ноты, время до вызова следующей ноты)
+// по умолчанию: колокол 1, время звучания ноты 300мс, таймаут между нотами 3000мс
+// пример использования функции:[nota(RELE_K7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
+
+int nota(int _kolokol = RELE_K1,
+unsigned long _timeOfBlowToTheBell = DEF_TIME_OF_BLOW_TO_THE_BELL,
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
+	digitalWrite(_kolokol, HHH);
+	delay(_timeOfBlowToTheBell);
+	digitalWrite(_kolokol, LLL);
+	delay(_delayUntilNextNota);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 2 НАБОР НОТ
+// НОТЫ ПО УМОЛЧАНИЮ: для каждой ноты можно настроить время работы реле по умолчанию
+// задается в настройках вверху скетча
+// функция нота по умолчанию,принимает один параметр (время до вызова следующей ноты)
+
+void nota1(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота1 
+	nota(RELE_K1, timtOfBlowUnicNota_1, _delayUntilNextNota);}
+
+void nota2(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота2 
+	nota(RELE_K2, timtOfBlowUnicNota_2, _delayUntilNextNota);}
+
+void nota3(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота3 
+	nota(RELE_K3, timtOfBlowUnicNota_3, _delayUntilNextNota);}
+
+void nota4(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота4 
+	nota(RELE_K4, timtOfBlowUnicNota_4, _delayUntilNextNota);}
+
+void nota5(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота5 
+	nota(RELE_K5, timtOfBlowUnicNota_5, _delayUntilNextNota);}
+
+void nota6(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота6 
+	nota(RELE_K6, timtOfBlowUnicNota_6, _delayUntilNextNota);}
+
+void nota7(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота7 
+	nota(RELE_K7, timtOfBlowUnicNota_7, _delayUntilNextNota);}
+
+void nota8(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота8 
+	nota(RELE_K8, timtOfBlowUnicNota_8, _delayUntilNextNota);}
+
+void nota9(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота9 
+	nota(RELE_K9, timtOfBlowUnicNota_9, _delayUntilNextNota);}
+
+void nota10(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота10 
+	nota(RELE_K10, timtOfBlowUnicNota_10, _delayUntilNextNota);}
+
+void nota11(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота11 
+	nota(RELE_K11, timtOfBlowUnicNota_11, _delayUntilNextNota);}
+
+void nota12(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота12 
+	nota(RELE_K12, timtOfBlowUnicNota_12, _delayUntilNextNota);}
+
+void nota13(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота13 
+	nota(RELE_K13, timtOfBlowUnicNota_13, _delayUntilNextNota);}
+
+void nota14(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота14 
+	nota(RELE_K14, timtOfBlowUnicNota_14, _delayUntilNextNota);}
+
+void nota15(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота15 
+	nota(RELE_K15, timtOfBlowUnicNota_15, _delayUntilNextNota);}
+
+void nota16(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота16 
+	nota(RELE_K16, timtOfBlowUnicNota_16, _delayUntilNextNota);}
+
+void nota17(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота17 
+	nota(RELE_K17, timtOfBlowUnicNota_17, _delayUntilNextNota);}
+
+void nota18(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота18 
+	nota(RELE_K18, timtOfBlowUnicNota_18, _delayUntilNextNota);}
+
+void nota19(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота19 
+	nota(RELE_K19, timtOfBlowUnicNota_19, _delayUntilNextNota);}
+
+void nota20(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота20 
+	nota(RELE_K20, timtOfBlowUnicNota_20, _delayUntilNextNota);}
+
+void nota21(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота21 
+	nota(RELE_K21, timtOfBlowUnicNota_21, _delayUntilNextNota);}
+
+void nota22(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота22 
+	nota(RELE_K22, timtOfBlowUnicNota_22, _delayUntilNextNota);}
+
+void nota23(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота23 
+	nota(RELE_K23, timtOfBlowUnicNota_23, _delayUntilNextNota);}
+
+void nota24(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота24 
+	nota(RELE_K24, timtOfBlowUnicNota_24, _delayUntilNextNota);}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // КОМБО НОТЫ: для одновременного вызова нескольких колоколов
 
