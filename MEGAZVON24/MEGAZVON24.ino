@@ -296,6 +296,31 @@ void setup() {
 	pinMode(RELE_K23, OUTPUT);
 	pinMode(RELE_K24, OUTPUT);
 
+	digitalWrite(RELE_K1, HHH);
+	digitalWrite(RELE_K2, HHH);
+	digitalWrite(RELE_K3, HHH);
+	digitalWrite(RELE_K4, HHH);
+	digitalWrite(RELE_K5, HHH);
+	digitalWrite(RELE_K6, HHH);
+	digitalWrite(RELE_K7, HHH);
+	digitalWrite(RELE_K8, HHH);
+	digitalWrite(RELE_K9, HHH);
+	digitalWrite(RELE_K10, HHH);
+	digitalWrite(RELE_K11, HHH);
+	digitalWrite(RELE_K12, HHH);
+	digitalWrite(RELE_K13, HHH);
+	digitalWrite(RELE_K14, HHH);
+	digitalWrite(RELE_K15, HHH);
+	digitalWrite(RELE_K16, HHH);
+	digitalWrite(RELE_K17, HHH);
+	digitalWrite(RELE_K18, HHH);
+	digitalWrite(RELE_K19, HHH);
+	digitalWrite(RELE_K20, HHH);
+	digitalWrite(RELE_K21, HHH);
+	digitalWrite(RELE_K22, HHH);
+	digitalWrite(RELE_K23, HHH);
+	digitalWrite(RELE_K24, HHH);
+
 	// инициализация комплектующих
 
 	// часы:
