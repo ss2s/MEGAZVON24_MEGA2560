@@ -82,7 +82,7 @@
 #define RELE_K24 44                  // 24 колокол (реле 24)
 
 // колокол который отбивает время, по умолчанию 24 колокол
-#define RELE_HOUR_BLOW RELE_K24      // это настройка, изменять последнюю цифру что после К
+#define RELE_HOUR_BLOW RELE_K22      // это настройка, изменять последнюю цифру что после К
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,7 +151,7 @@
 #define DEF_TIME_OF_BLOW_UNIC_NOTA_24 300UL   // ВРЕМЯ УДАРА ЯЗЫЧКА В 24 КОЛОКОЛ В МИЛЛИСЕКУНДАХ (ВРЕМЯ НОТЫ)
 
 // колокол который отбивает время, по умолчанию 24 колокол
-#define DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW DEF_TIME_OF_BLOW_UNIC_NOTA_24 // это настройка, изменять последнюю цифру
+#define DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW DEF_TIME_OF_BLOW_UNIC_NOTA_22 // это настройка, изменять последнюю цифру
 
 #endif
 
@@ -196,7 +196,7 @@
 #define DEF_TIME_OF_BLOW_UNIC_NOTA_23 300UL   // ВРЕМЯ УДАРА ЯЗЫЧКА В 23 КОЛОКОЛ В МИЛЛИСЕКУНДАХ (ВРЕМЯ НОТЫ)
 
 // колокол который отбивает время, по умолчанию 24 колокол
-#define DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW DEF_TIME_OF_BLOW_UNIC_NOTA_24 // это настройка, изменять последнюю цифру
+#define DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW DEF_TIME_OF_BLOW_UNIC_NOTA_22 // это настройка, изменять последнюю цифру
 
 #endif
 
