@@ -31,8 +31,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // переменные для работы с функцией millis();
-unsigned long lastMill = 0;
-unsigned long thisMill = 0;
+unsigned long startMill = 1UL;
+unsigned long currentMill = 1UL;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,7 +83,7 @@ unsigned long maxNumber(unsigned long _a, unsigned long _b){
 
 // функция возврата номера реле по имени
 inline int remapReleNameToNumber(int _kolokolName){
-	int kolokolNumber = 0;
+	int kolokolNumber = _kolokolName;
 
 	switch(_kolokolName){
 		case RELE_K1:
@@ -167,7 +167,7 @@ inline int remapReleNameToNumber(int _kolokolName){
 
 // функция возврата имени реле по номеру
 inline int remapReleNumberToName(int _kolokolNumber){
-	int kolokolName = 0;
+	int kolokolName = _kolokolNumber;
 
 	switch(_kolokolNumber){
 		case 1:
@@ -422,7 +422,7 @@ unsigned long findNotaDelayForKolokolName(int _kolokolName = 0){
 // 1 НАБОР НОТ
 // функция нота,принимает три параметра через запятую(номер колокола, время звучания ноты, время до вызова следующей ноты)
 // по умолчанию: колокол 1, время звучания ноты 300мс, таймаут между нотами 3000мс
-// пример использования функции:[nota(RELE_K7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
+// пример использования функции:[nota(7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
 
 int nota(int _kolokol = RELE_K1,
 unsigned long _timeOfBlowToTheBell = DEF_TIME_OF_BLOW_TO_THE_BELL,
@@ -444,76 +444,76 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 // функция нота по умолчанию,принимает один параметр (время до вызова следующей ноты)
 
 void nota1(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота1 
-	nota(RELE_K1, timtOfBlowUnicNota_1, _delayUntilNextNota);}
+	nota(1, timtOfBlowUnicNota_1, _delayUntilNextNota);}
 
 void nota2(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота2 
-	nota(RELE_K2, timtOfBlowUnicNota_2, _delayUntilNextNota);}
+	nota(2, timtOfBlowUnicNota_2, _delayUntilNextNota);}
 
 void nota3(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота3 
-	nota(RELE_K3, timtOfBlowUnicNota_3, _delayUntilNextNota);}
+	nota(3, timtOfBlowUnicNota_3, _delayUntilNextNota);}
 
 void nota4(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота4 
-	nota(RELE_K4, timtOfBlowUnicNota_4, _delayUntilNextNota);}
+	nota(4, timtOfBlowUnicNota_4, _delayUntilNextNota);}
 
 void nota5(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота5 
-	nota(RELE_K5, timtOfBlowUnicNota_5, _delayUntilNextNota);}
+	nota(5, timtOfBlowUnicNota_5, _delayUntilNextNota);}
 
 void nota6(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота6 
-	nota(RELE_K6, timtOfBlowUnicNota_6, _delayUntilNextNota);}
+	nota(6, timtOfBlowUnicNota_6, _delayUntilNextNota);}
 
 void nota7(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота7 
-	nota(RELE_K7, timtOfBlowUnicNota_7, _delayUntilNextNota);}
+	nota(7, timtOfBlowUnicNota_7, _delayUntilNextNota);}
 
 void nota8(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота8 
-	nota(RELE_K8, timtOfBlowUnicNota_8, _delayUntilNextNota);}
+	nota(8, timtOfBlowUnicNota_8, _delayUntilNextNota);}
 
 void nota9(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота9 
-	nota(RELE_K9, timtOfBlowUnicNota_9, _delayUntilNextNota);}
+	nota(9, timtOfBlowUnicNota_9, _delayUntilNextNota);}
 
 void nota10(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота10 
-	nota(RELE_K10, timtOfBlowUnicNota_10, _delayUntilNextNota);}
+	nota(10, timtOfBlowUnicNota_10, _delayUntilNextNota);}
 
 void nota11(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота11 
-	nota(RELE_K11, timtOfBlowUnicNota_11, _delayUntilNextNota);}
+	nota(11, timtOfBlowUnicNota_11, _delayUntilNextNota);}
 
 void nota12(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота12 
-	nota(RELE_K12, timtOfBlowUnicNota_12, _delayUntilNextNota);}
+	nota(12, timtOfBlowUnicNota_12, _delayUntilNextNota);}
 
 void nota13(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота13 
-	nota(RELE_K13, timtOfBlowUnicNota_13, _delayUntilNextNota);}
+	nota(13, timtOfBlowUnicNota_13, _delayUntilNextNota);}
 
 void nota14(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота14 
-	nota(RELE_K14, timtOfBlowUnicNota_14, _delayUntilNextNota);}
+	nota(14, timtOfBlowUnicNota_14, _delayUntilNextNota);}
 
 void nota15(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота15 
-	nota(RELE_K15, timtOfBlowUnicNota_15, _delayUntilNextNota);}
+	nota(15, timtOfBlowUnicNota_15, _delayUntilNextNota);}
 
 void nota16(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота16 
-	nota(RELE_K16, timtOfBlowUnicNota_16, _delayUntilNextNota);}
+	nota(16, timtOfBlowUnicNota_16, _delayUntilNextNota);}
 
 void nota17(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота17 
-	nota(RELE_K17, timtOfBlowUnicNota_17, _delayUntilNextNota);}
+	nota(17, timtOfBlowUnicNota_17, _delayUntilNextNota);}
 
 void nota18(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота18 
-	nota(RELE_K18, timtOfBlowUnicNota_18, _delayUntilNextNota);}
+	nota(18, timtOfBlowUnicNota_18, _delayUntilNextNota);}
 
 void nota19(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота19 
-	nota(RELE_K19, timtOfBlowUnicNota_19, _delayUntilNextNota);}
+	nota(19, timtOfBlowUnicNota_19, _delayUntilNextNota);}
 
 void nota20(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота20 
-	nota(RELE_K20, timtOfBlowUnicNota_20, _delayUntilNextNota);}
+	nota(20, timtOfBlowUnicNota_20, _delayUntilNextNota);}
 
 void nota21(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота21 
-	nota(RELE_K21, timtOfBlowUnicNota_21, _delayUntilNextNota);}
+	nota(21, timtOfBlowUnicNota_21, _delayUntilNextNota);}
 
 void nota22(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота22 
-	nota(RELE_K22, timtOfBlowUnicNota_22, _delayUntilNextNota);}
+	nota(22, timtOfBlowUnicNota_22, _delayUntilNextNota);}
 
 void nota23(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота23 
-	nota(RELE_K23, timtOfBlowUnicNota_23, _delayUntilNextNota);}
+	nota(23, timtOfBlowUnicNota_23, _delayUntilNextNota);}
 
 void nota24(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // нота24 
-	nota(RELE_K24, timtOfBlowUnicNota_24, _delayUntilNextNota);}
+	nota(24, timtOfBlowUnicNota_24, _delayUntilNextNota);}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -530,9 +530,15 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 
 	digitalWrite(_kolokol1,HHH);
 	digitalWrite(_kolokol2,HHH);
+
+	while(1){
+
+	}
+
 	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
 	digitalWrite(_kolokol1,LLL);
 	digitalWrite(_kolokol2,LLL);
+
 	delay(_delayUntilNextNota);
 }
 
@@ -549,10 +555,12 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);
 	digitalWrite(_kolokol3, HHH);
+
 	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
 	digitalWrite(_kolokol1, LLL);
 	digitalWrite(_kolokol2, LLL);
 	digitalWrite(_kolokol3, LLL);
+
 	delay(_delayUntilNextNota);
 }
 
@@ -572,11 +580,13 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol2, HHH);
 	digitalWrite(_kolokol3, HHH);
 	digitalWrite(_kolokol4, HHH);
+
 	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
 	digitalWrite(_kolokol1, LLL);
 	digitalWrite(_kolokol2, LLL);
 	digitalWrite(_kolokol3, LLL);
 	digitalWrite(_kolokol4, LLL);
+
 	delay(_delayUntilNextNota);
 }
 
@@ -599,12 +609,14 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol3, HHH);
 	digitalWrite(_kolokol4, HHH);
 	digitalWrite(_kolokol5, HHH);
+
 	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
 	digitalWrite(_kolokol1, LLL);
 	digitalWrite(_kolokol2, LLL);
 	digitalWrite(_kolokol3, LLL);
 	digitalWrite(_kolokol4, LLL);
 	digitalWrite(_kolokol5, LLL);
+
 	delay(_delayUntilNextNota);
 }
 
@@ -630,6 +642,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol4, HHH);
 	digitalWrite(_kolokol5, HHH);
 	digitalWrite(_kolokol6, HHH);
+
 	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
 	digitalWrite(_kolokol1, LLL);
 	digitalWrite(_kolokol2, LLL);
@@ -637,6 +650,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol4, LLL);
 	digitalWrite(_kolokol5, LLL);
 	digitalWrite(_kolokol6, LLL);
+
 	delay(_delayUntilNextNota);
 }
 
@@ -665,6 +679,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol5, HHH);
 	digitalWrite(_kolokol6, HHH);
 	digitalWrite(_kolokol7, HHH);
+
 	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
 	digitalWrite(_kolokol1, LLL);
 	digitalWrite(_kolokol2, LLL);
@@ -673,5 +688,6 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol5, LLL);
 	digitalWrite(_kolokol6, LLL);
 	digitalWrite(_kolokol7, LLL);
+
 	delay(_delayUntilNextNota);
 }
