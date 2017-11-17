@@ -424,7 +424,7 @@ unsigned long findNotaDelayForKolokolName(int _kolokolName = 0){
 // по умолчанию: колокол 1, время звучания ноты 300мс, таймаут между нотами 3000мс
 // пример использования функции:[nota(7, 250, 2000);] 7 колокол, время ноты 250мс, таймаут до следующей ноты 2с
 
-int nota(int _kolokol = RELE_K1,
+int nota(int _kolokol = 1,
 unsigned long _timeOfBlowToTheBell = DEF_TIME_OF_BLOW_TO_THE_BELL,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
