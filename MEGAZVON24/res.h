@@ -1,19 +1,14 @@
-unsigned long currentMillis = 1UL;
-unsigned long previousMillis = 1UL;
- 
-void setup() {
- 
+
+unsigned long startMill = 1UL;
+unsigned long currentMill = 1UL;
+unsigned long delPeriod = 2000UL;
+
+void setup(){
+	pinMode(13, OUTPUT);
 }
- 
-void loop() {
-    currentMillis = millis();
-     
-    if ( currentMillis - previousMillis >= 500UL ){
-        previousMillis = currentMillis;
-         
-        //этот код повторяться каждые 500 мсек
- 
-    }
- 
- 
+
+void loop(){
+	startTime = millis();
+	while ((currentMillis = millis()) - startTime < 2000ul);
+	!digitalWrite(13, HIGH);
 }
