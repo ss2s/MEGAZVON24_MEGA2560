@@ -531,7 +531,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	digitalWrite(_kolokol1,HHH);
 	digitalWrite(_kolokol2,HHH);
 
-	while(1){
+	while(0){
 
 	}
 
