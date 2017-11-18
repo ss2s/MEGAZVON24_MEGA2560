@@ -326,8 +326,11 @@ void setup() {
 	
 	lcd.begin(16, 2);
   	lcd.clear();
-  	
-	lcd.print("MEGAZVON24");
+
+	lcd.print("   MEGAZVON24");
+
+	//lcd.setCursor(heart1xPos,heart1yPos);
+	//lcd.write(byte(2));
 
 	// инициализация комплектующих
 
