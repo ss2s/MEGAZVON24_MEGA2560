@@ -433,7 +433,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	int kName = remapReleNumberToName(_kolokol);
 
 	lcd.clear();
-	lcd.setCursor(2,1);
+	lcd.setCursor(3,1);
 	lcd.write(byte(0));
 	lcd.print(" ");
 	lcd.print(kNumber);
@@ -570,6 +570,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 
 	_kolokol1 = remapReleNumberToName(_kolokol1);
 	_kolokol2 = remapReleNumberToName(_kolokol2);
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo2");
 	
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);
@@ -590,6 +595,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	_kolokol1 = remapReleNumberToName(_kolokol1);
 	_kolokol2 = remapReleNumberToName(_kolokol2);
 	_kolokol3 = remapReleNumberToName(_kolokol3);
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo3");
 
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);
@@ -614,6 +624,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	_kolokol2 = remapReleNumberToName(_kolokol2);
 	_kolokol3 = remapReleNumberToName(_kolokol3);
 	_kolokol4 = remapReleNumberToName(_kolokol4);
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo4");
 
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);
@@ -642,6 +657,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	_kolokol3 = remapReleNumberToName(_kolokol3);
 	_kolokol4 = remapReleNumberToName(_kolokol4);
 	_kolokol5 = remapReleNumberToName(_kolokol5);
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo5");
 
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);
@@ -674,6 +694,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	_kolokol4 = remapReleNumberToName(_kolokol4);
 	_kolokol5 = remapReleNumberToName(_kolokol5);
 	_kolokol6 = remapReleNumberToName(_kolokol6);
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo6");
 
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);
@@ -710,6 +735,11 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 	_kolokol5 = remapReleNumberToName(_kolokol5);
 	_kolokol6 = remapReleNumberToName(_kolokol6);
 	_kolokol7 = remapReleNumberToName(_kolokol7);
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo7");
 
 	digitalWrite(_kolokol1, HHH);
 	digitalWrite(_kolokol2, HHH);

@@ -104,37 +104,46 @@ byte customCharRightArrow3[8] = {  // стрелка вправо для дис�
 // функция проверки кнопок
 byte key(){  // 1-723, 2-482, 3-133, 4-310, 5-0;
 	int val = analogRead(A0);
-	if(val < 67) return 5;             // right
-	else if(val < 221) return 4;       // left
-	else if(val < 396) return 3;       // up
-	else if(val < 602) return 2;       // down
-	else if(val < 873) return 1;       // select
-	else if(val <= 1023) return 0;     // no pressed
-  Serial.println(val);
+	byte keyVal = 0;
+	if(val < 67) keyVal = 5;             // right
+	else if(val < 221) keyVal = 4;       // left
+	else if(val < 396) keyVal = 3;       // up
+	else if(val < 602) keyVal = 2;       // down
+	else if(val < 873) keyVal = 1;       // select // 873
+	else if(val <= 1023) keyVal = 0;     // no press
+	Serial.print(keyVal);
+	Serial.print(" ");
+	Serial.println(val);
+	return keyVal;
 }
 
 void buttonChekForLoop(){  // обработчик нажатий кнопок в цикле loop
-	int val = key();
+	byte val = key();
 
-	if(val = 0){}
-	else if(val = 1){
-		Serial.println(val);
-		//mMenu24();
+	if(val == 0){
+
+	}else if(val == 1){
+		mMenu24();
+
+	}else if(val == 2){
+
+	}else if(val == 3){
+
+	}else if(val == 4){
+
+	}else if(val == 5){
+
 	}
-	else if(val = 2){}
-	else if(val = 3){}
-	else if(val = 4){}
-	else if(val = 5){}
 }
 
 void buttonChekForMenu(){  // обработчик нажатий кнопок в menu
-	int val = key();
-	if(val = 0){        // no pressed = no action
-	}else if(val = 1){  // select
-	}else if(val = 2){  // down
-	}else if(val = 3){  // up
-	}else if(val = 4){  // left
-	}else if(val = 5){  // right
+	byte val = key();
+	if(val == 0){        // no pressed = no action
+	}else if(val == 1){  // select
+	}else if(val == 2){  // down
+	}else if(val == 3){  // up
+	}else if(val == 4){  // left
+	}else if(val == 5){  // right
 	}
 }
 
@@ -182,11 +191,15 @@ void timeBellRound(int _hours = 1){
 // ФУНКЦИЯ МЕНЮ:
 void mMenu24(){
 	lcd.clear();
-	lcd.setCursor(3,0);
+	lcd.setCursor(6,0);
 	lcd.print("MENU");
-	delay(1000);
-	loop();
-	while(0){
+	delay(2000);
+	while(1){
+		lcd.clear();
+		delay(1000);
+		lcd.setCursor(0,1);
+		lcd.print(" RESET to exit");
+		delay(1500);
 	}
 }
 
@@ -195,7 +208,7 @@ void mMenu24(){
 
 void setup() {
 
-  	pinMode(LED_BUILTIN, OUTPUT);  // фиксим 13 диод
+  	//pinMode(LED_BUILTIN, OUTPUT);  // фиксим 13 диод
 	Serial.begin(9600);
 
 	// инициализация пользовательских символов
@@ -203,7 +216,7 @@ void setup() {
   	lcd.createChar(1, customCharNota1);
   	lcd.createChar(2, customCharLeftArrow2);
   	lcd.createChar(3, customCharRightArrow3);
-
+/*
 	// инициализация колоколов
 	pinMode(RELE_K1, OUTPUT);
 	pinMode(RELE_K2, OUTPUT);
@@ -254,11 +267,11 @@ void setup() {
 	digitalWrite(RELE_K22, LLL);
 	digitalWrite(RELE_K23, LLL);
 	digitalWrite(RELE_K24, LLL);
-
+*/
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	lcd.begin(16, 2);
-  	lcd.clear();
+  lcd.clear();
 	lcd.print("   MEGAZVON24");
 	lcd.setCursor(2,1);
 	lcd.write(byte(1));
@@ -272,13 +285,23 @@ void setup() {
 
 void loop() {
 
-	//buttonChekForLoop();
-	melodiaEX2();
+  	// byte lVal = key();
+  	// lcd.clear();
+  	// lcd.print(lVal);
+  	// lcd.print(" ");
+  	// lcd.print(analogRead(A0));
+  	// delay(100);
+
+	buttonChekForLoop();
 
 	lcd.clear();
 	lcd.setCursor(2,0);
 	lcd.write(byte(1));
 	lcd.print(" melodiaEX2");
+	delay(1000);
+
+	melodiaEX2();
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
