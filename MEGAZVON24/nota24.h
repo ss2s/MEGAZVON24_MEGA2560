@@ -525,19 +525,35 @@ int _kolokol1 = 1,
 int _kolokol2 = 2,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 {
-	_kolokol1 = remapReleNumberToName(_kolokol1);
-	_kolokol2 = remapReleNumberToName(_kolokol2);
+	int fKolokol1 = remapReleNumberToName(_kolokol1);
+	int fKolokol2 = remapReleNumberToName(_kolokol2);
+	unsigned long fTimeOfBlow1 = findNotaDelayForKolokolNumber(_kolokol1);
+	unsigned long fTimeOfBlow2 = findNotaDelayForKolokolNumber(_kolokol2);
 
-	digitalWrite(_kolokol1,HHH);
-	digitalWrite(_kolokol2,HHH);
 
+	digitalWrite(fKolokol1,HHH);
+	digitalWrite(fKolokol2,HHH);
+
+	startMill = millis();
 	while(1){
 
-	}
+		if(((currentMill = millis()) - startMill >= fTimeOfBlow1)
+			&&(digitalRead(fKolokol1) == HHH)){
 
-	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	digitalWrite(_kolokol1,LLL);
-	digitalWrite(_kolokol2,LLL);
+			digitalWrite(fKolokol1,LLL);
+		}
+		if(((currentMill = millis()) - startMill >= fTimeOfBlow2)
+			&&(digitalRead(fKolokol2) == HHH)){
+
+			digitalWrite(fKolokol2,LLL);
+		}
+		if(((currentMill = millis()) - startMill >= fTimeOfBlow1)
+			&&((currentMill = millis()) - startMill >= fTimeOfBlow2)
+			&&(digitalRead(fKolokol1) == HHH)&&(digitalRead(fKolokol2) == HHH)){
+
+			break;
+		}
+	}
 
 	delay(_delayUntilNextNota);
 }
