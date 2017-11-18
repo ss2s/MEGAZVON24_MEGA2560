@@ -123,8 +123,7 @@ void buttonChekForLoop(){  // обработчик нажатий кнопок �
 	if(val == 0){
 
 	}else if(val == 1){
-		mMenu24();
-
+		menu24();
 	}else if(val == 2){
 
 	}else if(val == 3){
@@ -188,12 +187,35 @@ void timeBellRound(int _hours = 1){
 // \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\///
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// КОМПОНЕНТЫ МЕНЮ:
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// функция удара в любой колокол с настройками из меню
+void bellForMenu(){
+
+	int bfmColocol = 12;
+	unsigned long bfmTimeOfBlow = 300UL;
+
+	lcd.clear();
+	lcd.setCursor(0,0);
+	lcd.write(byte(0));
+	lcd.print(" ");
+	lcd.print(bfmColocol);
+	lcd.print(" del ");
+	lcd.print(bfmTimeOfBlow);
+	while(1){}
+}
+
 // ФУНКЦИЯ МЕНЮ:
-void mMenu24(){
+void menu24(){
 	lcd.clear();
 	lcd.setCursor(6,0);
 	lcd.print("MENU");
 	delay(2000);
+	bellForMenu();
 	while(1){
 		lcd.clear();
 		delay(1000);
@@ -216,7 +238,7 @@ void setup() {
   	lcd.createChar(1, customCharNota1);
   	lcd.createChar(2, customCharLeftArrow2);
   	lcd.createChar(3, customCharRightArrow3);
-/*
+
 	// инициализация колоколов
 	pinMode(RELE_K1, OUTPUT);
 	pinMode(RELE_K2, OUTPUT);
@@ -267,7 +289,7 @@ void setup() {
 	digitalWrite(RELE_K22, LLL);
 	digitalWrite(RELE_K23, LLL);
 	digitalWrite(RELE_K24, LLL);
-*/
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	lcd.begin(16, 2);
@@ -294,11 +316,11 @@ void loop() {
 
 	buttonChekForLoop();
 
-	lcd.clear();
-	lcd.setCursor(2,0);
-	lcd.write(byte(1));
-	lcd.print(" melodiaEX2");
-	delay(1000);
+	// lcd.clear();
+	// lcd.setCursor(2,0);
+	// lcd.write(byte(1));
+	// lcd.print(" melodiaEX2");
+	// delay(1000);
 
 	melodiaEX2();
 
