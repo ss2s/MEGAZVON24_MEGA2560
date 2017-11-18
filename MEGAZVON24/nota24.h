@@ -18,7 +18,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "Arduino.h"
-#include "MEGAZVON24_CONFIG.h"
+#include "config24.h"           // файл конфигурации
+#include "res24.h"              // файл ресурсов
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\\
@@ -428,11 +429,20 @@ int nota(int _kolokol = 1,
 unsigned long _timeOfBlowToTheBell = DEF_TIME_OF_BLOW_TO_THE_BELL,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
-	_kolokol = remapReleNumberToName(_kolokol);
+	int kNumber = _kolokol;
+	int kName = remapReleNumberToName(_kolokol);
 
-	digitalWrite(_kolokol, HHH);
+	lcd.clear();
+	lcd.setCursor(2,1);
+	lcd.write(byte(0));
+	lcd.print(" ");
+	lcd.print(kNumber);
+	lcd.print("  PIN ");
+	lcd.print(kName);
+
+	digitalWrite(kName, HHH);
 	delay(_timeOfBlowToTheBell);
-	digitalWrite(_kolokol, LLL);
+	digitalWrite(kName, LLL);
 	delay(_delayUntilNextNota);
 }
 
