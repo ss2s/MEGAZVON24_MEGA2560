@@ -326,11 +326,10 @@ void setup() {
 	
 	lcd.begin(16, 2);
   	lcd.clear();
-
 	lcd.print("   MEGAZVON24");
-
-	//lcd.setCursor(heart1xPos,heart1yPos);
-	//lcd.write(byte(2));
+	lcd.setCursor(2,1);
+	lcd.write(byte(1));
+	lcd.print(" melodiaEX2");
 
 	// инициализация комплектующих
 
