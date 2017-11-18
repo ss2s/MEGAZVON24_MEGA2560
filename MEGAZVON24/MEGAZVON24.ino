@@ -262,8 +262,7 @@ void menu(){}
 
 void setup() {
 
-	//pinMode(13, OUTPUT);  // фиксим 13 диод
-  pinMode(LED_BUILTIN, OUTPUT);
+  	pinMode(LED_BUILTIN, OUTPUT);  // фиксим 13 диод
 	Serial.begin(9600);
 
 	// инициализация пользовательских символов
