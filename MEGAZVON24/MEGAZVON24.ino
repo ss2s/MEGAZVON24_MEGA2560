@@ -115,15 +115,16 @@ byte key(){  // 1-723, 2-482, 3-133, 4-310, 5-0;
 
 void buttonChekForLoop(){  // обработчик нажатий кнопок в цикле loop
 	int val = key();
-	if(val = 0){
-	}else if(val = 1){
-		mMenu24();
-	}else if(val = 2){
+
+	if(val = 0){}
+	else if(val = 1){
+		Serial.println(val);
 		//mMenu24();
-	}else if(val = 3){
-	}else if(val = 4){
-	}else if(val = 5){
 	}
+	else if(val = 2){}
+	else if(val = 3){}
+	else if(val = 4){}
+	else if(val = 5){}
 }
 
 void buttonChekForMenu(){  // обработчик нажатий кнопок в menu
@@ -183,6 +184,8 @@ void mMenu24(){
 	lcd.clear();
 	lcd.setCursor(3,0);
 	lcd.print("MENU");
+	delay(1000);
+	loop();
 	while(0){
 	}
 }
@@ -269,13 +272,13 @@ void setup() {
 
 void loop() {
 
-	// buttonChekForLoop();
+	//buttonChekForLoop();
 	melodiaEX2();
 
-	// lcd.clear();
-	// lcd.setCursor(2,0);
-	// lcd.write(byte(1));
-	// lcd.print(" melodiaEX2");
+	lcd.clear();
+	lcd.setCursor(2,0);
+	lcd.write(byte(1));
+	lcd.print(" melodiaEX2");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
