@@ -248,7 +248,7 @@ void bellForMenu(){
 					bfmCikl = 0;  // выход из меню удара в колокол
 				}else if(bfmVirtualPos == 3){
 					bfmTimeOfBlowMnojitel *= 10;
-					if(bfmTimeOfBlowMnojitel > 1000){bfmTimeOfBlowMnojitel = 1;}
+					if(bfmTimeOfBlowMnojitel > 100){bfmTimeOfBlowMnojitel = 1;}
 				}else if(bfmVirtualPos == 4){
 					nota(bfmKolocol, bfmTimeOfBlow, 2000);  // играть выбранную ноту
 				}
