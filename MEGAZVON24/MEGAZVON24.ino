@@ -96,6 +96,17 @@ byte customCharRightArrow3[8] = {  // стрелка вправо для дис�
 	0b00000
 };
 
+byte customCharMenuArrow4[8] = {
+	0b00100,
+	0b01110,
+	0b11111,
+	0b00000,
+	0b00000,
+	0b11111,
+	0b01110,
+	0b00100
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -122,15 +133,15 @@ void buttonChekForLoop(){  // обработчик нажатий кнопок �
 
 	if(val == 0){
 
-	}else if(val == 1){
+	}else if(val == 1){  // select
 		menu24();
-	}else if(val == 2){
+	}else if(val == 2){  // down
 
-	}else if(val == 3){
+	}else if(val == 3){  // up
 
-	}else if(val == 4){
+	}else if(val == 4){  // left
 
-	}else if(val == 5){
+	}else if(val == 5){  // right
 
 	}
 }
@@ -193,20 +204,59 @@ void timeBellRound(int _hours = 1){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// функция удара в любой колокол с настройками из меню
-void bellForMenu(){
+// функция рисования для функции удара в любой колокол с настройками из меню
+inline void drawBellForMenu(int _bfmColocol = 12, unsigned long _bfmTimeOfBlow = 300UL){
 
-	int bfmColocol = 12;
-	unsigned long bfmTimeOfBlow = 300UL;
-
+	int dbfmColocol = _bfmColocol;
+	unsigned long dbfmTimeOfBlow = _bfmTimeOfBlow;
 	lcd.clear();
 	lcd.setCursor(0,0);
 	lcd.write(byte(0));
-	lcd.print(" ");
-	lcd.print(bfmColocol);
+	lcd.setCursor(2,0);
+	lcd.print(dbfmColocol);
+	lcd.setCursor(5,0);
 	lcd.print(" del ");
-	lcd.print(bfmTimeOfBlow);
-	while(1){}
+	lcd.setCursor(9,0);
+	lcd.print(dbfmTimeOfBlow);
+	lcd.setCursor(14,0);
+	lcd.print("OK");
+}
+
+// функция удара в любой колокол с настройками из меню
+void bellForMenu(){
+
+	int bfmColocol = 12;  // переменная для хранения номера колокола
+	unsigned long bfmTimeOfBlow = 300UL;  // переменная для хранения выдержки язычка
+	bool bfmCikl = 1;  // переменная для управления циклом while
+	byte bfmPos = 1;   // позиция указателя меню
+	byte bfmKey = 0;   // значение кнопок для обработки в цикле while
+
+	drawBellForMenu();
+
+	lcd.setCursor(0,1);
+	lcd.write(byte(4));
+
+	while(bfmCikl){
+		bfmKey = key();
+		if(bfmKey > 0){
+			if(bfmKey == 1){  // s
+				if(bfmPos == 1){
+					bfmCikl = 0;  // выход из меню
+				}else if(bfmPos == 4){
+					nota(bfmColocol, bfmTimeOfBlow, 0);  // играть выбранную ноту
+				}
+
+			}else if(bfmKey == 2){  // d
+
+			}else if(bfmKey == 3){  // u
+
+			}else if(bfmKey == 4){  // l
+
+			}else if(bfmKey == 5){  // r
+
+			}
+		}
+	}
 }
 
 // ФУНКЦИЯ МЕНЮ:
@@ -238,6 +288,7 @@ void setup() {
   	lcd.createChar(1, customCharNota1);
   	lcd.createChar(2, customCharLeftArrow2);
   	lcd.createChar(3, customCharRightArrow3);
+  	lcd.createChar(4, customCharMenuArrow4);
 
 	// инициализация колоколов
 	pinMode(RELE_K1, OUTPUT);
@@ -293,7 +344,8 @@ void setup() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	lcd.begin(16, 2);
-  lcd.clear();
+    lcd.clear();
+    lcd.clear();
 	lcd.print("   MEGAZVON24");
 	lcd.setCursor(2,1);
 	lcd.write(byte(1));
@@ -322,7 +374,7 @@ void loop() {
 	// lcd.print(" melodiaEX2");
 	// delay(1000);
 
-	melodiaEX2();
+	//melodiaEX2();
 
 }
 
