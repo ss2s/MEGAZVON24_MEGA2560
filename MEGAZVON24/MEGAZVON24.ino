@@ -226,9 +226,10 @@ inline void drawBellForMenu(int _bfmColocol = 12, unsigned long _bfmTimeOfBlow =
 void bellForMenu(){
 
 	int bfmColocol = 12;  // переменная для хранения номера колокола
-	unsigned long bfmTimeOfBlow = 300UL;  // переменная для хранения выдержки язычка
+	unsigned long bfmTimeOfBlow = DEF_TIME_OF_BLOW_TO_THE_BELL;  // переменная для хранения выдержки язычка
 	bool bfmCikl = 1;  // переменная для управления циклом while
-	byte bfmPos = 1;   // позиция указателя меню
+	byte bfmVirtualPos = 1;   // виртуальная позиция указателя меню
+	byte bfmRealPos = 0;   // реальная позиция указателя меню
 	byte bfmKey = 0;   // значение кнопок для обработки в цикле while
 
 	drawBellForMenu();
@@ -238,12 +239,14 @@ void bellForMenu(){
 
 	while(bfmCikl){
 		bfmKey = key();
+
+
 		if(bfmKey > 0){
 			if(bfmKey == 1){  // s
-				if(bfmPos == 1){
+				if(bfmVirtualPos == 1){
 					bfmCikl = 0;  // выход из меню
-				}else if(bfmPos == 4){
-					nota(bfmColocol, bfmTimeOfBlow, 0);  // играть выбранную ноту
+				}else if(bfmVirtualPos == 4){
+					nota(bfmColocol, bfmTimeOfBlow, 1500);  // играть выбранную ноту
 				}
 
 			}else if(bfmKey == 2){  // d
@@ -253,9 +256,31 @@ void bellForMenu(){
 			}else if(bfmKey == 4){  // l
 
 			}else if(bfmKey == 5){  // r
-
+				bfmVirtualPos ++;
+				if(bfmVirtualPos > 4){bfmVirtualPos = 0;}
 			}
 		}
+
+		switch (bfmVirtualPos){
+		    case 1:
+		      bfmRealPos = 0;
+		      break;
+		    case 2:
+		      bfmRealPos = 2;
+		      break;
+		    case 3:
+		      bfmRealPos = 9;
+		      break;
+		    case 4:
+		      bfmRealPos = 14;
+		      break;
+		}
+
+		drawBellForMenu();
+		lcd.setCursor(bfmRealPos,1);
+		lcd.write(byte(4));
+
+		delay(100);
 	}
 }
 
