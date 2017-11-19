@@ -538,19 +538,19 @@ void nota24(unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){  // но�
 void combo2(
 int _kolokol1 = 1,
 int _kolokol2 = 2,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
-{	
-	int kNumber1 = _kolokol1;
-	int kNumber2 = _kolokol2;
-	int kName1 = remapReleNumberToName(_kolokol1);
-	int kName2 = remapReleNumberToName(_kolokol2);
-	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
-	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
 	bool comboCikl = 1;
 
-	bool comboDR1 = 1;  // digitalRead
-	bool comboDR2 = 1;
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+
 	bool comboDS1 = 1;  // digitalState
 	bool comboDS2 = 1;
 
@@ -564,105 +564,107 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
 
 	startMill = millis();
 	while(comboCikl){
+
 		currentMill = millis();
+
 		if((currentMill - startMill) >= kDel1){
 			digitalWrite(kName1, LLL);
 			comboDS1 = 0;
 		}
+
 		if((currentMill - startMill) >= kDel2){
 			digitalWrite(kName2, LLL);
 			comboDS2 = 0;
 		}
-		// comboDR1 = digitalRead(kName1);
-		// comboDR2 = digitalRead(kName2);
+
 		if((comboDS1 == 0) && (comboDS2 == 0)){
 			comboCikl = 0;
 		}
 	}
 
 	delay(_delayUntilNextNota);
-
-	//----------------------------------------------------------------
-
-	// int fKolokol1 = remapReleNumberToName(_kolokol1);
-	// int fKolokol2 = remapReleNumberToName(_kolokol2);
-
-	// unsigned long fTimeOfBlow1 = findNotaDelayForKolokolNumber(_kolokol1);
-	// unsigned long fTimeOfBlow2 = findNotaDelayForKolokolNumber(_kolokol2);
-
-
-	// digitalWrite(fKolokol1,HHH);
-	// digitalWrite(fKolokol2,HHH);
-
-	// startMill = millis();
-	// while(1){
-
-	// 	if(((currentMill = millis()) - startMill >= fTimeOfBlow1)
-	// 		&&(digitalRead(fKolokol1) == HHH)){
-
-	// 		digitalWrite(fKolokol1,LLL);
-	// 	}
-	// 	if(((currentMill = millis()) - startMill >= fTimeOfBlow2)
-	// 		&&(digitalRead(fKolokol2) == HHH)){
-
-	// 		digitalWrite(fKolokol2,LLL);
-	// 	}
-	// 	if(((currentMill = millis()) - startMill >= fTimeOfBlow1)
-	// 		&&((currentMill = millis()) - startMill >= fTimeOfBlow2)
-	// 		&&(digitalRead(fKolokol1) == HHH)&&(digitalRead(fKolokol2) == HHH)){
-
-	// 		break;
-	// 	}
-	// }
-
-	// delay(_delayUntilNextNota);
-
-//------------------------------------------------------------------
-
-	// _kolokol1 = remapReleNumberToName(_kolokol1);
-	// _kolokol2 = remapReleNumberToName(_kolokol2);
-
-	// lcd.clear();
-	// lcd.setCursor(3,1);
-	// lcd.write(byte(0));
-	// lcd.print(" combo2");
-	
-	// digitalWrite(_kolokol1, HHH);
-	// digitalWrite(_kolokol2, HHH);
-
-	// delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	// digitalWrite(_kolokol1, LLL);
-	// digitalWrite(_kolokol2, LLL);
-
-	// delay(_delayUntilNextNota);
-
 }
 
 void combo3(
 int _kolokol1 = 1,
 int _kolokol2 = 2,
 int _kolokol3 = 3,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
-{
-	_kolokol1 = remapReleNumberToName(_kolokol1);
-	_kolokol2 = remapReleNumberToName(_kolokol2);
-	_kolokol3 = remapReleNumberToName(_kolokol3);
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
+	bool comboCikl = 1;
+
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+	int kNumber3 = _kolokol3;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+	int kName3 = remapReleNumberToName(_kolokol3);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+	unsigned long kDel3 = findNotaDelayForKolokolNumber(kNumber3);
+
+	bool comboDS1 = 1;  // digitalState
+	bool comboDS2 = 1;
+	bool comboDS3 = 1;
 
 	lcd.clear();
 	lcd.setCursor(3,1);
 	lcd.write(byte(0));
 	lcd.print(" combo3");
+	
+	digitalWrite(kName1, HHH);
+	digitalWrite(kName2, HHH);
+	digitalWrite(kName3, HHH);
 
-	digitalWrite(_kolokol1, HHH);
-	digitalWrite(_kolokol2, HHH);
-	digitalWrite(_kolokol3, HHH);
+	startMill = millis();
+	while(comboCikl){
 
-	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	digitalWrite(_kolokol1, LLL);
-	digitalWrite(_kolokol2, LLL);
-	digitalWrite(_kolokol3, LLL);
+		currentMill = millis();
+
+		if((currentMill - startMill) >= kDel1){
+			digitalWrite(kName1, LLL);
+			comboDS1 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel2){
+			digitalWrite(kName2, LLL);
+			comboDS2 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel3){
+			digitalWrite(kName3, LLL);
+			comboDS3 = 0;
+		}
+
+		if((comboDS1 == 0) && (comboDS2 == 0) && (comboDS3 == 0)){
+			comboCikl = 0;
+		}
+	}
 
 	delay(_delayUntilNextNota);
+
+//---------------------------------------------------------------
+	// _kolokol1 = remapReleNumberToName(_kolokol1);
+	// _kolokol2 = remapReleNumberToName(_kolokol2);
+	// _kolokol3 = remapReleNumberToName(_kolokol3);
+
+	// lcd.clear();
+	// lcd.setCursor(3,1);
+	// lcd.write(byte(0));
+	// lcd.print(" combo3");
+
+	// digitalWrite(_kolokol1, HHH);
+	// digitalWrite(_kolokol2, HHH);
+	// digitalWrite(_kolokol3, HHH);
+
+	// delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
+	// digitalWrite(_kolokol1, LLL);
+	// digitalWrite(_kolokol2, LLL);
+	// digitalWrite(_kolokol3, LLL);
+
+	// delay(_delayUntilNextNota);
 }
 
 void combo4(
@@ -670,8 +672,8 @@ int _kolokol1 = 1,
 int _kolokol2 = 2,
 int _kolokol3 = 3,
 int _kolokol4 = 4,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
-{
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
 	_kolokol1 = remapReleNumberToName(_kolokol1);
 	_kolokol2 = remapReleNumberToName(_kolokol2);
 	_kolokol3 = remapReleNumberToName(_kolokol3);
@@ -702,8 +704,8 @@ int _kolokol2 = 2,
 int _kolokol3 = 3,
 int _kolokol4 = 4,
 int _kolokol5 = 5,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
-{
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
 	_kolokol1 = remapReleNumberToName(_kolokol1);
 	_kolokol2 = remapReleNumberToName(_kolokol2);
 	_kolokol3 = remapReleNumberToName(_kolokol3);
@@ -738,8 +740,8 @@ int _kolokol3 = 3,
 int _kolokol4 = 4,
 int _kolokol5 = 5,
 int _kolokol6 = 6,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
-{
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
 	_kolokol1 = remapReleNumberToName(_kolokol1);
 	_kolokol2 = remapReleNumberToName(_kolokol2);
 	_kolokol3 = remapReleNumberToName(_kolokol3);
@@ -778,8 +780,8 @@ int _kolokol4 = 4,
 int _kolokol5 = 5,
 int _kolokol6 = 6,
 int _kolokol7 = 7,
-unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA)
-{
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
 	_kolokol1 = remapReleNumberToName(_kolokol1);
 	_kolokol2 = remapReleNumberToName(_kolokol2);
 	_kolokol3 = remapReleNumberToName(_kolokol3);
