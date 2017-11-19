@@ -231,6 +231,7 @@ void bellForMenu(){
 	byte bfmVirtualPos = 1;   // виртуальная позиция указателя меню
 	byte bfmRealPos = 0;   // реальная позиция указателя меню
 	byte bfmKey = 0;   // значение кнопок для обработки в цикле while
+	unsigned long bfmTimeOfBlowMnojitel = 1;  // множитель для мс. в меню
 
 	drawBellForMenu();
 
@@ -245,8 +246,11 @@ void bellForMenu(){
 			if(bfmKey == 1){  // s
 				if(bfmVirtualPos == 1){
 					bfmCikl = 0;  // выход из меню удара в колокол
+				}else if(bfmVirtualPos == 3){
+					bfmTimeOfBlowMnojitel *= 10;
+					if(bfmTimeOfBlowMnojitel > 1000){bfmTimeOfBlowMnojitel = 1;}
 				}else if(bfmVirtualPos == 4){
-					nota(bfmKolocol, bfmTimeOfBlow, 1500);  // играть выбранную ноту
+					nota(bfmKolocol, bfmTimeOfBlow, 2000);  // играть выбранную ноту
 				}
 
 			}else if(bfmKey == 2){  // l
@@ -259,8 +263,10 @@ void bellForMenu(){
 					bfmKolocol --;
 					if(bfmKolocol <= 0){bfmKolocol = 24;}
 				}else if(bfmVirtualPos == 3){
-					bfmTimeOfBlow --;
+					bfmTimeOfBlow -= bfmTimeOfBlowMnojitel;
 					if(bfmTimeOfBlow <= 0){bfmTimeOfBlow = 9999;}
+				}else if(bfmVirtualPos == 4){
+					nota(bfmKolocol, bfmTimeOfBlow, 2000);  // играть выбранную ноту
 				}
 			}else if(bfmKey == 4){  // u
 				if(bfmVirtualPos == 1){
@@ -269,8 +275,10 @@ void bellForMenu(){
 					bfmKolocol ++;
 					if(bfmKolocol > 24){bfmKolocol = 1;}
 				}else if(bfmVirtualPos == 3){
-					bfmTimeOfBlow ++;
+					bfmTimeOfBlow += bfmTimeOfBlowMnojitel;
 					if(bfmTimeOfBlow > 9999){bfmTimeOfBlow = 1;}
+				}else if(bfmVirtualPos == 4){
+					nota(bfmKolocol, bfmTimeOfBlow, 2000);  // играть выбранную ноту
 				}
 			}else if(bfmKey == 5){  // r
 				bfmVirtualPos ++;
@@ -296,6 +304,9 @@ void bellForMenu(){
 		drawBellForMenu(bfmKolocol, bfmTimeOfBlow);
 		lcd.setCursor(bfmRealPos,1);
 		lcd.write(byte(4));
+		if(bfmVirtualPos == 3){
+			lcd.print(bfmTimeOfBlowMnojitel);
+		}
 
 		delay(150);
 	}

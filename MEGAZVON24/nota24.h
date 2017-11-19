@@ -431,9 +431,14 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
 	int kNumber = _kolokol;
 	int kName = remapReleNumberToName(_kolokol);
+	unsigned long thisTimeOfBlowToTheBell = _timeOfBlowToTheBell;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
+	lcd.print("del ");
+	lcd.print(thisTimeOfBlowToTheBell);
+	lcd.print(" ms");
+	lcd.setCursor(2,1);
 	lcd.write(byte(0));
 	lcd.print(" ");
 	lcd.print(kNumber);
