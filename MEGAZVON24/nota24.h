@@ -644,27 +644,6 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	}
 
 	delay(_delayUntilNextNota);
-
-//---------------------------------------------------------------
-	// _kolokol1 = remapReleNumberToName(_kolokol1);
-	// _kolokol2 = remapReleNumberToName(_kolokol2);
-	// _kolokol3 = remapReleNumberToName(_kolokol3);
-
-	// lcd.clear();
-	// lcd.setCursor(3,1);
-	// lcd.write(byte(0));
-	// lcd.print(" combo3");
-
-	// digitalWrite(_kolokol1, HHH);
-	// digitalWrite(_kolokol2, HHH);
-	// digitalWrite(_kolokol3, HHH);
-
-	// delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	// digitalWrite(_kolokol1, LLL);
-	// digitalWrite(_kolokol2, LLL);
-	// digitalWrite(_kolokol3, LLL);
-
-	// delay(_delayUntilNextNota);
 }
 
 void combo4(
@@ -674,26 +653,67 @@ int _kolokol3 = 3,
 int _kolokol4 = 4,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
-	_kolokol1 = remapReleNumberToName(_kolokol1);
-	_kolokol2 = remapReleNumberToName(_kolokol2);
-	_kolokol3 = remapReleNumberToName(_kolokol3);
-	_kolokol4 = remapReleNumberToName(_kolokol4);
+	bool comboCikl = 1;
+
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+	int kNumber3 = _kolokol3;
+	int kNumber4 = _kolokol4;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+	int kName3 = remapReleNumberToName(_kolokol3);
+	int kName4 = remapReleNumberToName(_kolokol4);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+	unsigned long kDel3 = findNotaDelayForKolokolNumber(kNumber3);
+	unsigned long kDel4 = findNotaDelayForKolokolNumber(kNumber4);
+
+	bool comboDS1 = 1;  // digitalState
+	bool comboDS2 = 1;
+	bool comboDS3 = 1;
+	bool comboDS4 = 1;
 
 	lcd.clear();
 	lcd.setCursor(3,1);
 	lcd.write(byte(0));
 	lcd.print(" combo4");
+	
+	digitalWrite(kName1, HHH);
+	digitalWrite(kName2, HHH);
+	digitalWrite(kName3, HHH);
+	digitalWrite(kName4, HHH);
 
-	digitalWrite(_kolokol1, HHH);
-	digitalWrite(_kolokol2, HHH);
-	digitalWrite(_kolokol3, HHH);
-	digitalWrite(_kolokol4, HHH);
+	startMill = millis();
+	while(comboCikl){
 
-	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	digitalWrite(_kolokol1, LLL);
-	digitalWrite(_kolokol2, LLL);
-	digitalWrite(_kolokol3, LLL);
-	digitalWrite(_kolokol4, LLL);
+		currentMill = millis();
+
+		if((currentMill - startMill) >= kDel1){
+			digitalWrite(kName1, LLL);
+			comboDS1 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel2){
+			digitalWrite(kName2, LLL);
+			comboDS2 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel3){
+			digitalWrite(kName3, LLL);
+			comboDS3 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel4){
+			digitalWrite(kName4, LLL);
+			comboDS4 = 0;
+		}
+
+		if((comboDS1 == 0) && (comboDS2 == 0) && (comboDS3 == 0) && (comboDS4 == 0)){
+			comboCikl = 0;
+		}
+	}
 
 	delay(_delayUntilNextNota);
 }
@@ -706,29 +726,78 @@ int _kolokol4 = 4,
 int _kolokol5 = 5,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
-	_kolokol1 = remapReleNumberToName(_kolokol1);
-	_kolokol2 = remapReleNumberToName(_kolokol2);
-	_kolokol3 = remapReleNumberToName(_kolokol3);
-	_kolokol4 = remapReleNumberToName(_kolokol4);
-	_kolokol5 = remapReleNumberToName(_kolokol5);
+	bool comboCikl = 1;
+
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+	int kNumber3 = _kolokol3;
+	int kNumber4 = _kolokol4;
+	int kNumber5 = _kolokol5;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+	int kName3 = remapReleNumberToName(_kolokol3);
+	int kName4 = remapReleNumberToName(_kolokol4);
+	int kName5 = remapReleNumberToName(_kolokol5);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+	unsigned long kDel3 = findNotaDelayForKolokolNumber(kNumber3);
+	unsigned long kDel4 = findNotaDelayForKolokolNumber(kNumber4);
+	unsigned long kDel5 = findNotaDelayForKolokolNumber(kNumber5);
+
+	bool comboDS1 = 1;  // digitalState
+	bool comboDS2 = 1;
+	bool comboDS3 = 1;
+	bool comboDS4 = 1;
+	bool comboDS5 = 1;
 
 	lcd.clear();
 	lcd.setCursor(3,1);
 	lcd.write(byte(0));
 	lcd.print(" combo5");
+	
+	digitalWrite(kName1, HHH);
+	digitalWrite(kName2, HHH);
+	digitalWrite(kName3, HHH);
+	digitalWrite(kName4, HHH);
+	digitalWrite(kName5, HHH);
 
-	digitalWrite(_kolokol1, HHH);
-	digitalWrite(_kolokol2, HHH);
-	digitalWrite(_kolokol3, HHH);
-	digitalWrite(_kolokol4, HHH);
-	digitalWrite(_kolokol5, HHH);
+	startMill = millis();
+	while(comboCikl){
 
-	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	digitalWrite(_kolokol1, LLL);
-	digitalWrite(_kolokol2, LLL);
-	digitalWrite(_kolokol3, LLL);
-	digitalWrite(_kolokol4, LLL);
-	digitalWrite(_kolokol5, LLL);
+		currentMill = millis();
+
+		if((currentMill - startMill) >= kDel1){
+			digitalWrite(kName1, LLL);
+			comboDS1 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel2){
+			digitalWrite(kName2, LLL);
+			comboDS2 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel3){
+			digitalWrite(kName3, LLL);
+			comboDS3 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel4){
+			digitalWrite(kName4, LLL);
+			comboDS4 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel5){
+			digitalWrite(kName5, LLL);
+			comboDS5 = 0;
+		}
+
+		if((comboDS1 == 0) && (comboDS2 == 0) && (comboDS3 == 0) && (comboDS4 == 0) 
+		&& (comboDS5 == 0)){
+			comboCikl = 0;
+		}
+	}
 
 	delay(_delayUntilNextNota);
 }
@@ -742,32 +811,88 @@ int _kolokol5 = 5,
 int _kolokol6 = 6,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
-	_kolokol1 = remapReleNumberToName(_kolokol1);
-	_kolokol2 = remapReleNumberToName(_kolokol2);
-	_kolokol3 = remapReleNumberToName(_kolokol3);
-	_kolokol4 = remapReleNumberToName(_kolokol4);
-	_kolokol5 = remapReleNumberToName(_kolokol5);
-	_kolokol6 = remapReleNumberToName(_kolokol6);
+	bool comboCikl = 1;
+
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+	int kNumber3 = _kolokol3;
+	int kNumber4 = _kolokol4;
+	int kNumber5 = _kolokol5;
+	int kNumber6 = _kolokol6;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+	int kName3 = remapReleNumberToName(_kolokol3);
+	int kName4 = remapReleNumberToName(_kolokol4);
+	int kName5 = remapReleNumberToName(_kolokol5);
+	int kName6 = remapReleNumberToName(_kolokol6);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+	unsigned long kDel3 = findNotaDelayForKolokolNumber(kNumber3);
+	unsigned long kDel4 = findNotaDelayForKolokolNumber(kNumber4);
+	unsigned long kDel5 = findNotaDelayForKolokolNumber(kNumber5);
+	unsigned long kDel6 = findNotaDelayForKolokolNumber(kNumber6);
+
+	bool comboDS1 = 1;  // digitalState
+	bool comboDS2 = 1;
+	bool comboDS3 = 1;
+	bool comboDS4 = 1;
+	bool comboDS5 = 1;
+	bool comboDS6 = 1;
 
 	lcd.clear();
 	lcd.setCursor(3,1);
 	lcd.write(byte(0));
 	lcd.print(" combo6");
+	
+	digitalWrite(kName1, HHH);
+	digitalWrite(kName2, HHH);
+	digitalWrite(kName3, HHH);
+	digitalWrite(kName4, HHH);
+	digitalWrite(kName5, HHH);
+	digitalWrite(kName6, HHH);
 
-	digitalWrite(_kolokol1, HHH);
-	digitalWrite(_kolokol2, HHH);
-	digitalWrite(_kolokol3, HHH);
-	digitalWrite(_kolokol4, HHH);
-	digitalWrite(_kolokol5, HHH);
-	digitalWrite(_kolokol6, HHH);
+	startMill = millis();
+	while(comboCikl){
 
-	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	digitalWrite(_kolokol1, LLL);
-	digitalWrite(_kolokol2, LLL);
-	digitalWrite(_kolokol3, LLL);
-	digitalWrite(_kolokol4, LLL);
-	digitalWrite(_kolokol5, LLL);
-	digitalWrite(_kolokol6, LLL);
+		currentMill = millis();
+
+		if((currentMill - startMill) >= kDel1){
+			digitalWrite(kName1, LLL);
+			comboDS1 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel2){
+			digitalWrite(kName2, LLL);
+			comboDS2 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel3){
+			digitalWrite(kName3, LLL);
+			comboDS3 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel4){
+			digitalWrite(kName4, LLL);
+			comboDS4 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel5){
+			digitalWrite(kName5, LLL);
+			comboDS5 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel6){
+			digitalWrite(kName6, LLL);
+			comboDS6 = 0;
+		}
+
+		if((comboDS1 == 0) && (comboDS2 == 0) && (comboDS3 == 0) && (comboDS4 == 0) 
+		&& (comboDS5 == 0) && (comboDS6 == 0)){
+			comboCikl = 0;
+		}
+	}
 
 	delay(_delayUntilNextNota);
 }
@@ -782,35 +907,215 @@ int _kolokol6 = 6,
 int _kolokol7 = 7,
 unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 
-	_kolokol1 = remapReleNumberToName(_kolokol1);
-	_kolokol2 = remapReleNumberToName(_kolokol2);
-	_kolokol3 = remapReleNumberToName(_kolokol3);
-	_kolokol4 = remapReleNumberToName(_kolokol4);
-	_kolokol5 = remapReleNumberToName(_kolokol5);
-	_kolokol6 = remapReleNumberToName(_kolokol6);
-	_kolokol7 = remapReleNumberToName(_kolokol7);
+	bool comboCikl = 1;
+
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+	int kNumber3 = _kolokol3;
+	int kNumber4 = _kolokol4;
+	int kNumber5 = _kolokol5;
+	int kNumber6 = _kolokol6;
+	int kNumber7 = _kolokol7;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+	int kName3 = remapReleNumberToName(_kolokol3);
+	int kName4 = remapReleNumberToName(_kolokol4);
+	int kName5 = remapReleNumberToName(_kolokol5);
+	int kName6 = remapReleNumberToName(_kolokol6);
+	int kName7 = remapReleNumberToName(_kolokol7);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+	unsigned long kDel3 = findNotaDelayForKolokolNumber(kNumber3);
+	unsigned long kDel4 = findNotaDelayForKolokolNumber(kNumber4);
+	unsigned long kDel5 = findNotaDelayForKolokolNumber(kNumber5);
+	unsigned long kDel6 = findNotaDelayForKolokolNumber(kNumber6);
+	unsigned long kDel7 = findNotaDelayForKolokolNumber(kNumber7);
+
+	bool comboDS1 = 1;  // digitalState
+	bool comboDS2 = 1;
+	bool comboDS3 = 1;
+	bool comboDS4 = 1;
+	bool comboDS5 = 1;
+	bool comboDS6 = 1;
+	bool comboDS7 = 1;
 
 	lcd.clear();
 	lcd.setCursor(3,1);
 	lcd.write(byte(0));
 	lcd.print(" combo7");
+	
+	digitalWrite(kName1, HHH);
+	digitalWrite(kName2, HHH);
+	digitalWrite(kName3, HHH);
+	digitalWrite(kName4, HHH);
+	digitalWrite(kName5, HHH);
+	digitalWrite(kName6, HHH);
+	digitalWrite(kName7, HHH);
 
-	digitalWrite(_kolokol1, HHH);
-	digitalWrite(_kolokol2, HHH);
-	digitalWrite(_kolokol3, HHH);
-	digitalWrite(_kolokol4, HHH);
-	digitalWrite(_kolokol5, HHH);
-	digitalWrite(_kolokol6, HHH);
-	digitalWrite(_kolokol7, HHH);
+	startMill = millis();
+	while(comboCikl){
 
-	delay(DEF_TIME_OF_BLOW_TO_THE_BELL);
-	digitalWrite(_kolokol1, LLL);
-	digitalWrite(_kolokol2, LLL);
-	digitalWrite(_kolokol3, LLL);
-	digitalWrite(_kolokol4, LLL);
-	digitalWrite(_kolokol5, LLL);
-	digitalWrite(_kolokol6, LLL);
-	digitalWrite(_kolokol7, LLL);
+		currentMill = millis();
+
+		if((currentMill - startMill) >= kDel1){
+			digitalWrite(kName1, LLL);
+			comboDS1 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel2){
+			digitalWrite(kName2, LLL);
+			comboDS2 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel3){
+			digitalWrite(kName3, LLL);
+			comboDS3 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel4){
+			digitalWrite(kName4, LLL);
+			comboDS4 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel5){
+			digitalWrite(kName5, LLL);
+			comboDS5 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel6){
+			digitalWrite(kName6, LLL);
+			comboDS6 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel7){
+			digitalWrite(kName7, LLL);
+			comboDS7 = 0;
+		}
+
+		if((comboDS1 == 0) && (comboDS2 == 0) && (comboDS3 == 0) && (comboDS4 == 0) 
+		&& (comboDS5 == 0) && (comboDS6 == 0) && (comboDS7 == 0)){
+			comboCikl = 0;
+		}
+	}
+
+	delay(_delayUntilNextNota);
+}
+
+void combo8(
+int _kolokol1 = 1,
+int _kolokol2 = 2,
+int _kolokol3 = 3,
+int _kolokol4 = 4,
+int _kolokol5 = 5,
+int _kolokol6 = 6,
+int _kolokol7 = 7,
+int _kolokol8 = 8,
+unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
+
+	bool comboCikl = 1;
+
+	int kNumber1 = _kolokol1;
+	int kNumber2 = _kolokol2;
+	int kNumber3 = _kolokol3;
+	int kNumber4 = _kolokol4;
+	int kNumber5 = _kolokol5;
+	int kNumber6 = _kolokol6;
+	int kNumber7 = _kolokol7;
+	int kNumber8 = _kolokol8;
+
+	int kName1 = remapReleNumberToName(_kolokol1);
+	int kName2 = remapReleNumberToName(_kolokol2);
+	int kName3 = remapReleNumberToName(_kolokol3);
+	int kName4 = remapReleNumberToName(_kolokol4);
+	int kName5 = remapReleNumberToName(_kolokol5);
+	int kName6 = remapReleNumberToName(_kolokol6);
+	int kName7 = remapReleNumberToName(_kolokol7);
+	int kName8 = remapReleNumberToName(_kolokol8);
+
+	unsigned long kDel1 = findNotaDelayForKolokolNumber(kNumber1);
+	unsigned long kDel2 = findNotaDelayForKolokolNumber(kNumber2);
+	unsigned long kDel3 = findNotaDelayForKolokolNumber(kNumber3);
+	unsigned long kDel4 = findNotaDelayForKolokolNumber(kNumber4);
+	unsigned long kDel5 = findNotaDelayForKolokolNumber(kNumber5);
+	unsigned long kDel6 = findNotaDelayForKolokolNumber(kNumber6);
+	unsigned long kDel7 = findNotaDelayForKolokolNumber(kNumber7);
+	unsigned long kDel8 = findNotaDelayForKolokolNumber(kNumber8);
+
+	bool comboDS1 = 1;  // digitalState
+	bool comboDS2 = 1;
+	bool comboDS3 = 1;
+	bool comboDS4 = 1;
+	bool comboDS5 = 1;
+	bool comboDS6 = 1;
+	bool comboDS7 = 1;
+	bool comboDS8 = 1;
+
+	lcd.clear();
+	lcd.setCursor(3,1);
+	lcd.write(byte(0));
+	lcd.print(" combo8");
+	
+	digitalWrite(kName1, HHH);
+	digitalWrite(kName2, HHH);
+	digitalWrite(kName3, HHH);
+	digitalWrite(kName4, HHH);
+	digitalWrite(kName5, HHH);
+	digitalWrite(kName6, HHH);
+	digitalWrite(kName7, HHH);
+	digitalWrite(kName8, HHH);
+
+	startMill = millis();
+	while(comboCikl){
+
+		currentMill = millis();
+
+		if((currentMill - startMill) >= kDel1){
+			digitalWrite(kName1, LLL);
+			comboDS1 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel2){
+			digitalWrite(kName2, LLL);
+			comboDS2 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel3){
+			digitalWrite(kName3, LLL);
+			comboDS3 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel4){
+			digitalWrite(kName4, LLL);
+			comboDS4 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel5){
+			digitalWrite(kName5, LLL);
+			comboDS5 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel6){
+			digitalWrite(kName6, LLL);
+			comboDS6 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel7){
+			digitalWrite(kName7, LLL);
+			comboDS7 = 0;
+		}
+
+		if((currentMill - startMill) >= kDel8){
+			digitalWrite(kName8, LLL);
+			comboDS8 = 0;
+		}
+
+		if((comboDS1 == 0) && (comboDS2 == 0) && (comboDS3 == 0) && (comboDS4 == 0) 
+		&& (comboDS5 == 0) && (comboDS6 == 0) && (comboDS7 == 0) && (comboDS8 == 0)){
+			comboCikl = 0;
+		}
+	}
 
 	delay(_delayUntilNextNota);
 }
