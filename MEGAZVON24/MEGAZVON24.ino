@@ -107,6 +107,17 @@ byte customCharMenuArrow4[8] = {
 	0b00100
 };
 
+byte customCharChasi5[8] = {
+	0b00000,
+	0b00000,
+	0b01110,
+	0b10101,
+	0b10111,
+	0b10001,
+	0b01110,
+	0b00000
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -246,6 +257,8 @@ void bellForMenu(){
 			if(bfmKey == 1){  // s
 				if(bfmVirtualPos == 1){
 					bfmCikl = 0;  // выход из меню удара в колокол
+				}else if(bfmVirtualPos == 2){
+					nota(bfmKolocol, bfmTimeOfBlow, 2000);  // играть выбранную ноту
 				}else if(bfmVirtualPos == 3){
 					bfmTimeOfBlowMnojitel *= 10;
 					if(bfmTimeOfBlowMnojitel > 100){bfmTimeOfBlowMnojitel = 1;}
@@ -312,6 +325,8 @@ void bellForMenu(){
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // ФУНКЦИЯ МЕНЮ:
 void menu24(){
 	lcd.clear();
@@ -342,6 +357,7 @@ void setup() {
   	lcd.createChar(2, customCharLeftArrow2);
   	lcd.createChar(3, customCharRightArrow3);
   	lcd.createChar(4, customCharMenuArrow4);
+  	lcd.createChar(5, customCharChasi5);
 
 	// инициализация колоколов
 	pinMode(RELE_K1, OUTPUT);
