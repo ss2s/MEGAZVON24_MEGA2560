@@ -117,9 +117,9 @@ byte key(){  // 1-723, 2-482, 3-133, 4-310, 5-0;
 	int val = analogRead(A0);
 	byte keyVal = 0;
 	if(val < 67) keyVal = 5;             // right
-	else if(val < 221) keyVal = 4;       // left
-	else if(val < 396) keyVal = 3;       // up
-	else if(val < 602) keyVal = 2;       // down
+	else if(val < 221) keyVal = 4;       // up
+	else if(val < 396) keyVal = 3;       // down
+	else if(val < 602) keyVal = 2;       // left
 	else if(val < 873) keyVal = 1;       // select // 873
 	else if(val <= 1023) keyVal = 0;     // no press
 	Serial.print(keyVal);
@@ -135,11 +135,11 @@ void buttonChekForLoop(){  // обработчик нажатий кнопок �
 
 	}else if(val == 1){  // select
 		menu24();
-	}else if(val == 2){  // down
+	}else if(val == 2){  // left
 
-	}else if(val == 3){  // up
+	}else if(val == 3){  // down
 
-	}else if(val == 4){  // left
+	}else if(val == 4){  // up
 
 	}else if(val == 5){  // right
 
@@ -150,9 +150,9 @@ void buttonChekForMenu(){  // обработчик нажатий кнопок �
 	byte val = key();
 	if(val == 0){        // no pressed = no action
 	}else if(val == 1){  // select
-	}else if(val == 2){  // down
-	}else if(val == 3){  // up
-	}else if(val == 4){  // left
+	}else if(val == 2){  // left
+	}else if(val == 3){  // down
+	}else if(val == 4){  // up
 	}else if(val == 5){  // right
 	}
 }
@@ -205,16 +205,16 @@ void timeBellRound(int _hours = 1){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // функция рисования для функции удара в любой колокол с настройками из меню
-inline void drawBellForMenu(int _bfmColocol = 12, unsigned long _bfmTimeOfBlow = 300UL){
+inline void drawBellForMenu(int _bfmKolocol = 12, unsigned long _bfmTimeOfBlow = DEF_TIME_OF_BLOW_TO_THE_BELL){
 
-	int dbfmColocol = _bfmColocol;
+	int dbfmKolocol = _bfmKolocol;
 	unsigned long dbfmTimeOfBlow = _bfmTimeOfBlow;
 	lcd.clear();
 	lcd.setCursor(0,0);
 	lcd.write(byte(0));
 	lcd.setCursor(2,0);
-	lcd.print(dbfmColocol);
-	lcd.setCursor(5,0);
+	lcd.print(dbfmKolocol);
+	lcd.setCursor(4,0);
 	lcd.print(" del ");
 	lcd.setCursor(9,0);
 	lcd.print(dbfmTimeOfBlow);
@@ -225,7 +225,7 @@ inline void drawBellForMenu(int _bfmColocol = 12, unsigned long _bfmTimeOfBlow =
 // функция удара в любой колокол с настройками из меню
 void bellForMenu(){
 
-	int bfmColocol = 12;  // переменная для хранения номера колокола
+	int bfmKolocol = 12;  // переменная для хранения номера колокола
 	unsigned long bfmTimeOfBlow = DEF_TIME_OF_BLOW_TO_THE_BELL;  // переменная для хранения выдержки язычка
 	bool bfmCikl = 1;  // переменная для управления циклом while
 	byte bfmVirtualPos = 1;   // виртуальная позиция указателя меню
@@ -244,17 +244,34 @@ void bellForMenu(){
 		if(bfmKey > 0){
 			if(bfmKey == 1){  // s
 				if(bfmVirtualPos == 1){
-					bfmCikl = 0;  // выход из меню
+					bfmCikl = 0;  // выход из меню удара в колокол
 				}else if(bfmVirtualPos == 4){
-					nota(bfmColocol, bfmTimeOfBlow, 1500);  // играть выбранную ноту
+					nota(bfmKolocol, bfmTimeOfBlow, 1500);  // играть выбранную ноту
 				}
 
-			}else if(bfmKey == 2){  // d
-
-			}else if(bfmKey == 3){  // u
-
-			}else if(bfmKey == 4){  // l
-
+			}else if(bfmKey == 2){  // l
+				bfmVirtualPos --;
+				if(bfmVirtualPos <= 0){bfmVirtualPos = 4;}
+			}else if(bfmKey == 3){  // d
+				if(bfmVirtualPos == 1){
+					bfmCikl = 0;  // выход из меню удара в колокол
+				}else if(bfmVirtualPos == 2){
+					bfmKolocol --;
+					if(bfmKolocol <= 0){bfmKolocol = 24;}
+				}else if(bfmVirtualPos == 3){
+					bfmTimeOfBlow --;
+					if(bfmTimeOfBlow <= 0){bfmTimeOfBlow = 9999;}
+				}
+			}else if(bfmKey == 4){  // u
+				if(bfmVirtualPos == 1){
+					bfmCikl = 0;  // выход из меню удара в колокол
+				}else if(bfmVirtualPos == 2){
+					bfmKolocol ++;
+					if(bfmKolocol > 24){bfmKolocol = 1;}
+				}else if(bfmVirtualPos == 3){
+					bfmTimeOfBlow ++;
+					if(bfmTimeOfBlow > 9999){bfmTimeOfBlow = 1;}
+				}
 			}else if(bfmKey == 5){  // r
 				bfmVirtualPos ++;
 				if(bfmVirtualPos > 4){bfmVirtualPos = 0;}
@@ -276,11 +293,11 @@ void bellForMenu(){
 		      break;
 		}
 
-		drawBellForMenu();
+		drawBellForMenu(bfmKolocol, bfmTimeOfBlow);
 		lcd.setCursor(bfmRealPos,1);
 		lcd.write(byte(4));
 
-		delay(100);
+		delay(150);
 	}
 }
 
@@ -289,7 +306,7 @@ void menu24(){
 	lcd.clear();
 	lcd.setCursor(6,0);
 	lcd.print("MENU");
-	delay(2000);
+	delay(1000);
 	bellForMenu();
 	while(1){
 		lcd.clear();
