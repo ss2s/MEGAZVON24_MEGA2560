@@ -334,13 +334,14 @@ void menu24(){
 	lcd.print("MENU");
 	delay(1000);
 	bellForMenu();
-	while(1){
-		lcd.clear();
-		delay(1000);
-		lcd.setCursor(0,1);
-		lcd.print(" RESET to exit");
-		delay(1500);
-	}
+	
+	// while(1){
+	// 	lcd.clear();
+	// 	delay(1000);
+	// 	lcd.setCursor(0,1);
+	// 	lcd.print(" RESET to exit");
+	// 	delay(1500);
+	// }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
