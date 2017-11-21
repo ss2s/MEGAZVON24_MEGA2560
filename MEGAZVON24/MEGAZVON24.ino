@@ -242,6 +242,8 @@ inline void drawBellForMenu(int _bfmKolocol = 12, unsigned long _bfmTimeOfBlow =
 // функция удара в любой колокол с настройками из меню
 void bellForMenu(){
 
+	unsigned int buttonDelay = 200;
+
 	int bfmKolocol = 12;  // переменная для хранения номера колокола
 	unsigned long bfmTimeOfBlow = DEF_TIME_OF_BLOW_TO_THE_BELL;  // переменная для хранения выдержки язычка
 	bool bfmCikl = 1;  // переменная для управления циклом while
@@ -271,10 +273,13 @@ void bellForMenu(){
 				}else if(bfmVirtualPos == 4){
 					nota(bfmKolocol, bfmTimeOfBlow, DEF_DEL_UNT_NEXT_NOTA);  // играть выбранную ноту
 				}
+				
+				delay(buttonDelay);
 
 			}else if(bfmKey == 2){  // l
 				bfmVirtualPos --;
 				if(bfmVirtualPos <= 0){bfmVirtualPos = 4;}
+				delay(buttonDelay);
 			}else if(bfmKey == 3){  // d
 				if(bfmVirtualPos == 1){
 					bfmCikl = 0;  // выход из меню удара в колокол
@@ -287,6 +292,7 @@ void bellForMenu(){
 				}else if(bfmVirtualPos == 4){
 					nota(bfmKolocol, bfmTimeOfBlow, DEF_DEL_UNT_NEXT_NOTA);  // играть выбранную ноту
 				}
+				delay(buttonDelay);
 			}else if(bfmKey == 4){  // u
 				if(bfmVirtualPos == 1){
 					bfmCikl = 0;  // выход из меню удара в колокол
@@ -299,35 +305,35 @@ void bellForMenu(){
 				}else if(bfmVirtualPos == 4){
 					nota(bfmKolocol, bfmTimeOfBlow, DEF_DEL_UNT_NEXT_NOTA);  // играть выбранную ноту
 				}
+				delay(buttonDelay);
 			}else if(bfmKey == 5){  // r
 				bfmVirtualPos ++;
 				if(bfmVirtualPos > 4){bfmVirtualPos = 0;}
+				delay(buttonDelay);
+			}
+
+			switch (bfmVirtualPos){
+			    case 1:
+			      bfmRealPos = 0;
+			      break;
+			    case 2:
+			      bfmRealPos = 2;
+			      break;
+			    case 3:
+			      bfmRealPos = 9;
+			      break;
+			    case 4:
+			      bfmRealPos = 14;
+			      break;
+			}
+
+			drawBellForMenu(bfmKolocol, bfmTimeOfBlow);
+			lcd.setCursor(bfmRealPos,1);
+			lcd.write(byte(4));
+			if(bfmVirtualPos == 3){
+				lcd.print(bfmTimeOfBlowMnojitel);
 			}
 		}
-
-		switch (bfmVirtualPos){
-		    case 1:
-		      bfmRealPos = 0;
-		      break;
-		    case 2:
-		      bfmRealPos = 2;
-		      break;
-		    case 3:
-		      bfmRealPos = 9;
-		      break;
-		    case 4:
-		      bfmRealPos = 14;
-		      break;
-		}
-
-		drawBellForMenu(bfmKolocol, bfmTimeOfBlow);
-		lcd.setCursor(bfmRealPos,1);
-		lcd.write(byte(4));
-		if(bfmVirtualPos == 3){
-			lcd.print(bfmTimeOfBlowMnojitel);
-		}
-
-		delay(150);
 	}
 }
 
