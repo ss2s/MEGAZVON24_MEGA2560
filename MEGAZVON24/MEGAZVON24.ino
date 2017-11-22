@@ -456,7 +456,7 @@ void loop() {
 	// lcd.print(" melodiaEX2");
 	// delay(1000);
 
-	melodiaEX2();
+	melodiaEX3();
 
 }
 

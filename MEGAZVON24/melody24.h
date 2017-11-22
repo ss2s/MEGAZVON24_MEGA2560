@@ -73,7 +73,65 @@ void melodiaEX2(){
 }
 
 // мелодия EX3
-void melodiaEX3(){}
+void melodiaEX3(){
+
+	float tempMelody = 1.0;  // это переменная темпа мелодии. если нужно ускорить 0.9 - 0.1.  ` замедлить 1.1 - 10.0
+
+	combo2(16,17,500*tempMelody);
+	combo2(16,17,300*tempMelody);
+	combo2(5,17,500*tempMelody);
+	combo2(5,17,200*tempMelody);
+	combo2(16,17,200*tempMelody);
+
+	nota15(200*tempMelody);
+	combo2(16,17,200*tempMelody);
+	combo2(16,17,200*tempMelody);
+	nota5(200*tempMelody);
+
+	combo2(15,17,500*tempMelody);
+	nota11(200*tempMelody);
+	nota16(200*tempMelody);
+	nota7(200*tempMelody);
+	nota11(400*tempMelody);
+
+	nota14(200*tempMelody);
+	nota13(200*tempMelody);
+	nota12(300*tempMelody);
+	nota16(400*tempMelody);
+	nota12(500*tempMelody);
+	nota16(200*tempMelody);
+
+	nota12(500*tempMelody);
+	nota12(200*tempMelody);
+	nota5(200*tempMelody);
+	nota16(200*tempMelody);
+	nota12(500*tempMelody);
+
+	nota15(200*tempMelody);
+	nota13(500*tempMelody);
+	nota7(200*tempMelody);
+	nota7(200*tempMelody);
+	nota16(500*tempMelody);
+
+	combo2(5,13,200*tempMelody);
+	combo2(13,3,300*tempMelody);
+	combo2(5,3,200*tempMelody);
+	combo2(18,3,300*tempMelody);
+
+	nota3(200*tempMelody);
+	combo2(11,16,300*tempMelody);
+	combo2(5,15,200*tempMelody);
+	combo2(5,15,200*tempMelody);
+
+	combo2(13,3,500*tempMelody);
+	combo2(14,7,300*tempMelody);
+	combo2(16,19,200*tempMelody);
+	nota5(200*tempMelody);
+
+	combo2(14,13,200*tempMelody);
+	combo2(15,13,200*tempMelody);
+	combo2(18,13,0);
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\\
