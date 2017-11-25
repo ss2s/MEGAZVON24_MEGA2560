@@ -67,7 +67,6 @@ unsigned long timtOfBlowUnicNota_23 = DEF_TIME_OF_BLOW_UNIC_NOTA_23;   // ВРЕ
 unsigned long timtOfBlowUnicNota_24 = DEF_TIME_OF_BLOW_UNIC_NOTA_24;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 24 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // функция макс возвращает большее из двух чисел
 unsigned long maxNumber(unsigned long _a, unsigned long _b){
 
