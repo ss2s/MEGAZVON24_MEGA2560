@@ -41,7 +41,7 @@ unsigned long currentMill = 1UL;
 
 // для каждой ноты в отдельности, 2 набор нот
 // настройка в файле "MELODIA_ZVONA.h"
-unsigned long timtOfBlowUnicNota_1 = DEF_TIME_OF_BLOW_UNIC_NOTA_1;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 1 КОЛОКОЛ (ВРЕМЯ НОТЫ)
+/*unsigned long timtOfBlowUnicNota_1 = DEF_TIME_OF_BLOW_UNIC_NOTA_1;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 1 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 unsigned long timtOfBlowUnicNota_2 = DEF_TIME_OF_BLOW_UNIC_NOTA_2;   // ВРЕМЯ УДАРА ЯЗЫЧКА ВО 2 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 unsigned long timtOfBlowUnicNota_3 = DEF_TIME_OF_BLOW_UNIC_NOTA_3;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 3 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 unsigned long timtOfBlowUnicNota_4 = DEF_TIME_OF_BLOW_UNIC_NOTA_4;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 4 КОЛОКОЛ (ВРЕМЯ НОТЫ)
@@ -65,6 +65,31 @@ unsigned long timtOfBlowUnicNota_21 = DEF_TIME_OF_BLOW_UNIC_NOTA_21;   // ВРЕ
 unsigned long timtOfBlowUnicNota_22 = DEF_TIME_OF_BLOW_UNIC_NOTA_22;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 22 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 unsigned long timtOfBlowUnicNota_23 = DEF_TIME_OF_BLOW_UNIC_NOTA_23;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 23 КОЛОКОЛ (ВРЕМЯ НОТЫ)
 unsigned long timtOfBlowUnicNota_24 = DEF_TIME_OF_BLOW_UNIC_NOTA_24;   // ВРЕМЯ УДАРА ЯЗЫЧКА В 24 КОЛОКОЛ (ВРЕМЯ НОТЫ)
+*/
+unsigned long timtOfBlowUnicNota_1;
+unsigned long timtOfBlowUnicNota_2;
+unsigned long timtOfBlowUnicNota_3;
+unsigned long timtOfBlowUnicNota_4;
+unsigned long timtOfBlowUnicNota_5;
+unsigned long timtOfBlowUnicNota_6;
+unsigned long timtOfBlowUnicNota_7;
+unsigned long timtOfBlowUnicNota_8;
+unsigned long timtOfBlowUnicNota_9;
+unsigned long timtOfBlowUnicNota_10;
+unsigned long timtOfBlowUnicNota_11;
+unsigned long timtOfBlowUnicNota_12;
+unsigned long timtOfBlowUnicNota_13;
+unsigned long timtOfBlowUnicNota_14;
+unsigned long timtOfBlowUnicNota_15;
+unsigned long timtOfBlowUnicNota_16;
+unsigned long timtOfBlowUnicNota_17;
+unsigned long timtOfBlowUnicNota_18;
+unsigned long timtOfBlowUnicNota_19;
+unsigned long timtOfBlowUnicNota_20;
+unsigned long timtOfBlowUnicNota_21;
+unsigned long timtOfBlowUnicNota_22;
+unsigned long timtOfBlowUnicNota_23;
+unsigned long timtOfBlowUnicNota_24;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // функция макс возвращает большее из двух чисел

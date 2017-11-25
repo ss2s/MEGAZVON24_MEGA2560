@@ -44,8 +44,10 @@ LiquidCrystal lcd(DEF_LCD_INIT_PIN);
 #include <EEPROM.h>
 unsigned long EEPROM_ulong_read(int addr);
 void EEPROM_ulong_write(int addr, unsigned long data);
-//void timtOfBlowUnicNotaSet();
-//void timtOfBlowUnicNotaGet();
+void timeOfBlowUnicNotaSet(int _kolokol);
+unsigned long timeOfBlowUnicNotaGet(int _kolokol);
+void timeOfBlowUnicNotaSetPak();
+void timeOfBlowUnicNotaGetPak();
 
 #include "nota24.h"             // ноты
 #include "melody24.h"           // файл с мелодиями
@@ -137,9 +139,9 @@ byte key(){  // 1-723, 2-482, 3-133, 4-310, 5-0;
 	else if(val < 602) keyVal = 2;       // left
 	else if(val < 873) keyVal = 1;       // select // 873
 	else if(val <= 1023) keyVal = 0;     // no press
-	Serial.print(keyVal);
-	Serial.print(" ");
-	Serial.println(val);
+	// Serial.print(keyVal);
+	// Serial.print(" ");
+	// Serial.println(val);
 	return keyVal;
 }
 
@@ -192,49 +194,149 @@ void EEPROM_ulong_write(int fAddr, unsigned long data) // запись в EEPROM
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void timtOfBlowUnicNotaSet(){}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void timtOfBlowUnicNotaGet(){}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\\
-// \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\///
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// В ЭТОМ РАЗДЕЛЕ НАСТРАИВАЕТСЯ РАСПИСАНИЕ МЕЛОДИЙ ПЕРЕЗВОНА И ЧАСЫ:
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// часы: будильник
-
-// часы: время
-void chekVremya(){
+void timeOfBlowUnicNotaSet(int _kolokol){
+	int tobKolokol = _kolokol;
+	unsigned long tobTimtOfBlowUnicNota = findNotaDelayForKolokolNumber(tobKolokol);
+	EEPROM_ulong_write(tobKolokol, tobTimtOfBlowUnicNota);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+unsigned long timeOfBlowUnicNotaGet(int _kolokol){
+	int tobKolokol = _kolokol;
+	unsigned long tobTimtOfBlowUnicNota = EEPROM_ulong_read(tobKolokol);
 
-// расписание:
-int chekPerezvon(){
-}
-
-int chasZvona(){}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// дополнительные функции расписания:
-// функция отбивания времени колоколом
-void timeBellRound(int _hours = 1){
-	for(int i=0;i<_hours;i++){
-		nota(RELE_HOUR_BLOW, DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW, HOUR_OF_BLOW_DELAY);
+	switch (tobKolokol) {
+	    case 1:
+	      timtOfBlowUnicNota_1 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 2:
+	      timtOfBlowUnicNota_2 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 3:
+	      timtOfBlowUnicNota_3 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 4:
+	      timtOfBlowUnicNota_4 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 5:
+	      timtOfBlowUnicNota_5 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 6:
+	      timtOfBlowUnicNota_6 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 7:
+	      timtOfBlowUnicNota_7 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 8:
+	      timtOfBlowUnicNota_8 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 9:
+	      timtOfBlowUnicNota_9 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 10:
+	      timtOfBlowUnicNota_10 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 11:
+	      timtOfBlowUnicNota_11 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 12:
+	      timtOfBlowUnicNota_12 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 13:
+	      timtOfBlowUnicNota_13 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 14:
+	      timtOfBlowUnicNota_14 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 15:
+	      timtOfBlowUnicNota_15 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 16:
+	      timtOfBlowUnicNota_16 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 17:
+	      timtOfBlowUnicNota_17 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 18:
+	      timtOfBlowUnicNota_18 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 19:
+	      timtOfBlowUnicNota_19 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 20:
+	      timtOfBlowUnicNota_20 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 21:
+	      timtOfBlowUnicNota_21 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 22:
+	      timtOfBlowUnicNota_22 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 23:
+	      timtOfBlowUnicNota_23 = tobTimtOfBlowUnicNota;
+	      break;
+	    case 24:
+	      timtOfBlowUnicNota_24 = tobTimtOfBlowUnicNota;
+	      break;
 	}
+
+	return tobTimtOfBlowUnicNota;
 }
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void timeOfBlowUnicNotaSetPak(){
 
+	EEPROM_ulong_write(1, DEF_TIME_OF_BLOW_UNIC_NOTA_1);
+	EEPROM_ulong_write(2, DEF_TIME_OF_BLOW_UNIC_NOTA_2);
+	EEPROM_ulong_write(3, DEF_TIME_OF_BLOW_UNIC_NOTA_3);
+	EEPROM_ulong_write(4, DEF_TIME_OF_BLOW_UNIC_NOTA_4);
+	EEPROM_ulong_write(5, DEF_TIME_OF_BLOW_UNIC_NOTA_5);
+	EEPROM_ulong_write(6, DEF_TIME_OF_BLOW_UNIC_NOTA_6);
+	EEPROM_ulong_write(7, DEF_TIME_OF_BLOW_UNIC_NOTA_7);
+	EEPROM_ulong_write(8, DEF_TIME_OF_BLOW_UNIC_NOTA_8);
+	EEPROM_ulong_write(9, DEF_TIME_OF_BLOW_UNIC_NOTA_9);
+	EEPROM_ulong_write(10, DEF_TIME_OF_BLOW_UNIC_NOTA_10);
+	EEPROM_ulong_write(11, DEF_TIME_OF_BLOW_UNIC_NOTA_11);
+	EEPROM_ulong_write(12, DEF_TIME_OF_BLOW_UNIC_NOTA_12);
+	EEPROM_ulong_write(13, DEF_TIME_OF_BLOW_UNIC_NOTA_13);
+	EEPROM_ulong_write(14, DEF_TIME_OF_BLOW_UNIC_NOTA_14);
+	EEPROM_ulong_write(15, DEF_TIME_OF_BLOW_UNIC_NOTA_15);
+	EEPROM_ulong_write(16, DEF_TIME_OF_BLOW_UNIC_NOTA_16);
+	EEPROM_ulong_write(17, DEF_TIME_OF_BLOW_UNIC_NOTA_17);
+	EEPROM_ulong_write(18, DEF_TIME_OF_BLOW_UNIC_NOTA_18);
+	EEPROM_ulong_write(19, DEF_TIME_OF_BLOW_UNIC_NOTA_19);
+	EEPROM_ulong_write(20, DEF_TIME_OF_BLOW_UNIC_NOTA_20);
+	EEPROM_ulong_write(21, DEF_TIME_OF_BLOW_UNIC_NOTA_21);
+	EEPROM_ulong_write(22, DEF_TIME_OF_BLOW_UNIC_NOTA_22);
+	EEPROM_ulong_write(23, DEF_TIME_OF_BLOW_UNIC_NOTA_23);
+	EEPROM_ulong_write(24, DEF_TIME_OF_BLOW_UNIC_NOTA_24);
+	
+}
+void timeOfBlowUnicNotaGetPak(){
+
+	timtOfBlowUnicNota_1 = EEPROM_ulong_read(1);
+	timtOfBlowUnicNota_2 = EEPROM_ulong_read(2);
+	timtOfBlowUnicNota_3 = EEPROM_ulong_read(3);
+	timtOfBlowUnicNota_4 = EEPROM_ulong_read(4);
+	timtOfBlowUnicNota_5 = EEPROM_ulong_read(5);
+	timtOfBlowUnicNota_6 = EEPROM_ulong_read(6);
+	timtOfBlowUnicNota_7 = EEPROM_ulong_read(7);
+	timtOfBlowUnicNota_8 = EEPROM_ulong_read(8);
+	timtOfBlowUnicNota_9 = EEPROM_ulong_read(9);
+	timtOfBlowUnicNota_10 = EEPROM_ulong_read(10);
+	timtOfBlowUnicNota_11 = EEPROM_ulong_read(11);
+	timtOfBlowUnicNota_12 = EEPROM_ulong_read(12);
+	timtOfBlowUnicNota_13 = EEPROM_ulong_read(13);
+	timtOfBlowUnicNota_14 = EEPROM_ulong_read(14);
+	timtOfBlowUnicNota_15 = EEPROM_ulong_read(15);
+	timtOfBlowUnicNota_16 = EEPROM_ulong_read(16);
+	timtOfBlowUnicNota_17 = EEPROM_ulong_read(17);
+	timtOfBlowUnicNota_18 = EEPROM_ulong_read(18);
+	timtOfBlowUnicNota_19 = EEPROM_ulong_read(19);
+	timtOfBlowUnicNota_20 = EEPROM_ulong_read(20);
+	timtOfBlowUnicNota_21 = EEPROM_ulong_read(21);
+	timtOfBlowUnicNota_22 = EEPROM_ulong_read(22);
+	timtOfBlowUnicNota_23 = EEPROM_ulong_read(23);
+	timtOfBlowUnicNota_24 = EEPROM_ulong_read(24);
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\\
 // \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\///
@@ -363,6 +465,266 @@ void bellForMenu(){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline void drawTimtOfBlowUnicNotaForMenu(int _tobKolocol = 12){
+
+	int dtobKolocol = _tobKolocol;
+	unsigned long dtobTimeOfBlow = findNotaDelayForKolokolNumber(dtobKolocol);
+	lcd.clear();
+	lcd.setCursor(0,0);
+	lcd.write(byte(5));
+	lcd.setCursor(2,0);
+	lcd.print(dtobKolocol);
+	lcd.setCursor(4,0);
+	lcd.print(" set ");
+	lcd.setCursor(9,0);
+	lcd.print(dtobTimeOfBlow);
+	lcd.setCursor(14,0);
+	lcd.print("OK");
+}
+// функция настройки длительности нот
+void timtOfBlowUnicNotaForMenu(){
+	unsigned int buttonDelay = 200;  // задержка для меню
+
+	int tobKolocol = 12;  // переменная для хранения номера колокола
+	unsigned long tobTimeOfBlow = DEF_TIME_OF_BLOW_TO_THE_BELL;  // переменная для хранения выдержки язычка
+	bool tobCikl = 1;  // переменная для управления циклом while
+	byte tobVirtualPos = 1;   // виртуальная позиция указателя меню
+	byte tobRealPos = 0;   // реальная позиция указателя меню
+	byte tobKey = 0;   // значение кнопок для обработки в цикле while
+	unsigned long tobTimeOfBlowMnojitel = 1;  // множитель для мс. в меню
+
+	drawTimtOfBlowUnicNotaForMenu();
+
+	lcd.setCursor(0,1);
+	lcd.write(byte(4));
+
+	while(tobCikl){
+		tobKey = key();
+
+
+		if(tobKey > 0){
+			if(tobKey == 1){  // s
+				if(tobVirtualPos == 1){
+					tobCikl = 0;  // выход из меню настройки времени ноты
+				}else if(tobVirtualPos == 3){
+					tobTimeOfBlowMnojitel *= 10;
+					if(tobTimeOfBlowMnojitel > 100){tobTimeOfBlowMnojitel = 1;}
+				}else if(tobVirtualPos == 4){
+					timeOfBlowUnicNotaSet(tobKolocol);
+				}
+				delay(buttonDelay);
+
+			}else if(tobKey == 2){  // l
+				tobVirtualPos --;
+				if(tobVirtualPos <= 0){tobVirtualPos = 4;}
+				delay(buttonDelay);
+			}else if(tobKey == 3){  // d
+				if(tobVirtualPos == 1){
+					tobCikl = 0;  // выход из меню настройки времени ноты
+				}else if(tobVirtualPos == 2){
+					tobKolocol --;
+					if(tobKolocol <= 0){tobKolocol = 24;}
+				}else if(tobVirtualPos == 3){
+
+					switch (tobKolocol) {
+					    case 1:
+					      timtOfBlowUnicNota_1 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 2:
+					      timtOfBlowUnicNota_2 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 3:
+					      timtOfBlowUnicNota_3 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 4:
+					      timtOfBlowUnicNota_4 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 5:
+					      timtOfBlowUnicNota_5 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 6:
+					      timtOfBlowUnicNota_6 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 7:
+					      timtOfBlowUnicNota_7 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 8:
+					      timtOfBlowUnicNota_8 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 9:
+					      timtOfBlowUnicNota_9 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 10:
+					      timtOfBlowUnicNota_10 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 11:
+					      timtOfBlowUnicNota_11 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 12:
+					      timtOfBlowUnicNota_12 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 13:
+					      timtOfBlowUnicNota_13 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 14:
+					      timtOfBlowUnicNota_14 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 15:
+					      timtOfBlowUnicNota_15 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 16:
+					      timtOfBlowUnicNota_16 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 17:
+					      timtOfBlowUnicNota_17 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 18:
+					      timtOfBlowUnicNota_18 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 19:
+					      timtOfBlowUnicNota_19 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 20:
+					      timtOfBlowUnicNota_20 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 21:
+					      timtOfBlowUnicNota_21 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 22:
+					      timtOfBlowUnicNota_22 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 23:
+					      timtOfBlowUnicNota_23 -= tobTimeOfBlowMnojitel;
+					      break;
+					    case 24:
+					      timtOfBlowUnicNota_24 -= tobTimeOfBlowMnojitel;
+					      break;
+					}
+
+					if(tobTimeOfBlow <= 0){tobTimeOfBlow = 9999;}
+				}else if(tobVirtualPos == 4){
+					timeOfBlowUnicNotaSet(tobKolocol);
+				}
+				delay(buttonDelay);
+			}else if(tobKey == 4){  // u
+				if(tobVirtualPos == 1){
+					tobCikl = 0;  // выход из меню настройки времени ноты
+				}else if(tobVirtualPos == 2){
+					tobKolocol ++;
+					if(tobKolocol > 24){tobKolocol = 1;}
+				}else if(tobVirtualPos == 3){
+
+					switch (tobKolocol) {
+					    case 1:
+					      timtOfBlowUnicNota_1 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 2:
+					      timtOfBlowUnicNota_2 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 3:
+					      timtOfBlowUnicNota_3 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 4:
+					      timtOfBlowUnicNota_4 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 5:
+					      timtOfBlowUnicNota_5 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 6:
+					      timtOfBlowUnicNota_6 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 7:
+					      timtOfBlowUnicNota_7 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 8:
+					      timtOfBlowUnicNota_8 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 9:
+					      timtOfBlowUnicNota_9 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 10:
+					      timtOfBlowUnicNota_10 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 11:
+					      timtOfBlowUnicNota_11 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 12:
+					      timtOfBlowUnicNota_12 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 13:
+					      timtOfBlowUnicNota_13 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 14:
+					      timtOfBlowUnicNota_14 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 15:
+					      timtOfBlowUnicNota_15 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 16:
+					      timtOfBlowUnicNota_16 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 17:
+					      timtOfBlowUnicNota_17 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 18:
+					      timtOfBlowUnicNota_18 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 19:
+					      timtOfBlowUnicNota_19 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 20:
+					      timtOfBlowUnicNota_20 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 21:
+					      timtOfBlowUnicNota_21 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 22:
+					      timtOfBlowUnicNota_22 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 23:
+					      timtOfBlowUnicNota_23 += tobTimeOfBlowMnojitel;
+					      break;
+					    case 24:
+					      timtOfBlowUnicNota_24 += tobTimeOfBlowMnojitel;
+					      break;
+					}
+
+					if(tobTimeOfBlow > 9999){tobTimeOfBlow = 1;}
+				}else if(tobVirtualPos == 4){
+					timeOfBlowUnicNotaSet(tobKolocol);
+				}
+				delay(buttonDelay);
+			}else if(tobKey == 5){  // r
+				tobVirtualPos ++;
+				if(tobVirtualPos > 4){tobVirtualPos = 0;}
+				delay(buttonDelay);
+			}
+
+			switch (tobVirtualPos){
+			    case 1:
+			      tobRealPos = 0;
+			      break;
+			    case 2:
+			      tobRealPos = 2;
+			      break;
+			    case 3:
+			      tobRealPos = 9;
+			      break;
+			    case 4:
+			      tobRealPos = 14;
+			      break;
+			}
+
+			drawTimtOfBlowUnicNotaForMenu(tobKolocol);
+			lcd.setCursor(tobRealPos,1);
+			lcd.write(byte(4));
+			if(tobVirtualPos == 3){
+				lcd.print(tobTimeOfBlowMnojitel);
+			}
+		}
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ФУНКЦИЯ МЕНЮ:
 void menu24(){
@@ -371,6 +733,9 @@ void menu24(){
 	lcd.print("MENU");
 	delay(1000);
 	bellForMenu();
+	timtOfBlowUnicNotaForMenu();
+	rminute = 61;
+	timeToDisplay();
 	
 	// while(1){
 	// 	lcd.clear();
@@ -386,8 +751,8 @@ void menu24(){
 
 void setup() {
 
-	//timtOfBlowUnicNotaSet();  // запись длительностей нот в EEPROM из файла "config24.h" (применяется 1 раз)
-	timtOfBlowUnicNotaGet();  // чтение длительностей нот из EEPROM в переменную (выполняется при старте МК)
+	//timeOfBlowUnicNotaSetPak();  // запись длительностей нот в EEPROM из файла "config24.h" (применяется 1 раз)
+	timeOfBlowUnicNotaGetPak();  // чтение длительностей нот из EEPROM в переменную (выполняется при старте МК)
 
   	//pinMode(LED_BUILTIN, OUTPUT);  // фиксим 13 диод
 	Serial.begin(9600);
@@ -460,18 +825,33 @@ void setup() {
 	lcd.setCursor(2,1);
 	lcd.write(byte(1));
 	lcd.print(" melodiaEX3");
-	delay(2000);
+	delay(500);
 
-	melodiaEX3();
+	//melodiaEX3();
+
+	lcd.clear();
+	lcd.print("select to MENU");
 	// инициализация комплектующих
 
-	 lcd.clear();
-	lcd.print("select to MENU");
+	// ЧАСЫ:
+	clock.begin();         // Инициализируем работу с объектом библиотеки DS3231
+//clock.enableOutput(false);// Определяем назначение вывода SQW (INT) для генерации прерываний при сработке будильников
+
+//  clock.setDateTime(__DATE__, __TIME__);      // Устанавливаем время на часах, основываясь на времени компиляции скетча
+//  clock.setDateTime(2016, 9, 15, 0, 0, 0);      // Установка времени вручную (Год, Месяц, День, Час, Минута, Секунда)
+//  setAlarm1(Дата или день, Час, Минута, Секунда, Режим)
+//clock.setAlarm1(0, 0, 0, 1, DS3231_MATCH_S);           // Устанавливаем первый будильник на срабатывание в 10 сек.
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void loop() {
+
+	timeToDisplay();  // вывод времени на дисплей
+	buttonChekForLoop();  // проверка кнопок
+	chekPerezvon();  // проверка расписания
+	//timeToSerial();
+	delay(1000);
 
   	// byte lVal = key();
   	// lcd.clear();
@@ -479,16 +859,12 @@ void loop() {
   	// lcd.print(" ");
   	// lcd.print(analogRead(A0));
   	// delay(100);
-
-	buttonChekForLoop();
-
 	// lcd.clear();
 	// lcd.setCursor(2,0);
 	// lcd.write(byte(1));
 	// lcd.print(" melodiaEX2");
 	// delay(1000);
-
-	//delay(10000);  // задержка 10 секунд
+	// delay(10000);  // задержка 10 секунд
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
