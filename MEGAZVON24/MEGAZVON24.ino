@@ -725,6 +725,133 @@ void timtOfBlowUnicNotaForMenu(){
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline void drawSpisokMelodiyForMenu(String _melodiaSTR){
+
+	String dsmMelodiaSTR = _melodiaSTR;
+	lcd.clear();
+	lcd.setCursor(0,0);
+	lcd.write(byte(1));
+	lcd.setCursor(2,0);
+	lcd.print(dsmMelodiaSTR);
+	lcd.setCursor(14,0);
+	lcd.print("OK");
+}
+// список мелодий для меню
+void spisokMelodiyForMenu(){
+
+	unsigned int buttonDelay = 200;  // задержка для меню
+	bool smCikl = 1;  // переменная для управления циклом while
+	byte smVirtualPos = 1;   // виртуальная позиция указателя меню
+	byte smRealPos = 0;   // реальная позиция указателя меню
+	byte smVirtualMelodia = 1;  // виртуальная мелодия
+	String smRealMelodia = "melodia1";   // реальная мелодия
+	byte smKey = 0;   // значение кнопок для обработки в цикле while
+
+	drawSpisokMelodiyForMenu(smRealMelodia);
+	lcd.setCursor(0,1);
+	lcd.write(byte(4));
+
+	while(smCikl){
+		smKey = key();
+		if(smKey > 0){
+
+			switch (smVirtualPos){
+			    case 1:
+			      smRealPos = 0;
+			      break;
+			    case 2:
+			      smRealPos = 2;
+			      break;
+			    case 3:
+			      smRealPos = 14;
+			      break;
+			}
+
+			switch (smVirtualMelodia) {
+					    case 1:
+					      smRealMelodia = "melodia1";
+					      break;
+					    case 2:
+					      smRealMelodia = "melodia2";
+					      break;
+					    case 3:
+					      smRealMelodia = "melodia3";
+					      break;
+					    case 4:
+					      smRealMelodia = "melodia4";
+					      break;
+					    case 5:
+					      smRealMelodia = "melodia5";
+					      break;
+					    case 6:
+					      smRealMelodia = "melodia6";
+					      break;
+					    case 7:
+					      smRealMelodia = "melodia7";
+					      break;
+					    case 8:
+					      smRealMelodia = "melodia8";
+					      break;
+					    case 9:
+					      smRealMelodia = "melodia9";
+					      break;
+					    case 10:
+					      smRealMelodia = "melodia10";
+					      break;
+					    case 11:
+					      smRealMelodia = "melodia11";
+					      break;
+					    case 12:
+					      smRealMelodia = "melodia12";
+					      break;
+					    case 13:
+					      smRealMelodia = "melodia15";
+					      break;
+					    case 14:
+					      smRealMelodia = "melodia30";
+					      break;
+					    case 15:
+					      smRealMelodia = "melodia45";
+					      break;
+					    case 16:
+					      smRealMelodia = "melodiaEX1";
+					      break;
+					    case 17:
+					      smRealMelodia = "melodiaEX2";
+					      break;
+					    case 18:
+					      smRealMelodia = "melodiaEX3";
+					      break;
+					    case 19:
+					      smRealMelodia = "melodiaRes1";
+					      break;
+					    case 20:
+					      smRealMelodia = "melodiaRes2";
+					      break;
+					    case 21:
+					      smRealMelodia = "melodiaRes3";
+					      break;
+					    case 22:
+					      smRealMelodia = "melodiaRes4";
+					      break;
+					    case 23:
+					      smRealMelodia = "melodiaRes5";
+					      break;
+					    case 24:
+					      smRealMelodia = "melodiaRes6";
+					      break;
+					    case 25:
+					      smRealMelodia = "melodiaRes7";
+					      break;
+					}
+
+			drawSpisokMelodiyForMenu(smRealMelodia);
+			lcd.setCursor(smRealPos,1);
+			lcd.write(byte(4));
+		}
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ФУНКЦИЯ МЕНЮ:
 void menu24(){
@@ -734,6 +861,7 @@ void menu24(){
 	delay(1000);
 	bellForMenu();
 	timtOfBlowUnicNotaForMenu();
+	spisokMelodiyForMenu();
 	rminute = 61;
 	timeToDisplay();
 	
