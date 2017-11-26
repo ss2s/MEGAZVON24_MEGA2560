@@ -725,6 +725,7 @@ void timtOfBlowUnicNotaForMenu(){
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// функция рисования для меню проигрывания мелодий
 inline void drawSpisokMelodiyForMenu(String _melodiaSTR){
 
 	String dsmMelodiaSTR = _melodiaSTR;
@@ -735,6 +736,88 @@ inline void drawSpisokMelodiyForMenu(String _melodiaSTR){
 	lcd.print(dsmMelodiaSTR);
 	lcd.setCursor(14,0);
 	lcd.print("OK");
+}
+
+// функция проигрывания для меню проигрывания мелодий
+void proigratMelodiuForMenu(byte _smVirtualMelodia){
+	byte pmVirtualMelodia = _smVirtualMelodia;
+	switch (pmVirtualMelodia) {
+					    case 1:
+					      melodia1();
+					      break;
+					    case 2:
+					      melodia2();
+					      break;
+					    case 3:
+					      melodia3();
+					      break;
+					    case 4:
+					      melodia4();
+					      break;
+					    case 5:
+					      melodia5();
+					      break;
+					    case 6:
+					      melodia6();
+					      break;
+					    case 7:
+					      melodia7();
+					      break;
+					    case 8:
+					      melodia8();
+					      break;
+					    case 9:
+					      melodia9();
+					      break;
+					    case 10:
+					      melodia10();
+					      break;
+					    case 11:
+					      melodia11();
+					      break;
+					    case 12:
+					      melodia12();
+					      break;
+					    case 13:
+					      melodia15();
+					      break;
+					    case 14:
+					      melodia30();
+					      break;
+					    case 15:
+					      melodia45();
+					      break;
+					    case 16:
+					      melodiaEX1();
+					      break;
+					    case 17:
+					      melodiaEX2();
+					      break;
+					    case 18:
+					      melodiaEX3();
+					      break;
+					    case 19:
+					      melodiaRes1();
+					      break;
+					    case 20:
+					      melodiaRes2();
+					      break;
+					    case 21:
+					      melodiaRes3();
+					      break;
+					    case 22:
+					      melodiaRes4();
+					      break;
+					    case 23:
+					      melodiaRes5();
+					      break;
+					    case 24:
+					      melodiaRes6();
+					      break;
+					    case 25:
+					      melodiaRes7();
+					      break;
+					}
 }
 // список мелодий для меню
 void spisokMelodiyForMenu(){
@@ -754,6 +837,47 @@ void spisokMelodiyForMenu(){
 	while(smCikl){
 		smKey = key();
 		if(smKey > 0){
+
+			if(smKey == 1){  // s
+				if(smVirtualPos == 1){
+					smCikl = 0;  // выход из меню
+				}else if(smVirtualPos == 2){
+					proigratMelodiuForMenu(smVirtualMelodia);
+				}else if(smVirtualPos == 3){
+					proigratMelodiuForMenu(smVirtualMelodia);
+				}
+				
+				delay(buttonDelay);
+
+			}else if(smKey == 2){  // l
+				smVirtualPos --;
+				if(smVirtualPos <= 0){smVirtualPos = 3;}
+				delay(buttonDelay);
+			}else if(smKey == 3){  // d
+				if(smVirtualPos == 1){
+					smCikl = 0;  // выход из меню
+				}else if(smVirtualPos == 2){
+					smVirtualMelodia --;
+					if(smVirtualMelodia <= 0){smVirtualMelodia = 25;}
+				}else if(smVirtualPos == 3){
+					proigratMelodiuForMenu(smVirtualMelodia);
+				}
+				delay(buttonDelay);
+			}else if(smKey == 4){  // u
+				if(smVirtualPos == 1){
+					smCikl = 0;  // выход из меню
+				}else if(smVirtualPos == 2){
+					smVirtualMelodia ++;
+					if(smVirtualMelodia > 25){smVirtualMelodia = 1;}
+				}else if(smVirtualPos == 3){
+					proigratMelodiuForMenu(smVirtualMelodia);
+				}
+				delay(buttonDelay);
+			}else if(smKey == 5){  // r
+				smVirtualPos ++;
+				if(smVirtualPos > 3){smVirtualPos = 0;}
+				delay(buttonDelay);
+			}
 
 			switch (smVirtualPos){
 			    case 1:
@@ -978,21 +1102,6 @@ void loop() {
 	timeToDisplay();  // вывод времени на дисплей
 	buttonChekForLoop();  // проверка кнопок
 	chekPerezvon();  // проверка расписания
-	//timeToSerial();
-	delay(1000);
-
-  	// byte lVal = key();
-  	// lcd.clear();
-  	// lcd.print(lVal);
-  	// lcd.print(" ");
-  	// lcd.print(analogRead(A0));
-  	// delay(100);
-	// lcd.clear();
-	// lcd.setCursor(2,0);
-	// lcd.write(byte(1));
-	// lcd.print(" melodiaEX2");
-	// delay(1000);
-	// delay(10000);  // задержка 10 секунд
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
