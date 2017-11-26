@@ -884,7 +884,7 @@ void spisokMelodiyForMenu(){
 			      smRealPos = 0;
 			      break;
 			    case 2:
-			      smRealPos = 2;
+			      smRealPos = 5;
 			      break;
 			    case 3:
 			      smRealPos = 14;
@@ -986,6 +986,10 @@ void menu24(){
 	bellForMenu();
 	timtOfBlowUnicNotaForMenu();
 	spisokMelodiyForMenu();
+	lcd.clear();
+	lcd.setCursor(6,0);
+	lcd.print("EXIT");
+	delay(1000);
 	rminute = 61;
 	timeToDisplay();
 	
