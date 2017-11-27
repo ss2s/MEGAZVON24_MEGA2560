@@ -160,52 +160,80 @@ void melodiaRes7(){}
 
 // мелодия1
 void melodia1(){
-	// здесь писать ноты
+	// здесь писать ноты или мелодии
 	melodiaEX3();
 }
 
 // мелодия2
-void melodia2(){}
+void melodia2(){
+	
+}
 
 // мелодия3
-void melodia3(){}
+void melodia3(){
+	
+}
 
 // мелодия4
-void melodia4(){}
+void melodia4(){
+	
+}
 
 // мелодия5
-void melodia5(){}
+void melodia5(){
+	
+}
 
-void melodia6(){}
+void melodia6(){
+	
+}
 
 // мелодия7
-void melodia7(){}
+void melodia7(){
+	
+}
 
 // мелодия8
-void melodia8(){}
+void melodia8(){
+	
+}
 
 // мелодия9
-void melodia9(){}
+void melodia9(){
+	
+}
 
 // мелодия10
-void melodia10(){}
+void melodia10(){
+	
+}
 
 // мелодия11
-void melodia11(){}
+void melodia11(){
+	
+}
 
 // мелодия12
-void melodia12(){}
+void melodia12(){
+	
+}
 
 // МЕЛОДИИ КАЖДЫЕ 15 минут:
 
 // мелодия15
-void melodia15(){}
+void melodia15(){
+	
+}
 
 // мелодия30
-void melodia30(){}
+void melodia30(){
+	
+}
 
 // мелодия45
-void melodia45(){}
+void melodia45(){
+	
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
