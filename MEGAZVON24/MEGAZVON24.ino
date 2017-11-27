@@ -730,6 +730,7 @@ inline void drawSpisokMelodiyForMenu(String _melodiaSTR){
 
 	String dsmMelodiaSTR = _melodiaSTR;
 	lcd.clear();
+	lcd.clear();
 	lcd.setCursor(0,0);
 	lcd.write(byte(1));
 	lcd.setCursor(2,0);
@@ -974,6 +975,27 @@ void spisokMelodiyForMenu(){
 			lcd.write(byte(4));
 		}
 	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// часы: время
+/*void chekVremya(){
+	DateTime = clock.getDateTime();  // Считываем c часов текущие значения даты и времени в сущность DateTime
+	rsecond = int(DateTime.second);
+	rminute = int(DateTime.minute);  //  Меняем значение в переменной отслеживания минут на текущее
+	rhour = int(DateTime.hour);
+	rday = int(DateTime.day);
+	rdayOfWeek = int(DateTime.dayOfWeek);
+	rmonth = int(DateTime.month);
+	ryear = int(DateTime.year);
+	rdayofYear = clock.dateFormat("z", DateTime);
+}*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ФУНКЦИЯ НАСТРОЙКИ ЧАСОВ ИЗ МЕНЮ
+void timeSetForMenu(){
+	chekVremya();
+	clock.setDateTime(ryear, rmonth, rday, rhour, rminute, rsecond);  // Установка времени (Год,Мес,День, Час, Мин, Сек)
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

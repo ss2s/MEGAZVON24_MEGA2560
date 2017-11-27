@@ -45,7 +45,11 @@ RTCAlarmTime Alarm1;          // Определяем сущность стру�
 void chekVremya();
 // функция отбивания времени колоколом
 void timeBellRound(int _hours = 0){
-	for(int i=0;i<_hours;i++){
+	int tbrHours = _hours;
+	if(tbrHours > 12){
+		tbrHours -= 12;
+	}
+	for(int i=0;i<tbrHours;i++){
 		nota(RELE_HOUR_BLOW, DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW, HOUR_OF_BLOW_DELAY);
 	}
 }
@@ -100,9 +104,7 @@ int chekPerezvon(){
  		flag30m = 0;
  		flag45m = 0;
 
-		if(rhour == 0){
-
-		}else if(rhour == 1){
+		if(rhour == 1){
 
 		}else if(rhour == 2){
 
@@ -111,45 +113,85 @@ int chekPerezvon(){
 		}else if(rhour == 4){
 
 		}else if(rhour == 5){
-			melodia1();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 6){
-			melodia2();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 7){
-			melodia3();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 8){
-			melodia4();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 9){
-			melodia5();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 10){
-			melodia6();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 11){
-			melodia7();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 12){
-			melodia8();
+			melodiaEX3();
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 13){
-			melodia9();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 14){
-			melodia10();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 15){
-			melodia11();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 16){
-			melodia12();
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 17){
-
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 18){
-
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 19){
-
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 20){
-
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 21){
 			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 22){
-
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 23){
-
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
+		}else if(rhour == 0){
+			melodiaEX3();
+			delay(1000);
+			timeBellRound(rhour);  // функция отбивает время колоколом
 		}
 	}else if(rminute == 15 && flag15m == 0){
 		flag0m = 0;
