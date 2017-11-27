@@ -92,19 +92,6 @@ unsigned long timtOfBlowUnicNota_23;
 unsigned long timtOfBlowUnicNota_24;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// функция макс возвращает большее из двух чисел
-unsigned long maxNumber(unsigned long _a, unsigned long _b){
-
-	unsigned long maxN = 0;
-	if (_a>_b){
-		maxN = _a;
-	}else{
-		maxN = _b;
-	}
-	return maxN;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // функция возврата номера реле по имени
 inline int remapReleNameToNumber(int _kolokolName){
@@ -354,91 +341,6 @@ unsigned long findNotaDelayForKolokolNumber(int _kolokolNumber = 0){
 	}
 	return fDelay;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// функция подбора задержки к колоколу по его имени
-unsigned long findNotaDelayForKolokolName(int _kolokolName = 0){
-	unsigned long fDelay = DEF_TIME_OF_BLOW_TO_THE_BELL;
-
-	switch(_kolokolName){
-		case RELE_K1:
-		fDelay = timtOfBlowUnicNota_1;
-		break;
-		case RELE_K2:
-		fDelay = timtOfBlowUnicNota_2;
-		break;
-		case RELE_K3:
-		fDelay = timtOfBlowUnicNota_3;
-		break;
-		case RELE_K4:
-		fDelay = timtOfBlowUnicNota_4;
-		break;
-		case RELE_K5:
-		fDelay = timtOfBlowUnicNota_5;
-		break;
-		case RELE_K6:
-		fDelay = timtOfBlowUnicNota_6;
-		break;
-		case RELE_K7:
-		fDelay = timtOfBlowUnicNota_7;
-		break;
-		case RELE_K8:
-		fDelay = timtOfBlowUnicNota_8;
-		break;
-		case RELE_K9:
-		fDelay = timtOfBlowUnicNota_9;
-		break;
-		case RELE_K10:
-		fDelay = timtOfBlowUnicNota_10;
-		break;
-		case RELE_K11:
-		fDelay = timtOfBlowUnicNota_11;
-		break;
-		case RELE_K12:
-		fDelay = timtOfBlowUnicNota_12;
-		break;
-		case RELE_K13:
-		fDelay = timtOfBlowUnicNota_13;
-		break;
-		case RELE_K14:
-		fDelay = timtOfBlowUnicNota_14;
-		break;
-		case RELE_K15:
-		fDelay = timtOfBlowUnicNota_15;
-		break;
-		case RELE_K16:
-		fDelay = timtOfBlowUnicNota_16;
-		break;
-		case RELE_K17:
-		fDelay = timtOfBlowUnicNota_17;
-		break;
-		case RELE_K18:
-		fDelay = timtOfBlowUnicNota_18;
-		break;
-		case RELE_K19:
-		fDelay = timtOfBlowUnicNota_19;
-		break;
-		case RELE_K20:
-		fDelay = timtOfBlowUnicNota_20;
-		break;
-		case RELE_K21:
-		fDelay = timtOfBlowUnicNota_21;
-		break;
-		case RELE_K22:
-		fDelay = timtOfBlowUnicNota_22;
-		break;
-		case RELE_K23:
-		fDelay = timtOfBlowUnicNota_23;
-		break;
-		case RELE_K24:
-		fDelay = timtOfBlowUnicNota_24;
-		break;
-	}
-	return fDelay;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
