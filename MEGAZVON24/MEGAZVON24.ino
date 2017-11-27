@@ -405,7 +405,7 @@ void bellForMenu(){
 
 			}else if(bfmKey == 2){  // l
 				bfmVirtualPos --;
-				if(bfmVirtualPos <= 0){bfmVirtualPos = 4;}
+				if(bfmVirtualPos < 1){bfmVirtualPos = 4;}
 				delay(buttonDelay);
 			}else if(bfmKey == 3){  // d
 				if(bfmVirtualPos == 1){
@@ -435,7 +435,7 @@ void bellForMenu(){
 				delay(buttonDelay);
 			}else if(bfmKey == 5){  // r
 				bfmVirtualPos ++;
-				if(bfmVirtualPos > 4){bfmVirtualPos = 0;}
+				if(bfmVirtualPos > 4){bfmVirtualPos = 1;}
 				delay(buttonDelay);
 			}
 
@@ -472,6 +472,7 @@ inline void drawTimtOfBlowUnicNotaForMenu(int _tobKolocol = 12){
 	lcd.clear();
 	lcd.setCursor(0,0);
 	lcd.write(byte(5));
+	lcd.write(byte(0));
 	lcd.setCursor(2,0);
 	lcd.print(dtobKolocol);
 	lcd.setCursor(4,0);
@@ -516,7 +517,7 @@ void timtOfBlowUnicNotaForMenu(){
 
 			}else if(tobKey == 2){  // l
 				tobVirtualPos --;
-				if(tobVirtualPos <= 0){tobVirtualPos = 4;}
+				if(tobVirtualPos < 1){tobVirtualPos = 4;}
 				delay(buttonDelay);
 			}else if(tobKey == 3){  // d
 				if(tobVirtualPos == 1){
@@ -696,7 +697,7 @@ void timtOfBlowUnicNotaForMenu(){
 				delay(buttonDelay);
 			}else if(tobKey == 5){  // r
 				tobVirtualPos ++;
-				if(tobVirtualPos > 4){tobVirtualPos = 0;}
+				if(tobVirtualPos > 4){tobVirtualPos = 1;}
 				delay(buttonDelay);
 			}
 
@@ -852,7 +853,7 @@ void spisokMelodiyForMenu(){
 
 			}else if(smKey == 2){  // l
 				smVirtualPos --;
-				if(smVirtualPos <= 0){smVirtualPos = 3;}
+				if(smVirtualPos < 1){smVirtualPos = 3;}
 				delay(buttonDelay);
 			}else if(smKey == 3){  // d
 				if(smVirtualPos == 1){
@@ -876,7 +877,7 @@ void spisokMelodiyForMenu(){
 				delay(buttonDelay);
 			}else if(smKey == 5){  // r
 				smVirtualPos ++;
-				if(smVirtualPos > 3){smVirtualPos = 0;}
+				if(smVirtualPos > 3){smVirtualPos = 1;}
 				delay(buttonDelay);
 			}
 
@@ -978,25 +979,206 @@ void spisokMelodiyForMenu(){
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// часы: время
-/*void chekVremya(){
-	DateTime = clock.getDateTime();  // Считываем c часов текущие значения даты и времени в сущность DateTime
-	rsecond = int(DateTime.second);
-	rminute = int(DateTime.minute);  //  Меняем значение в переменной отслеживания минут на текущее
-	rhour = int(DateTime.hour);
-	rday = int(DateTime.day);
-	rdayOfWeek = int(DateTime.dayOfWeek);
-	rmonth = int(DateTime.month);
-	ryear = int(DateTime.year);
-	rdayofYear = clock.dateFormat("z", DateTime);
-}*/
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ФУНКЦИЯ НАСТРОЙКИ ЧАСОВ ИЗ МЕНЮ
-void timeSetForMenu(){
-	chekVremya();
-	clock.setDateTime(ryear, rmonth, rday, rhour, rminute, rsecond);  // Установка времени (Год,Мес,День, Час, Мин, Сек)
+// функция рисования для функции настройки даты из меню
+inline void drawDataSetForMenu(int _day = 27, int _month = 11, int _year =2017){
+
+	int ddsDay = _day;
+	int ddsMonth = _month;
+	int ddsYear = _year;
+
+	lcd.clear();
+	lcd.setCursor(0,0);
+	lcd.write(byte(5));
+	lcd.setCursor(2,0);
+	lcd.print(ddsDay);
+	lcd.setCursor(5,0);
+	lcd.print(ddsMonth);
+	lcd.setCursor(8,0);
+	lcd.print(ddsYear);
+	lcd.setCursor(14,0);
+	lcd.print("OK");
 }
+
+// функция рисования для функции настройки часов из меню
+inline void drawTimeSetForMenu(int _hour = 18, int _minute = 30, int _second = 30){
+
+	int dtsHour = _hour;
+	int dtsMinute = _minute;
+	int dtsSecond = _second;
+
+	lcd.clear();
+	lcd.setCursor(0,0);
+	lcd.write(byte(5));
+	lcd.setCursor(2,0);
+	lcd.print(dtsHour);
+	lcd.setCursor(5,0);
+	lcd.print(dtsMinute);
+	lcd.setCursor(8,0);
+	lcd.print(dtsSecond);
+	lcd.setCursor(12,0);
+	lcd.print("SAVE");
+}
+
+void timeSetForMenu(){
+
+	// rday;
+	// rmonth;
+	// ryear;
+	// rhour;
+	// rminute;
+	// rsecond;
+
+	unsigned int buttonDelay = 200;  // задержка для меню
+	bool tsCikl = 1;  // переменная для управления циклом while
+	byte tsVirtualPos = 1;   // виртуальная позиция указателя меню
+	byte tsRealPos = 0;   // реальная позиция указателя меню
+	byte tsKey = 0;   // значение кнопок для обработки в цикле while
+
+	chekVremya();
+	drawDataSetForMenu(rday, rmonth, ryear);
+	lcd.setCursor(0,1);
+	lcd.write(byte(4));
+
+	while(tsCikl){
+
+		tsKey = key();
+		if(tsKey > 0){
+
+		    if(tsKey == 1){  // s
+		    	if(tsVirtualPos == 1){
+		    		tsVirtualPos = 6;
+		    	}else if(tsVirtualPos == 5){
+		    		tsVirtualPos = 6;
+		    	}else if(tsVirtualPos == 6){
+		    		tsCikl = 0;
+		    	}else if(tsVirtualPos == 10){
+		    		clock.setDateTime(ryear, rmonth, rday, rhour, rminute, rsecond);  // Установка времени (Г,М,Д,Ч,М,С)
+		    		tsCikl = 0;
+		    	}
+		    	delay(buttonDelay);
+
+		    }else if(tsKey == 2){  // l
+		    	tsVirtualPos --;
+		    	if(tsVirtualPos < 1){tsVirtualPos = 1;}
+		    	delay(buttonDelay);
+
+		    }else if(tsKey == 3){  // d
+		    	if(tsVirtualPos == 1){
+		    		tsVirtualPos = 6;
+		    	}else if(tsVirtualPos == 2){
+		    		rday --;
+		    		if(rday<1){rday = 31;}
+		    	}else if(tsVirtualPos == 3){
+		    		rmonth --;
+		    		if(rmonth<1){rmonth = 12;}
+		    	}else if(tsVirtualPos == 4){
+		    		ryear --;
+		    		if(ryear<2000){ryear = 2222;}
+		    	}else if(tsVirtualPos == 5){
+		    		tsVirtualPos = 6;
+		    	}else if(tsVirtualPos == 6){
+		    		tsCikl = 0;
+		    	}else if(tsVirtualPos == 7){
+		    		rhour --;
+		    		if(rhour<0){rhour = 23;}
+		    	}else if(tsVirtualPos == 8){
+		    		rminute --;
+		    		if(rminute<0){rminute = 59;}
+		    	}else if(tsVirtualPos == 9){
+		    		rsecond --;
+		    		if(rsecond<0){rsecond = 59;}
+		    	}else if(tsVirtualPos == 10){
+		    		clock.setDateTime(ryear, rmonth, rday, rhour, rminute, rsecond);  // Установка времени (Г,М,Д,Ч,М,С)
+		    		tsCikl = 0;
+		    	}
+		    	delay(buttonDelay);
+
+		    }else if(tsKey == 4){  // u
+		    	if(tsVirtualPos == 1){
+		    		tsVirtualPos = 6;
+		    	}else if(tsVirtualPos == 2){
+		    		rday ++;
+		    		if(rday>31){rday = 1;}
+		    	}else if(tsVirtualPos == 3){
+		    		rmonth ++;
+		    		if(rmonth>12){rmonth = 1;}
+		    	}else if(tsVirtualPos == 4){
+		    		ryear ++;
+		    		if(ryear>2222){ryear = 2000;}
+		    	}else if(tsVirtualPos == 5){
+		    		tsVirtualPos = 6;
+		    	}else if(tsVirtualPos == 6){
+		    		tsCikl = 0;
+		    	}else if(tsVirtualPos == 7){
+		    		rhour ++;
+		    		if(rhour>23){rhour = 0;}
+		    	}else if(tsVirtualPos == 8){
+		    		rminute ++;
+		    		if(rminute>59){rminute = 0;}
+		    	}else if(tsVirtualPos == 9){
+		    		rsecond ++;
+		    		if(rsecond>59){rsecond = 0;}
+		    	}else if(tsVirtualPos == 10){
+		    		clock.setDateTime(ryear, rmonth, rday, rhour, rminute, rsecond);  // Установка времени (Г,М,Д,Ч,М,С)
+		    		tsCikl = 0;
+		    	}
+		    	delay(buttonDelay);
+		    	
+		    }else if(tsKey == 5){  // r
+		    	tsVirtualPos ++;
+		    	if(tsVirtualPos > 10){tsVirtualPos = 10;}
+		    }
+		    delay(buttonDelay);
+
+		    switch (tsVirtualPos){
+			    case 1:
+			      tsRealPos = 0;
+			      break;
+			    case 2:
+			      tsRealPos = 2;
+			      break;
+			    case 3:
+			      tsRealPos = 5;
+			      break;
+			    case 4:
+			      tsRealPos = 9;
+			      break;
+			    case 5:
+			      tsRealPos = 14;
+			      break;
+			    case 6:
+			      tsRealPos = 0;
+			      break;
+			    case 7:
+			      tsRealPos = 2;
+			      break;
+			    case 8:
+			      tsRealPos = 5;
+			      break;
+			    case 9:
+			      tsRealPos = 8;
+			      break;
+			    case 10:
+			      tsRealPos = 13;
+			      break;
+			}
+
+			if(tsVirtualPos<=5){
+				drawDataSetForMenu(rday, rmonth, ryear);
+			}else if(tsVirtualPos>5){
+				drawTimeSetForMenu(rhour, rminute, rsecond);
+			}
+			lcd.setCursor(tsRealPos,1);
+			lcd.write(byte(4));
+			if(tsVirtualPos == 5){
+				lcd.write(byte(3));
+			}
+		}
+	}
+}
+	//clock.setDateTime(ryear, rmonth, rday, rhour, rminute, rsecond);  // Установка времени (Год,Мес,День, Час, Мин, Сек)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ФУНКЦИЯ МЕНЮ:
@@ -1008,6 +1190,7 @@ void menu24(){
 	bellForMenu();
 	timtOfBlowUnicNotaForMenu();
 	spisokMelodiyForMenu();
+	timeSetForMenu();
 	lcd.clear();
 	lcd.setCursor(6,0);
 	lcd.print("EXIT");
