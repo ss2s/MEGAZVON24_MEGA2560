@@ -203,7 +203,10 @@ void EEPROM_ulong_write(int fAddr, unsigned long data) // запись в EEPROM
 void timeOfBlowUnicNotaSet(int _kolokol){
 	int tobKolokol = _kolokol;
 	unsigned long tobTimtOfBlowUnicNota = findNotaDelayForKolokolNumber(tobKolokol);
-	EEPROM_ulong_write(tobKolokol, tobTimtOfBlowUnicNota);
+	unsigned long readTobTimtOfBlowUnicNota = EEPROM_ulong_read(tobKolokol);
+	if(readTobTimtOfBlowUnicNota != tobTimtOfBlowUnicNota){
+		EEPROM_ulong_write(tobKolokol, tobTimtOfBlowUnicNota);
+	}
 }
 
 unsigned long timeOfBlowUnicNotaGet(int _kolokol){
