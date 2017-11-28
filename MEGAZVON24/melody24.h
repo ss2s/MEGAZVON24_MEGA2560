@@ -215,17 +215,17 @@ void melodia12(){
 
 // мелодия15
 void melodia15(){
-	melodiaEX3();
+	//melodiaEX3();
 }
 
 // мелодия30
 void melodia30(){
-	melodiaEX3();
+	//melodiaEX3();
 }
 
 // мелодия45
 void melodia45(){
-	melodiaEX3();
+	//melodiaEX3();
 }
 
 
