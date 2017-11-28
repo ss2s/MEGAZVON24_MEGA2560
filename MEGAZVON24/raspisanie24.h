@@ -9,25 +9,14 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ЧАСЫ DS3231:
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <Wire.h>         // библиотека I2C
-#include "DS3231.h"       // библиотека часов
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#include "Arduino.h"
-//#include "config24.h"
-//#include "nota24.h"
-//#include "melody24.h"
 
-// ФАЙЛ РАСПИСАНИЯ:
-// здесь настраивается расписание
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+bool flagManualPR = 0;
 bool flag0m = 0;
 bool flag15m = 0;
 bool flag30m = 0;
 bool flag45m = 0;
 bool fllag12h = 0;
+bool prazdnik = 1;
 int rsecond;
 int rminute = 61;  // Переменная для отслеживания изменения минут
 int rhour;         // переменная для хранения часов
@@ -46,22 +35,15 @@ void chekVremya();
 // функция отбивания времени колоколом
 void timeBellRound(int _hours = 0){
 	int tbrHours = _hours;
+	int tbrNomerRele = remapReleNameToNumber(RELE_HOUR_BLOW);
 	if(tbrHours > 12){
 		tbrHours -= 12;
 	}
 	for(int i=0;i<tbrHours;i++){
-		nota(RELE_HOUR_BLOW, DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW, HOUR_OF_BLOW_DELAY);
+		nota(tbrNomerRele, DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW, HOUR_OF_BLOW_DELAY);
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void timeToSerial(){
-	DateTime = clock.getDateTime();            // Считываем c часов текущие значения даты и времени в сущность DateTime
-  	Alarm1 = clock.getAlarm1();       // Считываем c первого будильника текущие настройки даты и времени в сущность Alarm1
-  	Serial.println(clock.dateFormat("d.m.Y H:i:s - l   ", DateTime));// Определяем формат вывода даты и выводим на монитор
-  	Serial.println("Temperature: " + String(clock.readTemperature()));              // Выводим значения температуры
-  	Serial.println("Alarm: " + String(clock.dateFormat("__ __:__:s", Alarm1)));  // Выводим настройки будильника                                
-  	Serial.println();                                                    // Перевод строки
-}
 
 void timeToDisplay(){
 	DateTime = clock.getDateTime();            // Считываем c часов текущие значения даты и времени в сущность DateTime
@@ -74,8 +56,20 @@ void timeToDisplay(){
 		lcd.print(String(clock.readTemperature()));
 
 		chekVremya();
-		lcd.print("   ");
-		lcd.print(rdayofYear);
+		lcd.setCursor(15,1);
+		lcd.print(rdayOfWeek);
+		if(flagManualPR == 0){
+		if(rdayOfWeek>5){
+			prazdnik = 1;
+		}else{
+			prazdnik = 0;
+		}
+	}
+		
+	}
+	if(prazdnik == 1){
+		lcd.setCursor(12,1);
+		lcd.write(byte(2));
 	}
 }
 
@@ -94,11 +88,20 @@ void chekVremya(){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void budnichniy(){}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // РАСПИСАНИЕ:
 
 int chekPerezvon(){
 	chekVremya();
+	if(flagManualPR == 0){
+		if(rdayOfWeek>5){
+			prazdnik = 1;
+		}else{
+			prazdnik = 0;
+		}
+	}
 	if(rminute == 0 && flag0m == 0){
 		flag0m = 1;
  		flag15m = 0;
@@ -106,7 +109,8 @@ int chekPerezvon(){
  		flag45m = 0;
 
 		if(rhour == 1){
-
+			flagManualPR = 0;
+			if(rdayOfWeek>5){prazdnik = 1;}else{prazdnik = 0;}
 		}else if(rhour == 2){
 
 		}else if(rhour == 3){
@@ -218,6 +222,9 @@ int chekPerezvon(){
 
  		melodia45();
 
+ 		if(rhour == 20 && prazdnik == 0){
+ 			budnichniy();
+ 		}
 	}
 }
 
