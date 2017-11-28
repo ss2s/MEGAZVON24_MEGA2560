@@ -100,6 +100,7 @@ void budnichniy(){  // будничный колокол
 	bool bCikl = 1;
 	int bKolokol = remapReleNameToNumber(RELE_BUDNICNIY);
 	unsigned long tobBKolokol = findNotaDelayForKolokolNumber(bKolokol);
+	unsigned int bHobDelay = BUDNICNIY_DELAY_DEF / 2;
 
 	lcd.clear();
 	lcd.setCursor(2,0);
@@ -109,7 +110,13 @@ void budnichniy(){  // будничный колокол
 	delay(1000);
 
 	while(bCikl){
-		nota(bCikl, tobBKolokol, BUDNICNIY_DELAY_DEF);
+		nota(bKolokol, tobBKolokol, bHobDelay);
+		lcd.clear();
+		lcd.setCursor(2,0);
+		lcd.write(byte(0));
+		lcd.setCursor(4,0);
+		lcd.print("budnicniy");
+		delay(bHobDelay);
 		chekVremya();
 		if(rminute == 0){
 			bCikl = 0;
@@ -481,6 +488,8 @@ void chekPerezvon(){
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}
+		rminute = 61;
+		timeToDisplay();
 	}else if(rminute == 15 && flag15m == 0){
 		lcd.clear();
 		lcd.setCursor(6,1);
@@ -498,6 +507,8 @@ void chekPerezvon(){
  		flag15m = 1;
  		flag30m = 0;
  		flag45m = 0;
+ 		rminute = 61;
+		timeToDisplay();
 	}else if(rminute == 30 && flag30m == 0){
 		lcd.clear();
 		lcd.setCursor(6,1);
@@ -515,6 +526,8 @@ void chekPerezvon(){
  		flag15m = 0;
  		flag30m = 1;
  		flag45m = 0;
+ 		rminute = 61;
+		timeToDisplay();
 	}else if(rminute == 45 && flag45m == 0){
 		lcd.clear();
 		lcd.setCursor(6,1);
@@ -536,7 +549,13 @@ void chekPerezvon(){
  		#if BUDNICNIY_ENABLE == 1
  		if(rhour == 8 && prazdnik == 0){
  			budnichniy();
+ 		}else{
+ 			rminute = 61;
+			timeToDisplay();
  		}
+ 		#else
+ 			rminute = 61;
+			timeToDisplay();
  		#endif
 	}
 }

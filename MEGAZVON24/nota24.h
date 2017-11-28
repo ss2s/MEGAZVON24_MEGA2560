@@ -473,9 +473,13 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS2 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo2");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);
@@ -528,9 +532,15 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS3 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo3");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
+	lcd.print(" ");
+	lcd.print(kNumber3);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);
@@ -594,9 +604,17 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS4 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo4");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
+	lcd.print(" ");
+	lcd.print(kNumber3);
+	lcd.print(" ");
+	lcd.print(kNumber4);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);
@@ -671,9 +689,19 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS5 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo5");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
+	lcd.print(" ");
+	lcd.print(kNumber3);
+	lcd.print(" ");
+	lcd.print(kNumber4);
+	lcd.print(" ");
+	lcd.print(kNumber5);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);
@@ -760,9 +788,21 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS6 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo6");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
+	lcd.print(" ");
+	lcd.print(kNumber3);
+	lcd.print(" ");
+	lcd.print(kNumber4);
+	lcd.print(" ");
+	lcd.print(kNumber5);
+	lcd.print(" ");
+	lcd.print(kNumber6);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);
@@ -860,9 +900,23 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS7 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo7");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
+	lcd.print(" ");
+	lcd.print(kNumber3);
+	lcd.print(" ");
+	lcd.print(kNumber4);
+	lcd.print(" ");
+	lcd.print(kNumber5);
+	lcd.print(" ");
+	lcd.print(kNumber6);
+	lcd.print(" ");
+	lcd.print(kNumber7);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);
@@ -971,9 +1025,25 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	bool comboDS8 = 1;
 
 	lcd.clear();
-	lcd.setCursor(3,1);
+	lcd.setCursor(3,0);
 	lcd.write(byte(0));
 	lcd.print(" combo8");
+	lcd.setCursor(0,1);
+	lcd.print(kNumber1);
+	lcd.print(" ");
+	lcd.print(kNumber2);
+	lcd.print(" ");
+	lcd.print(kNumber3);
+	lcd.print(" ");
+	lcd.print(kNumber4);
+	lcd.print(" ");
+	lcd.print(kNumber5);
+	lcd.print(" ");
+	lcd.print(kNumber6);
+	lcd.print(" ");
+	lcd.print(kNumber7);
+	lcd.print(" ");
+	lcd.print(kNumber8);
 	
 	digitalWrite(kName1, HHH);
 	digitalWrite(kName2, HHH);

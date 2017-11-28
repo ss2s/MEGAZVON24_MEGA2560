@@ -48,6 +48,11 @@ unsigned long timeOfBlowUnicNotaGet(int _kolokol);
 void timeOfBlowUnicNotaSetPak();
 void timeOfBlowUnicNotaGetPak();
 void chekPerezvon();
+void bellForMenu();
+void timtOfBlowUnicNotaForMenu();
+void spisokMelodiyForMenu();
+void timeSetForMenu();
+void menu24();
 
 #include "nota24.h"             // ноты
 #include "melody24.h"           // файл с мелодиями
@@ -423,7 +428,8 @@ void bellForMenu(){
 				delay(buttonDelay);
 			}else if(bfmKey == 4){  // u
 				if(bfmVirtualPos == 1){
-					bfmCikl = 0;  // выход из меню удара в колокол
+					delay(buttonDelay);
+					menu24();
 				}else if(bfmVirtualPos == 2){
 					bfmKolocol ++;
 					if(bfmKolocol > 24){bfmKolocol = 1;}
@@ -610,7 +616,8 @@ void timtOfBlowUnicNotaForMenu(){
 				delay(buttonDelay);
 			}else if(tobKey == 4){  // u
 				if(tobVirtualPos == 1){
-					tobCikl = 0;  // выход из меню настройки времени ноты
+					delay(buttonDelay);
+					bellForMenu();
 				}else if(tobVirtualPos == 2){
 					tobKolocol ++;
 					if(tobKolocol > 24){tobKolocol = 1;}
@@ -820,6 +827,9 @@ void proigratMelodiuForMenu(byte _smVirtualMelodia){
 					    case 25:
 					      melodiaRes7();
 					      break;
+					    case 26:
+					      budnichniy();
+					      break;
 					}
 }
 // список мелодий для меню
@@ -861,17 +871,18 @@ void spisokMelodiyForMenu(){
 					smCikl = 0;  // выход из меню
 				}else if(smVirtualPos == 2){
 					smVirtualMelodia --;
-					if(smVirtualMelodia <= 0){smVirtualMelodia = 25;}
+					if(smVirtualMelodia <= 0){smVirtualMelodia = 26;}
 				}else if(smVirtualPos == 3){
 					proigratMelodiuForMenu(smVirtualMelodia);
 				}
 				delay(buttonDelay);
 			}else if(smKey == 4){  // u
 				if(smVirtualPos == 1){
-					smCikl = 0;  // выход из меню
+					delay(buttonDelay);
+					timtOfBlowUnicNotaForMenu();
 				}else if(smVirtualPos == 2){
 					smVirtualMelodia ++;
-					if(smVirtualMelodia > 25){smVirtualMelodia = 1;}
+					if(smVirtualMelodia > 26){smVirtualMelodia = 1;}
 				}else if(smVirtualPos == 3){
 					proigratMelodiuForMenu(smVirtualMelodia);
 				}
@@ -969,6 +980,9 @@ void spisokMelodiyForMenu(){
 					      break;
 					    case 25:
 					      smRealMelodia = "melodiaRes7";
+					      break;
+					    case 26:
+					      smRealMelodia = "budnichniy";
 					      break;
 					}
 
@@ -1095,7 +1109,8 @@ void timeSetForMenu(){
 
 		    }else if(tsKey == 4){  // u
 		    	if(tsVirtualPos == 1){
-		    		tsVirtualPos = 6;
+		    		delay(buttonDelay);
+					spisokMelodiyForMenu();
 		    	}else if(tsVirtualPos == 2){
 		    		rday ++;
 		    		if(rday>31){rday = 1;}
@@ -1108,7 +1123,7 @@ void timeSetForMenu(){
 		    	}else if(tsVirtualPos == 5){
 		    		tsVirtualPos = 6;
 		    	}else if(tsVirtualPos == 6){
-		    		tsCikl = 0;
+		    		tsVirtualPos = 1;
 		    	}else if(tsVirtualPos == 7){
 		    		rhour ++;
 		    		if(rhour>23){rhour = 0;}
