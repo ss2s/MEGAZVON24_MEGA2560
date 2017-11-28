@@ -9,7 +9,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+float g3231t;
 bool flagManualPR = 0;
 bool flag0m = 0;
 bool flag15m = 0;
@@ -32,6 +32,32 @@ RTCDateTime DateTime;   // Определяем переменную DateTime, �
 RTCAlarmTime Alarm1;          // Определяем сущность структуры RTCAlarmTime (описанной в библиотеке DS3231)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void chekVremya();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///// температура ..
+float get3231Temp(){
+  byte tMSB, tLSB; 
+  float temp3231;
+
+  Wire.beginTransmission(0x68);
+  Wire.write(0x11);
+  Wire.endTransmission();
+  Wire.requestFrom(0x68, 2);
+
+  if(Wire.available()) {
+    tMSB = Wire.read(); //2's complement int portion
+    tLSB = Wire.read(); //fraction portion
+
+    temp3231 = (tMSB & B01111111); //do 2's math on Tmsb
+    temp3231 += ( (tLSB >> 6) * 0.25 ); //only care about bits 7 & 8
+  }
+  else {
+    //oh noes, no data!
+  }
+
+  return temp3231;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // функция отбивания времени колоколом
 void timeBellRound(int _hours = 0){
 	int tbrHours = _hours;
@@ -61,6 +87,8 @@ void timeToDisplay(){
 		lcd.setCursor(0,1);
 		lcd.print("temp ");
 		lcd.print(String(clock.readTemperature()));
+		//g3231t = get3231Temp();
+		//lcd.print(g3231t);
 
 		chekVremya();
 		lcd.setCursor(15,1);

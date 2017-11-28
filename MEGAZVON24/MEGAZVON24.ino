@@ -134,6 +134,18 @@ byte customCharChasi5[8] = {
 
 // ТЕХНИЧЕСКИЕ ФУНКЦИИ:
 
+// терморегулятор
+#if DEF_TEMP_ENABLE == 1
+void termoregulator(){
+	g3231t = get3231Temp();
+	if(g3231t < DEF_TEMP_ON){
+		digitalWrite(DEF_TEMP_RELE_PIN, HHH);
+	}else if(g3231t > DEF_TEMP_OFF){
+		digitalWrite(DEF_TEMP_RELE_PIN, LLL);
+	}
+}
+#endif
+
 // функция проверки кнопок
 byte key(){  // 1-723, 2-482, 3-133, 4-310, 5-0;
 	int val = analogRead(A0);
@@ -1238,6 +1250,7 @@ void setup() {
 
   	//pinMode(LED_BUILTIN, OUTPUT);  // фиксим 13 диод
 	//Serial.begin(9600);
+	Wire.begin();
 
 	// инициализация пользовательских символов
   	lcd.createChar(0, customCharBell0);
@@ -1298,6 +1311,11 @@ void setup() {
 	digitalWrite(RELE_K23, LLL);
 	digitalWrite(RELE_K24, LLL);
 
+	#if DEF_TEMP_ENABLE == 1
+	pinMode(DEF_TEMP_RELE_PIN, OUTPUT);
+	digitalWrite(DEF_TEMP_RELE_PIN, LLL);
+	#endif
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	#if DEF_YARKOST_DISPLEYA_DEF <= 255
@@ -1318,6 +1336,9 @@ void loop() {
 	timeToDisplay();  // вывод времени на дисплей
 	buttonChekForLoop();  // проверка кнопок
 	chekPerezvon();  // проверка расписания
+	#if DEF_TEMP_ENABLE == 1
+	termoregulator();
+	#endif
 	delay(200);
 }
 
