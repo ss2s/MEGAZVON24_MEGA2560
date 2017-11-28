@@ -47,7 +47,6 @@ void timeOfBlowUnicNotaSet(int _kolokol);
 unsigned long timeOfBlowUnicNotaGet(int _kolokol);
 void timeOfBlowUnicNotaSetPak();
 void timeOfBlowUnicNotaGetPak();
-
 void chekPerezvon();
 
 #include "nota24.h"             // ноты
@@ -1023,14 +1022,12 @@ inline void drawTimeSetForMenu(int _hour = 18, int _minute = 30, int _second = 3
 }
 
 void timeSetForMenu(){
-
 	// rday;
 	// rmonth;
 	// ryear;
 	// rhour;
 	// rminute;
 	// rsecond;
-
 	unsigned int buttonDelay = 200;  // задержка для меню
 	bool tsCikl = 1;  // переменная для управления циклом while
 	byte tsVirtualPos = 1;   // виртуальная позиция указателя меню
@@ -1205,6 +1202,7 @@ void menu24(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
+
 	#if DEF_TIME_OF_BLOW_UNIC_NOTA_ENABLE == 1
 	timeOfBlowUnicNotaSetPak();  // запись длительностей нот в EEPROM из файла "config24.h" (применяется 1 раз)
 	#endif
@@ -1284,16 +1282,15 @@ void setup() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	#if DEF_YARKOST_DISPLEYA_DEF <= 255
+		analogWrite(DEF_LCD_LIGHT_PIN, DEF_YARKOST_DISPLEYA_DEF);  // установка яркости
+	#endif
+
 	lcd.begin(16, 2);
     lcd.clear();
     lcd.clear();
 	lcd.print("   MEGAZVON24");
 	delay(500);
-
-	lcd.clear();
-	lcd.print("select to MENU");
-	// инициализация комплектующих
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1303,7 +1300,7 @@ void loop() {
 	timeToDisplay();  // вывод времени на дисплей
 	buttonChekForLoop();  // проверка кнопок
 	chekPerezvon();  // проверка расписания
-	//delay(200);
+	delay(200);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

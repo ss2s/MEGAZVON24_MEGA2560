@@ -35,12 +35,19 @@ void chekVremya();
 // функция отбивания времени колоколом
 void timeBellRound(int _hours = 0){
 	int tbrHours = _hours;
-	int tbrNomerRele = remapReleNameToNumber(RELE_HOUR_BLOW);
+	int tbrKolokol = remapReleNameToNumber(RELE_HOUR_BLOW);
+	unsigned long tbrKolokolDelay = findNotaDelayForKolokolNumber(tbrKolokol);
+	unsigned int tbrHobDelay = HOUR_OF_BLOW_DELAY / 2;
 	if(tbrHours > 12){
 		tbrHours -= 12;
 	}
 	for(int i=0;i<tbrHours;i++){
-		nota(tbrNomerRele, DEF_TIME_OF_BLOW_UNIC_NOTA_HOUR_OF_BLOW, HOUR_OF_BLOW_DELAY);
+		lcd.clear();
+		lcd.setCursor(7,1);
+		lcd.write(byte(5));
+		lcd.print(i+1);
+		delay(tbrHobDelay);
+		nota(tbrKolokol, tbrKolokolDelay, tbrHobDelay);
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,9 +106,10 @@ void budnichniy(){  // будничный колокол
 	lcd.write(byte(0));
 	lcd.setCursor(4,0);
 	lcd.print("budnicniy");
+	delay(1000);
 
 	while(bCikl){
-		nota(bCikl, tobBKolokol, 3000);
+		nota(bCikl, tobBKolokol, BUDNICNIY_DELAY_DEF);
 		chekVremya();
 		if(rminute == 0){
 			bCikl = 0;
@@ -131,212 +139,405 @@ void chekPerezvon(){
  		flag45m = 0;
 
 		if(rhour == 1){
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("1H");
+			delay(1000);
+			lcd.clear();
+
+
 			flagManualPR = 0;
 			if(rdayOfWeek>5){prazdnik = 1;}else{prazdnik = 0;}
 		}else if(rhour == 2){
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("2H");
+			delay(1000);
+			lcd.clear();
+
 
 		}else if(rhour == 3){
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("3H");
+			delay(1000);
+			lcd.clear();
+
 
 		}else if(rhour == 4){
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("4H");
+			delay(1000);
+			lcd.clear();
+
 
 		}else if(rhour == 5){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("5H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 5 ЧАСОВ  // МЕЛОДИЯ ДЛЯ 5 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 6){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("6H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 6 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 7){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("7H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 7 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 8){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("8H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 8 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 9){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("9H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 9 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 10){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("10H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 10 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 11){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("11H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 11 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 12){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("12H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 12 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 13){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("13H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 13 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 14){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("14H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 14 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 15){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("15H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 15 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 16){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("16H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 16 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 17){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("17H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 17 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 18){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("18H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 18 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 19){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("19H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 19 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 20){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("20H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 20 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 21){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("21H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 21 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 22){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("22H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 22 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 23){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("23H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 23 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}else if(rhour == 0){
-			melodiaEX3();
+			lcd.clear();
+			lcd.setCursor(6,1);
+			lcd.write(byte(1));
+			lcd.setCursor(8,1);
+			lcd.print("24H");
+			delay(1000);
+			lcd.clear();
+
+
+			melodiaEX3();  // МЕЛОДИЯ ДЛЯ 24 ЧАСОВ
+
+
 			delay(1000);
 			timeBellRound(rhour);  // функция отбивает время колоколом
 		}
 	}else if(rminute == 15 && flag15m == 0){
+		lcd.clear();
+		lcd.setCursor(6,1);
+		lcd.write(byte(1));
+		lcd.setCursor(8,1);
+		lcd.print("15M");
+		delay(1000);
+		lcd.clear();
+
+
+ 		melodia15();  // МЕЛОДИЯ ДЛЯ 15 МИНУТ
+
+
 		flag0m = 0;
  		flag15m = 1;
  		flag30m = 0;
  		flag45m = 0;
-
- 		melodia15();
-
 	}else if(rminute == 30 && flag30m == 0){
+		lcd.clear();
+		lcd.setCursor(6,1);
+		lcd.write(byte(1));
+		lcd.setCursor(8,1);
+		lcd.print("30M");
+		delay(1000);
+		lcd.clear();
+
+
+ 		melodia30();  // МЕЛОДИЯ ДЛЯ 30 МИНУТ
+
+
 		flag0m = 0;
  		flag15m = 0;
  		flag30m = 1;
  		flag45m = 0;
-
- 		melodia30();
-
 	}else if(rminute == 45 && flag45m == 0){
+		lcd.clear();
+		lcd.setCursor(6,1);
+		lcd.write(byte(1));
+		lcd.setCursor(8,1);
+		lcd.print("45M");
+		delay(1000);
+		lcd.clear();
+
+
+ 		melodia45();  // МЕЛОДИЯ ДЛЯ 45 МИНУТ
+
+
 		flag0m = 0;
  		flag15m = 0;
  		flag30m = 0;
  		flag45m = 1;
 
- 		melodia45();
-
  		#if BUDNICNIY_ENABLE == 1
- 		if(rhour == 20 && prazdnik == 0){
+ 		if(rhour == 8 && prazdnik == 0){
  			budnichniy();
  		}
  		#endif
 	}
 }
 
-int chasZvona(){}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// дополнительные функции расписания:
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-Date formats (Day)
-------------------
-
- * d : Day of the month, 2 digits with leading zeros (01 to 31)
- * D : A textual representation of a day, three letters (Mon through Sun)
- * j : Day of the month without leading zeros (1 to 31)
- * l : A full textual representation of the day of the week (Sunday through Saturday)
- * N : ISO-8601 numeric representation of the day of the week (1 for Monday through 7 for Sunday)
- * S : English ordinal suffix for the day of the month, 2 characters (st, nd, rd or th. Works well with j)
- * w : Numeric representation of the day of the week (0 for Sunday through 6 for Saturday)
- * z : The day of the year (0 through 365)
-
-Date formats (Month)
---------------------
-
- * F : A full textual representation of a month, such as January or March (January through December)
- * m : Numeric representation of a month, with leading zeros (01 through 12)
- * M : A short textual representation of a month, three letters (Jan through Dec)
- * n : Numeric representation of a month, without leading zeros (1 through 12)
- * t : Number of days in the given month (28 through 31)
-
-Date formats (Year)
--------------------
-
- * L : Whether it's a leap year (1 if it is a leap year, 0 otherwise)
- * Y : A full numeric representation of a year, 4 digits (Examples: 1999 or 2003)
- * y : A two digit representation of a year (Examples: 99 or 03)
-
-Date formats (Time)
--------------------
-
- * a : Lowercase Ante meridiem and Post meridiem (am or pm)
- * A : Uppercase Ante meridiem and Post meridiem (AM or PM)
- * g : 2-hour format of an hour without leading zeros (1 through 12)
- * G : 24-hour format of an hour without leading zeros (0 through 23)
- * h : 12-hour format of an hour with leading zeros (01 through 12)
- * H : 24-hour format of an hour with leading zeros (00 through 23)
- * i : Minutes with leading zeros (00 to 59)
- * s : Seconds, with leading zeros (00 through 59)
-
-Dare formats (Full Date/Time)
------------------------------
-
- * U : Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)
-
-
-
-Alarm modes:
------------------------------
-  Set Alarm - Every second.
-  DS3231_EVERY_SECOND is available only on Alarm1.
-  setAlarm1(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm1(0, 0, 0, 0, DS3231_EVERY_SECOND);
-
-  Set Alarm - Every full minute.
-  DS3231_EVERY_MINUTE is available only on Alarm2.
-  setAlarm2(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm2(0, 0, 0, 0, DS3231_EVERY_MINUTE);
-  
-  Set Alarm1 - Every 20s in each minute
-  setAlarm1(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm1(0, 0, 0, 20, DS3231_MATCH_S);
-
-  Set Alarm2 - Every 01m in each hour
-  setAlarm2(Date or Day, Hour, Minute, Mode, Armed = true)
-  clock.setAlarm2(0, 0, 1,     DS3231_MATCH_M);
-
-  Set Alarm - Every 01m:25s in each hour
-  setAlarm1(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm1(0, 0, 1, 25, DS3231_MATCH_M_S);
-
-  Set Alarm - Every 01h:10m:30s in each day
-  setAlarm1(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm1(0, 1, 10, 30, DS3231_MATCH_H_M_S);
-
-  Set Alarm - 07h:00m:00s in 25th day in month
-  setAlarm1(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm1(25, 7, 0, 0, DS3231_MATCH_DT_H_M_S);
-
-  Set Alarm - 10h:45m:30s in every Friday (1 - Mon, 7 - Sun)
-  setAlarm1(Date or Day, Hour, Minute, Second, Mode, Armed = true)
-  clock.setAlarm1(5, 10, 40, 30, DS3231_MATCH_DY_H_M_S);
- */

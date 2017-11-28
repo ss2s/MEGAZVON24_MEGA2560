@@ -366,6 +366,7 @@ unsigned int _delayUntilNextNota = DEF_DEL_UNT_NEXT_NOTA){
 	delay(_timeOfBlowToTheBell);
 	digitalWrite(kName, LLL);
 	delay(_delayUntilNextNota);
+	lcd.clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
