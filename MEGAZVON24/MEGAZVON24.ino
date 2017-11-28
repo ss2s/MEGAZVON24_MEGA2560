@@ -48,6 +48,8 @@ unsigned long timeOfBlowUnicNotaGet(int _kolokol);
 void timeOfBlowUnicNotaSetPak();
 void timeOfBlowUnicNotaGetPak();
 
+void chekPerezvon();
+
 #include "nota24.h"             // ноты
 #include "melody24.h"           // файл с мелодиями
 #include "raspisanie24.h"       // расписание

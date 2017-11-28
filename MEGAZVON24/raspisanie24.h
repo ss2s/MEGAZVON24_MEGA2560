@@ -88,12 +88,34 @@ void chekVremya(){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void budnichniy(){}
+void budnichniy(){  // будничный колокол
+
+	bool bCikl = 1;
+	int bKolokol = remapReleNameToNumber(RELE_BUDNICNIY);
+	unsigned long tobBKolokol = findNotaDelayForKolokolNumber(bKolokol);
+
+	lcd.clear();
+	lcd.setCursor(2,0);
+	lcd.write(byte(0));
+	lcd.setCursor(4,0);
+	lcd.print("budnicniy");
+
+	while(bCikl){
+		nota(bCikl, tobBKolokol, 3000);
+		chekVremya();
+		if(rminute == 0){
+			bCikl = 0;
+		}
+	}
+
+	lcd.clear();
+	chekPerezvon();
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // РАСПИСАНИЕ:
 
-int chekPerezvon(){
+void chekPerezvon(){
 	chekVremya();
 	if(flagManualPR == 0){
 		if(rdayOfWeek>5){
@@ -222,9 +244,11 @@ int chekPerezvon(){
 
  		melodia45();
 
+ 		#if BUDNICNIY_ENABLE == 1
  		if(rhour == 20 && prazdnik == 0){
  			budnichniy();
  		}
+ 		#endif
 	}
 }
 
