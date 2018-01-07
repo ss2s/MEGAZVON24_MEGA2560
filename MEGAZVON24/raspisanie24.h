@@ -527,8 +527,10 @@ void chekPerezvon(){
 		delay(1000);
 		lcd.clear();
 
+		if(rhour <= 23 && rhour >= 5){
 
- 		melodia15();  // МЕЛОДИЯ ДЛЯ 15 МИНУТ
+ 			melodia15();  // МЕЛОДИЯ ДЛЯ 15 МИНУТ
+		}
 
 
 		flag0m = 0;
@@ -537,6 +539,7 @@ void chekPerezvon(){
  		flag45m = 0;
  		rminute = 61;
 		timeToDisplay();
+
 	}else if(rminute == 30 && flag30m == 0){
 		lcd.clear();
 		lcd.setCursor(6,1);
@@ -547,8 +550,10 @@ void chekPerezvon(){
 		lcd.clear();
 
 
- 		melodia30();  // МЕЛОДИЯ ДЛЯ 30 МИНУТ
+		if(rhour <= 23 && rhour >= 5){
 
+ 			melodia30();  // МЕЛОДИЯ ДЛЯ 30 МИНУТ
+		}
 
 		flag0m = 0;
  		flag15m = 0;
@@ -556,6 +561,7 @@ void chekPerezvon(){
  		flag45m = 0;
  		rminute = 61;
 		timeToDisplay();
+
 	}else if(rminute == 45 && flag45m == 0){
 		lcd.clear();
 		lcd.setCursor(6,1);
@@ -566,7 +572,10 @@ void chekPerezvon(){
 		lcd.clear();
 
 
- 		melodia45();  // МЕЛОДИЯ ДЛЯ 45 МИНУТ
+ 		if(rhour <= 23 && rhour >= 5){
+
+ 			melodia45();  // МЕЛОДИЯ ДЛЯ 45 МИНУТ
+		}
 
 
 		flag0m = 0;
