@@ -36,12 +36,6 @@ int bt_not = 0; // входные данные с блютуз. переменн
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void BTchek(){
-	if(flagBTonof == 1){
-		BTloop();
-	}
-}
-
 void BTloop(){
 	while(1){
 		if (Serial1.available()){
@@ -83,6 +77,12 @@ void BTloop(){
   			Serial1.print("*t"); // отправка признака строки меню
     		Serial1.println("save to file. press select to start"); // отправка строки меню
   		}*/
+	}
+}
+
+void BTchek(){
+	if(flagBTonof == 1){
+		BTloop();
 	}
 }
 
