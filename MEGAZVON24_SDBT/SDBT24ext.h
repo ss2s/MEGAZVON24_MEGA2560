@@ -8,6 +8,38 @@
         \******************************************************************************************************/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Начало функции обработки кириллических символов при выводе на монитор серийного порта
+String utf8rus(String source){     // Функция для конвертации русских символов из двубайтовой кодировки в однобайтовую
+
+  int i,k;
+  String target;
+  unsigned char n;
+  char m[2] = { '0', '\0' };
+  k = source.length(); i = 0;
+  while (i < k) {
+    n = source[i]; i++;
+ 
+    if (n >= 0xBF){
+      switch (n) {
+        case 0xD0: {
+          n = source[i]; i++;
+          if (n == 0x81) { n = 0xA8; break; }
+          if (n >= 0x90 && n <= 0xBF) n = n + 0x30;
+          break;
+        }
+        case 0xD1: {
+          n = source[i]; i++;
+          if (n == 0x91) { n = 0xB8; break; }
+          if (n >= 0x80 && n <= 0x8F) n = n + 0x70;
+          break;
+        }
+      }
+    }
+    m[0] = n; target = target + String(m); 
+  }
+  return target;
+}
+// Конец функции обработки кириллических симоволов
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int rsecond;
 int rminute = 61;  // Переменная для отслеживания изменения минут
@@ -23,6 +55,8 @@ void timeToDisplay();
 //  ТЕХНИЧЕСКИЙ РАЗДЕЛ SDBT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // функции SDBT
+#define TESTDELAY 0
+
 #define DEFMaxMasSize 100
 unsigned int masMelodiaMas [2][DEFMaxMasSize];
 
@@ -45,29 +79,108 @@ int bt_not = 0; // входные данные с блютуз. переменн
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void menuDraw(){
+	if(flagMenu == 1){
+    	Serial1.println("*t perezvon mode *"); // отправка строки меню
+    	Serial1.println("PRESS BUTTON TO PLAY"); // отправка справочной информации
+	}else if(flagMenu == 2){
+		Serial1.println("*t record new melody *"); // отправка строки меню
+    	Serial1.println("PRESS OK TO START RECORDING"); // отправка справочной информации
+	}else if(flagMenu == 3){
+		Serial1.println("*t play recorded melody *"); // отправка строки меню
+		Serial1.println("PRESS OK TO PLAY RECORDED MELODY"); // отправка справочной информации
+	}else if(flagMenu == 4){
+		Serial1.println("*t save recorded melody *"); // отправка строки меню
+		Serial1.println("PRESS OK TO SAVE RECORDED MELODY"); // отправка справочной информации
+	}else if(flagMenu == 5){
+		Serial1.println("*t res mode *"); // отправка строки меню
+	}
+}
+
 void BTloop(){
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R147G255B0*"); // отправка цвета индикатора
     flagMenu = 1;
+    menuDraw();
 	while(1){
 		if (Serial1.available()){
     		b_d = Serial1.read();  // считывает первый управляющий байт (символ'x') определяющий дальнейшие действия в переменную b_d
     
-    		if (b_d == 'n'){       // если k то нажата кнопка колокола
+    		if (b_d == ' '){       // если k то нажата кнопка колокола
     	  		bt_not = Serial1.parseInt(); //  считывает число int в переменную bt_not до первого символа
-    	  		Serial.print("n ");
-    	  		Serial.println(bt_not);
-    		}
-    		/*else if (b_d == 'e'){  // если e то неотпущена кнопка колокола
-    		}*/
-    		else if (b_d == 'd'){  // если p то отпущена кнопка колокола
-    			Serial.println("d");
+    	  		counterComboMas = 1;
+    	  		masComboMas[counterComboMas] = bt_not;
+    	  		while(1){
+    	  			if (Serial1.available()){
+    	  				b_d = Serial1.read();
+    	  				if(b_d == ' '){
+    	  					counterComboMas ++;
+    	  					masComboMas[counterComboMas] = Serial1.parseInt();
+    	  				}
+    	  				else if(b_d == '.'){
+    	  					if(counterComboMas == 1){
+    	  						nota(masComboMas[1], TESTDELAY);
+    	  						Serial.println(bt_not);
+    	  					}
+    	  					else if(counterComboMas == 2){
+    	  						combo2(masComboMas[1], masComboMas[2], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					else if(counterComboMas == 3){
+    	  						combo3(masComboMas[1], masComboMas[2], masComboMas[3], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					else if(counterComboMas == 4){
+    	  						combo4(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					else if(counterComboMas == 5){
+    	  						combo5(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					else if(counterComboMas == 6){
+    	  						combo6(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					else if(counterComboMas == 7){
+    	  						combo7(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					else if(counterComboMas == 8){
+    	  						combo8(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], masComboMas[8], TESTDELAY);
+    	  						Serial.print("combo");
+    	  						Serial.println(counterComboMas);
+    	  					}
+    	  					counterComboMas = 1;
+    	  					break;
+    	  				}
+    	  			}
+    	  		}
+
+    	  		rminute = 61;
+				timeToDisplay();
     		}
     		else if (b_d == 'S'){  // селект
     		}
     		else if (b_d == 'U'){
+    			flagMenu --;
+    			if(flagMenu < 1){
+    				flagMenu = 5;
+    			}
+    			menuDraw();
     		}
     		else if (b_d == 'D'){
+    			flagMenu ++;
+    			if(flagMenu > 5){
+    				flagMenu = 1;
+    			}
+    			menuDraw();
     		}
     		else if (b_d == 'X'){
     			flagBT = 0;
