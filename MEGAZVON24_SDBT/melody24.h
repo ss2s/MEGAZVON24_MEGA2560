@@ -172,7 +172,49 @@ void melodiaRes2(){
 	combo2(18,13,0);
 }
 // мелодияRes3
-void melodiaRes3(){}
+void melodiaRes3(){
+	float tempMelody = 1.0;  // это переменная темпа мелодии. если нужно ускорить 0.9 - 0.1.  ` замедлить 1.1 - 10.0
+
+	combo2(11,14,500*tempMelody);
+	combo2(11,14,300*tempMelody);
+	nota11(300*tempMelody);
+	nota11(300*tempMelody);
+	combo2(11,14,500*tempMelody);
+	combo2(11,14,200*tempMelody);
+	nota11(300*tempMelody);
+	nota11(300*tempMelody);
+	nota6(300*tempMelody);
+	nota7(300*tempMelody);
+	nota11(300*tempMelody);
+	nota11(100*tempMelody);
+	nota7(300*tempMelody);
+	nota6(300*tempMelody);
+	nota6(300*tempMelody);
+	nota7(300*tempMelody);
+	nota7(300*tempMelody);
+	nota6(300*tempMelody);
+	nota7(300*tempMelody);
+	nota11(300*tempMelody);
+	nota7(100*tempMelody);
+	nota7(100*tempMelody);
+	nota6(300*tempMelody);
+	nota11(300*tempMelody);
+
+	combo2(11,14,200*tempMelody);
+	nota11(200*tempMelody);
+	combo2(11,14,200*tempMelody);
+
+	nota11(200*tempMelody);
+	combo2(14,16,500*tempMelody);
+	nota15(100*tempMelody);
+	combo2(11,14,200*tempMelody);
+	nota15(300*tempMelody);
+
+	combo2(11,14,300*tempMelody);
+	nota11(200*tempMelody);
+	combo2(11,14,300*tempMelody);
+
+}
 // мелодияRes4
 void melodiaRes4(){}
 // мелодияRes5
