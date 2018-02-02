@@ -19,16 +19,6 @@ bool flag30m = 0;
 bool flag45m = 0;
 bool fllag12h = 0;
 
-int rsecond;
-int rminute = 61;  // Переменная для отслеживания изменения минут
-int rhour;         // переменная для хранения часов
-int rday;
-int rdayOfWeek;
-int rmonth;
-int ryear;
-String rdayofYear;
-String temperatureDS3231; // переменная для хранения температуры
-
 // МАСИВ С РАСПИСАНИЕМ
 byte raspisanie[32] = {1,0,0,0,0,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,1,63,64,65,1,0,66};
 // 0 разрешить почасовое расписание 1, запретить 0
@@ -311,17 +301,15 @@ void chekRaspisanie(int _CRhour, int _CRminute){
 	if(CRhour == 0){CRhour = 24;}
 
 	if(rminute == 0){
-		if(raspisanie[0] == 1){
+		if(raspisanie[0] > 0){
 			if(raspisanie[CRhour] > 0){
 				playMelodyToIndex(raspisanie[CRhour]);
 			}
 		}
-		if(raspisanie[29] == 1){
-			CRx = CRhour + 1;
-			if(CRx > 24){CRx = 1;}
-			if(raspisanie[CRhour] > 0 && raspisanie[CRx] > 0){
+		if(raspisanie[29] > 0){
+			if(raspisanie[CRhour] > 0){
 				delay(1000);
-				timeBellRound();
+				timeBellRound(CRhour);
 			}
 		}
 	}

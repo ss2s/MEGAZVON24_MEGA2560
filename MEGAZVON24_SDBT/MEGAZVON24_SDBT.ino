@@ -189,7 +189,6 @@ void buttonChekForLoop(){  // обработчик нажатий кнопок �
 		rminute = 61;
 		timeToDisplay();
 	}else if(val == 3){  // down
-		flagManualPR = 1;
 		flagBT = !flagBT;
 		rminute = 61;
 		timeToDisplay();
