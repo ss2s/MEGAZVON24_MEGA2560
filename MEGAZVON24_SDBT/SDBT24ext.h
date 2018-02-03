@@ -337,6 +337,7 @@ void BTloop(){
     		else if (b_d == 'S'){  // селект
     			if(flagMenu == 2){
     				Serial.println("0);");
+    				Serial.println("");
     				BTstartMill = 0;
     			}
     		}
