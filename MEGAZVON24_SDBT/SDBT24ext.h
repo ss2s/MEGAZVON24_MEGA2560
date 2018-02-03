@@ -67,8 +67,9 @@ byte counterComboMas = 1;
 bool flagBT = 0;
 bool flagBTonof = 0;
 
-unsigned long BTstartMill = 1UL;
-unsigned long BTstopMill = 1UL;
+unsigned long BTstartMill = 0UL;
+unsigned long BTstopMill = 0UL;
+unsigned long BTresMill = 0UL;
 
 byte flagMenu = 1;
 byte flagMenu2 = 1;
@@ -84,16 +85,17 @@ void menuDraw(){
     	Serial1.println("*t perezvon mode *"); // отправка строки меню
     	Serial1.println("PRESS BUTTON TO PLAY"); // отправка справочной информации
 	}else if(flagMenu == 2){
+		Serial1.println("*t perezvon to serial print mode *"); // отправка строки меню
+		Serial1.println("PRESS BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR. PRESS OK TO STOP PRINT"); // отправка справочной информации
+	}else if(flagMenu == 3){
 		Serial1.println("*t record new melody *"); // отправка строки меню
     	Serial1.println("PRESS OK TO START RECORDING"); // отправка справочной информации
-	}else if(flagMenu == 3){
+	}else if(flagMenu == 4){
 		Serial1.println("*t play recorded melody *"); // отправка строки меню
 		Serial1.println("PRESS OK TO PLAY RECORDED MELODY"); // отправка справочной информации
-	}else if(flagMenu == 4){
+	}else if(flagMenu == 5){
 		Serial1.println("*t save recorded melody *"); // отправка строки меню
 		Serial1.println("PRESS OK TO SAVE RECORDED MELODY"); // отправка справочной информации
-	}else if(flagMenu == 5){
-		Serial1.println("*t res mode *"); // отправка строки меню
 	}
 }
 
@@ -102,7 +104,9 @@ void BTloop(){
     Serial1.println("R147G255B0*"); // отправка цвета индикатора
     flagMenu = 1;
     menuDraw();
+
 	while(1){
+
 		if (Serial1.available()){
     		b_d = Serial1.read();  // считывает первый управляющий байт (символ'x') определяющий дальнейшие действия в переменную b_d
     
@@ -110,6 +114,7 @@ void BTloop(){
     	  		bt_not = Serial1.parseInt(); //  считывает число int в переменную bt_not до первого символа
     	  		counterComboMas = 1;
     	  		masComboMas[counterComboMas] = bt_not;
+    	  		masComboMas[0] = bt_not;
     	  		while(1){
     	  			if (Serial1.available()){
     	  				b_d = Serial1.read();
@@ -118,45 +123,208 @@ void BTloop(){
     	  					masComboMas[counterComboMas] = Serial1.parseInt();
     	  				}
     	  				else if(b_d == '.'){
-    	  					if(counterComboMas == 1){
-    	  						nota(masComboMas[1], TESTDELAY);
-    	  						Serial.println(bt_not);
+    	  					if(flagMenu == 1){  // здесь отслеживание флага меню
+    	  						if(counterComboMas == 1){
+    	  							nota(masComboMas[1], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 2){
+    	  							combo2(masComboMas[1], masComboMas[2], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 3){
+    	  							combo3(masComboMas[1], masComboMas[2], masComboMas[3], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 4){
+    	  							combo4(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 5){
+    	  							combo5(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 6){
+    	  							combo6(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 7){
+    	  							combo7(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], TESTDELAY);
+    	  						}
+    	  						else if(counterComboMas == 8){
+    	  							combo8(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], masComboMas[8], TESTDELAY);
+    	  						}
+    	  					}else if(flagMenu == 2){
+    	  						if(counterComboMas == 1){
+    	  							BTstopMill = millis();
+    	  							nota(masComboMas[1], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("nota(");
+    	  							Serial.print(bt_not);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 2){
+    	  							BTstopMill = millis();
+    	  							combo2(masComboMas[1], masComboMas[2], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 3){
+    	  							BTstopMill = millis();
+    	  							combo3(masComboMas[1], masComboMas[2], masComboMas[3], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[3]);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 4){
+    	  							BTstopMill = millis();
+    	  							combo4(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[3]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[4]);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 5){
+    	  							BTstopMill = millis();
+    	  							combo5(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[3]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[4]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[5]);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 6){
+    	  							BTstopMill = millis();
+    	  							combo6(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[3]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[4]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[5]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[6]);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 7){
+    	  							BTstopMill = millis();
+    	  							combo7(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[3]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[4]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[5]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[6]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[7]);
+    	  							Serial.print(", ");
+    	  						}
+    	  						else if(counterComboMas == 8){
+    	  							BTstopMill = millis();
+    	  							combo8(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], masComboMas[8], TESTDELAY);
+    	  							BTresMill = BTstopMill - BTstartMill;
+    	  							if(BTresMill != BTstopMill){
+    	  								Serial.print(BTresMill);
+    	  								Serial.println(");");
+    	  							}
+    	  							BTstartMill = millis();
+    	  							Serial.print("combo");
+    	  							Serial.print(counterComboMas);
+    	  							Serial.print("(");
+    	  							Serial.print(masComboMas[1]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[2]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[3]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[4]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[5]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[6]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[7]);
+    	  							Serial.print(",");
+    	  							Serial.print(masComboMas[8]);
+    	  							Serial.print(", ");
+    	  						}
     	  					}
-    	  					else if(counterComboMas == 2){
-    	  						combo2(masComboMas[1], masComboMas[2], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
-    	  					else if(counterComboMas == 3){
-    	  						combo3(masComboMas[1], masComboMas[2], masComboMas[3], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
-    	  					else if(counterComboMas == 4){
-    	  						combo4(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
-    	  					else if(counterComboMas == 5){
-    	  						combo5(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
-    	  					else if(counterComboMas == 6){
-    	  						combo6(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
-    	  					else if(counterComboMas == 7){
-    	  						combo7(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
-    	  					else if(counterComboMas == 8){
-    	  						combo8(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], masComboMas[8], TESTDELAY);
-    	  						Serial.print("combo");
-    	  						Serial.println(counterComboMas);
-    	  					}
+    	  					
     	  					counterComboMas = 1;
     	  					break;
     	  				}
@@ -167,6 +335,10 @@ void BTloop(){
 				timeToDisplay();
     		}
     		else if (b_d == 'S'){  // селект
+    			if(flagMenu == 2){
+    				Serial.println("0);");
+    				BTstartMill = 0;
+    			}
     		}
     		else if (b_d == 'U'){
     			flagMenu --;
