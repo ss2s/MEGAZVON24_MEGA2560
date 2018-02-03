@@ -85,17 +85,23 @@ void menuDraw(){
     	Serial1.println("*t perezvon mode *"); // отправка строки меню
     	Serial1.println("PRESS BUTTON TO PLAY"); // отправка справочной информации
 	}else if(flagMenu == 2){
-		Serial1.println("*t perezvon to serial print mode *"); // отправка строки меню
-		Serial1.println("PRESS BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR. PRESS OK TO STOP PRINT"); // отправка справочной информации
+		Serial1.println("*t SERIAL PRINT MODE 1 *"); // отправка строки меню
+		Serial1.println("PRESS BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR MODE 1. PRESS OK TO STOP PRINT"); // отправка справочной информации
 	}else if(flagMenu == 3){
-		Serial1.println("*t record new melody *"); // отправка строки меню
-    	Serial1.println("PRESS OK TO START RECORDING"); // отправка справочной информации
+		Serial1.println("*t SERIAL PRINT MODE 2 *"); // отправка строки меню
+		Serial1.println("PRESS BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR 	MODE 2. PRESS OK TO STOP PRINT"); // отправка справочной информации
 	}else if(flagMenu == 4){
-		Serial1.println("*t play recorded melody *"); // отправка строки меню
-		Serial1.println("PRESS OK TO PLAY RECORDED MELODY"); // отправка справочной информации
+		Serial1.println("*t RECORD NEW MELODY *"); // отправка строки меню
+    	Serial1.println("PRESS OK TO START RECORDING"); // отправка справочной информации
 	}else if(flagMenu == 5){
-		Serial1.println("*t save recorded melody *"); // отправка строки меню
+		Serial1.println("*t PLAY RECORDED MELODY *"); // отправка строки меню
+		Serial1.println("PRESS OK TO PLAY RECORDED MELODY"); // отправка справочной информации
+	}else if(flagMenu == 6){
+		Serial1.println("*t SAVE RECORDED MELODY *"); // отправка строки меню
 		Serial1.println("PRESS OK TO SAVE RECORDED MELODY"); // отправка справочной информации
+	}else if(flagMenu == 7){
+		Serial1.println("*t SETING *"); // отправка строки меню
+		Serial1.println("PRESS BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR. PRESS OK TO STOP PRINT"); // отправка справочной информации
 	}
 }
 
