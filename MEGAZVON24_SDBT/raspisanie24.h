@@ -135,7 +135,8 @@ void timeToDisplay(){
 		lcd.setCursor(12,1);
 		lcd.write(byte(2));
 	}else if(flagBT == 1){
-		lcd.setCursor(12,1);
+		lcd.setCursor(11,1);
+		lcd.print("BT");
 		lcd.write(byte(6));
 	}
 }
