@@ -33,9 +33,31 @@ String utf8rus(String source){     // Функция для конвертаци
 // Конец функции обработки кириллических симоволов
 
 void setup(){
-	
+
+  Serial.begin(115200);	
 }
 
 void loop(){
-	
+
+  char simvol;
+  int simvolRes;
+
+  if(Serial.available()){
+
+    simvol =  Serial.read();
+
+    if (isDigit(simvol)){
+      Serial.print(simvol);
+      Serial.print(utf8rus(" - это цифра "));
+      simvolRes = simvol - '0';
+      if(simvolRes >= 5){
+        Serial.print('<');
+      }
+      Serial.println(simvolRes);
+
+    }else{
+      Serial.print(simvol);
+      Serial.println(utf8rus(" - это не цифра"));
+    }
+  }
 }

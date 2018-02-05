@@ -1,3 +1,11 @@
+//	                         _______    _______    _______    _______    __            
+//                          /\  ____\  /\  ____\  /\_____ \  /\  ____\  /\ \           
+//	                        \ \ \___/  \ \ \___/  \/_____\ \ \ \ \___/  \ \ \          
+//	                         \ \ \      \ \ \       /\  ____\ \ \ \      \ \_\         
+//	                          \ \ \_____ \ \ \_____ \ \ \___/_ \ \ \_____ \/_/_        
+//	                           \ \______\ \ \______\ \ \______\ \ \______\  /\_\       
+//	                            \/______/  \/______/  \/______/  \/______/  \/_/        
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,32 +99,62 @@ void FmasMelodiaClear(){
 }
 
 void FmasMelodiaSetToFile(int _indexM){
+
 	int indexM = _indexM;
+
 	if(indexM < 1 || indexM > 40){
 		return;
 	}
+
 	String dataString = "";
+
 	for(int i=1; i < DEFMaxMasSize; i++){
+
 		if(masMelodiaMas[0][i] > 0){
-			dataString += "_";
+
 			dataString += String(masMelodiaMas[0][i]);
+			dataString += ",";
+
 			if(masMelodiaMas[1][i] > 0){
-				dataString += "*";
+
 				dataString += String(masMelodiaMas[1][i]);
 				dataString += ".";
 				dataString += "\n";
 			}
 		}else{
+
 			dataString += "!";
+
 			break;
 		}
+
+		// if(masMelodiaMas[0][i] > 0){
+
+		// 	dataString += "_";
+		// 	dataString += String(masMelodiaMas[0][i]);
+
+		// 	if(masMelodiaMas[1][i] > 0){
+
+		// 		dataString += "*";
+		// 		dataString += String(masMelodiaMas[1][i]);
+		// 		dataString += ".";
+		// 		dataString += "\n";
+		// 	}
+		// }else{
+
+		// 	dataString += "!";
+
+		// 	break;
+		// }
 	}
 
 	if (SD.exists(indexToNameFileSD(indexM))){
+
 		SD.remove(indexToNameFileSD(indexM));
 	}
 
 	dataFile = SD.open(indexToNameFileSD(indexM), FILE_WRITE);
+
  	if (dataFile){
 
  	 	dataFile.println(dataString);
@@ -127,43 +165,73 @@ void FmasMelodiaSetToFile(int _indexM){
  	 	Serial.println(indexToNameFileSD(indexM));
  	}
 
- 	// dataFile = SD.open(indexToNameFileSD(indexM));
-  // 	if (dataFile) {
+ 	dataFile = SD.open(indexToNameFileSD(indexM));
+  	if (dataFile) {
 
-  // 		Serial.println(indexToNameFileSD(indexM));
-		// Serial.println("");
+  		Serial.println(indexToNameFileSD(indexM));
+		Serial.println("");
 
-  //   	while (dataFile.available()) {
-  //     		Serial.write(dataFile.read());
-  //   	}
-  //  		dataFile.close();
-  // 	}else{
-  //   	Serial.println("error opening file for read");
-  // 	}
+    	while (dataFile.available()) {
+      		Serial.write(dataFile.read());
+    	}
+   		dataFile.close();
+  	}else{
+    	Serial.println("error opening file for read");
+  	}
 }
 
 void FmasMelodiaGetForFile(int _indexM){
+
 	int indexM = _indexM;
+	int simvolInt = 0;
+	int GMcounter = 1;
+	char simvol = 'y';
+
 	FmasMelodiaClear();
-	Serial. println(indexM);  ///////////////////////////////////////////////>>>>>>>>>
+
+	Serial. println(indexM);  //--------------------------------------------------------------------------------->>
+	Serial.println(indexToNameFileSD(indexM));
+	Serial.println("");
 
 	if (SD.exists(indexToNameFileSD(indexM))){
-			dataFile = SD.open(indexToNameFileSD(indexM));
-  		if (dataFile) {
-	
-  			Serial.println(indexToNameFileSD(indexM));
-			Serial.println("");
-	
-    		while (dataFile.available()) {
-    	  		Serial.write(dataFile.read());
+
+		dataFile = SD.open(indexToNameFileSD(indexM));
+
+  		if(dataFile){
+
+    		while(dataFile.available() && GMcounter < DEFRecordStop){
+
+
+    	  		simvol = dataFile.read();
+
+    	  		if (isDigit(simvol)){
+
+    	  			simvolInt = (simvolInt * 10) + (simvol - '0');
+    	  		}
+    	  		else if(simvol == ','){
+
+    	  			masMelodiaMas[0][GMcounter] = simvolInt;
+    	  			simvolInt = 0;
+    	  			GMcounter ++;
+    	  		}
+    	  		else if(simvol == '.'){
+    	  			GMcounter --;
+    	  			masMelodiaMas[1][GMcounter] = simvolInt;
+    	  			simvolInt = 0;
+    	  			GMcounter ++;
+    	  		}
+    	  		else if(simvol == '!'){
+
+    	  		}
     		}
+    		masMelodiaMas[0][GMcounter] = 0;
+
    			dataFile.close();
   		}else{
+
     		Serial.println("error opening file for read");
   		}
-	}
-
-	
+	}	
 }
 
 void FmasMelodiaSetLoop(){
