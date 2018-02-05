@@ -23,6 +23,9 @@
 // все нужные файлы находятся в папке с прошивкой
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <SPI.h>
+#include <SD.h>
+File dataFile;
 #include "Arduino.h"            // Arduino lib
 #include <Wire.h>               // библиотека I2C
 #include "DS3231.h"             // библиотека часов
@@ -1265,6 +1268,8 @@ void setup() {
 
 	Serial.begin(115200);
 	Serial1.begin(9600);
+	delay(50);
+
 
 	Wire.begin();
 
@@ -1344,6 +1349,16 @@ void setup() {
     lcd.clear();
 	lcd.print("   MEGAZVON24");
 	delay(500);
+	if (!SD.begin(CHIPSELEKT)) {
+    	Serial.println("initialization failed!");
+    	lcd.clear();
+		lcd.print(" SD not detected");
+		delay(5000);
+    	if(SDCHEK == 1){
+    		while(1){
+    		}
+    	}
+  	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1365,7 +1380,7 @@ void loop() {
 	termoregulator();
 	#endif
 
-	delay(200);
+	delay(100);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
