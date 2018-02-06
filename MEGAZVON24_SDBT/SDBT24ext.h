@@ -1,11 +1,4 @@
-//	                         _______    _______    _______    _______    __            
-//                          /\  ____\  /\  ____\  /\_____ \  /\  ____\  /\ \           
-//	                        \ \ \___/  \ \ \___/  \/_____\ \ \ \ \___/  \ \ \          
-//	                         \ \ \      \ \ \       /\  ____\ \ \ \      \ \_\         
-//	                          \ \ \_____ \ \ \_____ \ \ \___/_ \ \ \_____ \/_/_        
-//	                           \ \______\ \ \______\ \ \______\ \ \______\  /\_\       
-//	                            \/______/  \/______/  \/______/  \/______/  \/_/        
-//
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +20,10 @@ int ryear;
 String rdayofYear;
 String temperatureDS3231; // переменная для хранения температуры
 void timeToDisplay();
-void playMelodyToIndex(byte _index);
+void playMelodyByIndex(byte _index);
 void FmasMelodiaClear();
 void FmasMelodiaPlay();
-void playMelodyToIndex(byte _index);
+void playMelodyByIndex(byte _index);
 void menuDraw();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  ТЕХНИЧЕСКИЙ РАЗДЕЛ SDBT
@@ -38,7 +31,7 @@ void menuDraw();
 // функции SDBT
 #define TESTDELAY 0
 
-#define DEFMaxMasSize 100
+#define DEFMaxMasSize 333
 #define DEFRecordStop DEFMaxMasSize - 2
 unsigned int masMelodiaMas [2][DEFMaxMasSize];
 
@@ -58,6 +51,7 @@ bool flagPlayForMemory = 0;
 
 unsigned long BTstartMill = 0UL;
 unsigned long BTstopMill = 0UL;
+unsigned long BTstopMill2 = 0UL;
 unsigned long BTresMill = 0UL;
 
 byte flagMenu = 1;
@@ -98,11 +92,11 @@ void FmasMelodiaClear(){
 	}
 }
 
-void FmasMelodiaSetToFile(int _indexM){
+void FmasMelodiaSetToFile(int _indexM){  // ФУНКЦИЯ ЗАПИСИ МЕЛОДИИ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ В ФАЙЛ НА ФЛЭШКЕ
 
 	int indexM = _indexM;
 
-	if(indexM < 1 || indexM > 40){
+	if(indexM < 1 || indexM > 44){
 		return;
 	}
 
@@ -123,29 +117,8 @@ void FmasMelodiaSetToFile(int _indexM){
 			}
 		}else{
 
-			dataString += "!";
-
 			break;
 		}
-
-		// if(masMelodiaMas[0][i] > 0){
-
-		// 	dataString += "_";
-		// 	dataString += String(masMelodiaMas[0][i]);
-
-		// 	if(masMelodiaMas[1][i] > 0){
-
-		// 		dataString += "*";
-		// 		dataString += String(masMelodiaMas[1][i]);
-		// 		dataString += ".";
-		// 		dataString += "\n";
-		// 	}
-		// }else{
-
-		// 	dataString += "!";
-
-		// 	break;
-		// }
 	}
 
 	if (SD.exists(indexToNameFileSD(indexM))){
@@ -161,9 +134,12 @@ void FmasMelodiaSetToFile(int _indexM){
  	 	dataFile.close();
  	}else{
 
- 	 	Serial.print("error opening file for write ");
- 	 	Serial.println(indexToNameFileSD(indexM));
+ 	 	Serial1.print("error SD write ");
+ 	 	Serial1.println(indexToNameFileSD(indexM));
  	}
+
+
+
 
  	dataFile = SD.open(indexToNameFileSD(indexM));
   	if (dataFile) {
@@ -176,18 +152,19 @@ void FmasMelodiaSetToFile(int _indexM){
     	}
    		dataFile.close();
   	}else{
-    	Serial.println("error opening file for read");
+    	Serial1.println("error SD read");
   	}
 }
 
-void FmasMelodiaGetForFile(int _indexM){
+void FmasMelodiaGetFromFile(int _indexM){  // ФУНКЦИЯ ЗАПИСИ МЕЛОДИИ ИЗ ФЛЭШКИ В ОПЕРАТИВНУЮ ПАМЯТЬ
+
+	//FmasMelodiaClear();
 
 	int indexM = _indexM;
 	int simvolInt = 0;
 	int GMcounter = 1;
 	char simvol = 'y';
 
-	FmasMelodiaClear();
 
 	Serial. println(indexM);  //--------------------------------------------------------------------------------->>
 	Serial.println(indexToNameFileSD(indexM));
@@ -220,54 +197,289 @@ void FmasMelodiaGetForFile(int _indexM){
     	  			simvolInt = 0;
     	  			GMcounter ++;
     	  		}
-    	  		else if(simvol == '!'){
-
-    	  		}
     		}
     		masMelodiaMas[0][GMcounter] = 0;
 
    			dataFile.close();
   		}else{
 
-    		Serial.println("error opening file for read");
+    		Serial.println("error SD read");
+    		Serial1.println("error SD read");
+    		lcd.clear();
+    		lcd.print("error SD read");
+    		delay(5000);
   		}
 	}	
 }
 
-void FmasMelodiaSetLoop(){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//byte raspisanie[32] = {1,0,0,0,0,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,1,67,68,69,1,0,70};
+// ЗНАЧЕНИЕ ЯЧЕЕК МАСИВА
+// 0 разрешить почасовое расписание 1, запретить 0
+// 1  индекс мелодии для 01:00
+// 2  индекс мелодии для 02:00
+// 3  индекс мелодии для 03:00
+// 4  индекс мелодии для 04:00
+// 5  индекс мелодии для 05:00
+// 6  индекс мелодии для 06:00
+// 7  индекс мелодии для 07:00
+// 8  индекс мелодии для 08:00
+// 9  индекс мелодии для 09:00
+// 10 индекс мелодии для 10:00
+// 11 индекс мелодии для 11:00
+// 12 индекс мелодии для 12:00
+// 13 индекс мелодии для 13:00
+// 14 индекс мелодии для 14:00
+// 15 индекс мелодии для 15:00
+// 16 индекс мелодии для 16:00
+// 17 индекс мелодии для 17:00
+// 18 индекс мелодии для 18:00
+// 19 индекс мелодии для 19:00
+// 20 индекс мелодии для 20:00
+// 21 индекс мелодии для 21:00
+// 22 индекс мелодии для 22:00
+// 23 индекс мелодии для 23:00
+// 24 индекс мелодии для 24:00
+// 25 разрешить поминутное расписание 1, запретить 0
+// 26 индекс мелодии для 15 минут
+// 27 индекс мелодии для 30 минут
+// 28 индекс мелодии для 45 минут
+// 29 разрешить отбивать время колоколом 1, запретить 0
+// 30 разрешить отбивать будничный
+// 31 индекс мелодии для будничный
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void sheduleSet(){  // ФУНКЦИЯ ЗАПИСИ РАСПИСАНИЯ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ НА ФЛЭШКУ
+
+	lcd.clear();
+    lcd.print("shedule set");
+
+  /////////////////////////////////////////////////////////////////////////////////////
+
+    String sheduleString = "";
+
+    sheduleString += "SHEDULE (RASPISANIE)";
+	sheduleString += "\n";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[0]);
+	sheduleString += "] - ";
+	sheduleString += "ENABLE HOURLY SHEDULE, 1-YES 0-NO";
+	sheduleString += "\n";
+
+	for(int i=1; i <= 24; i++){
+
+		sheduleString += "[";
+		sheduleString += String(raspisanie[i]);
+		sheduleString += "] - ";
+		sheduleString += "MELODY PER HOUR ";
+		sheduleString += String(i);
+		sheduleString += "  1-70 ";
+		sheduleString += "\n";
+	}
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[25]);
+	sheduleString += "] - ";
+	sheduleString += "ENABLE PER MINUTE SHEDULE, 1-YES 0-NO";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[26]);
+	sheduleString += "] - ";
+	sheduleString += "MELODY PER MINUTE 15  1-70";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[27]);
+	sheduleString += "] - ";
+	sheduleString += "MELODY PER MINUTE 30  1-70";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[28]);
+	sheduleString += "] - ";
+	sheduleString += "MELODY PER MINUTE 45  1-70";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[29]);
+	sheduleString += "] - ";
+	sheduleString += "ENABLE OTBIVANIE VREMENI, 1-YES 0-NO";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[30]);
+	sheduleString += "] - ";
+	sheduleString += "ENABLE BUDNICHNIY, 1-YES 0-NO";
+	sheduleString += "\n";
+
+	sheduleString += "[";
+	sheduleString += String(raspisanie[31]);
+	sheduleString += "] - ";
+	sheduleString += "MELODY FOR BUDNICHNIY";
+	sheduleString += "\n";
+
+  /////////////////////////////////////////////////////////////////////////////////////
+
+	if (SD.exists("shedule.txt")){
+		SD.remove("shedule.txt");
+	}
+	dataFile = SD.open("shedule.txt", FILE_WRITE);
+
+ 	if (dataFile){
+
+ 	 	dataFile.println(sheduleString);
+ 	 	dataFile.close();
+ 	}else{
+
+ 	 	Serial.print("error SD write ");
+ 	 	Serial.println("shedule.txt");
+
+    	Serial1.print("error SD write ");
+ 	 	Serial1.println("shedule.txt");
+
+    	lcd.clear();
+    	lcd.print("error SD write");
+
+    	delay(5000);
+ 	}
+ 	delay(500);
+}
+
+void sheduleGet(){  // ФУНКЦИЯ ЗАПИСИ РАСПИСАНИЯ ИЗ ФЛЭШКИ В ОПЕРАТИВНУЮ ПАМЯТЬ
+
+	lcd.clear();
+    lcd.print("shedule get");
+
+    int simvolInt = 0;
+	int Scounter = 0;
+	char simvol = 'y';
+
+    if (SD.exists("shedule.txt")){
+
+		dataFile = SD.open("shedule.txt");
+
+  		if(dataFile){
+
+    		while(dataFile.available() && Scounter < 32){
+
+
+    	  		simvol = dataFile.read();
+
+    	  		if(simvol == '['){
+
+    	  			while(1){
+
+    	  				simvol = dataFile.read();
+
+    	  				if (isDigit(simvol)){
+
+    	  					simvolInt = (simvolInt * 10) + (simvol - '0');
+    	  				}
+    	  				else if(simvol == ']'){
+
+    	  					raspisanie[Scounter] = simvolInt;
+    	  					simvolInt = 0;
+    	  					Scounter ++;
+
+    	  					break;
+    	  				}
+    	  			}
+    	  		}
+
+    	  		if (isDigit(simvol)){
+
+    	  			simvolInt = (simvolInt * 10) + (simvol - '0');
+    	  		}
+    	  		else if(simvol == ']'){
+
+    	  			raspisanie[Scounter] = simvolInt;
+    	  			simvolInt = 0;
+    	  			Scounter ++;
+    	  		}
+    		}
+
+   			dataFile.close();
+  		}else{
+
+    		Serial.println("error SD read");
+    		Serial1.println("error SD read");
+    		lcd.clear();
+    		lcd.print("error SD read");
+    		delay(5000);
+  		}
+	}	
+}
+
+void sheduleBegin(){  // ФУНКЦИЯ СЕТАП ДЛЯ РАСПИСАНИЯ
+
+	if (SD.exists("shedule.txt")){
+
+		sheduleGet();
+		delay(300);
+	}else{
+
+		sheduleSet();
+	}
+}
+
+void sheduleChangeFromB(){}
+
+void sheduleSetLoop(){  // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ НАСТРОЙКИ РАСПИСАНИЯ
+
 	bool cikl1 = 1;
 	int mCounter = 0;
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R255G255B255*"); // отправка цвета индикатора
-	Serial1.println("*t select the cell to save U or D *");
+	Serial1.println("*t select slot for save ↓↑ *");
+	//while(cikl1){}
+}
+
+void FmasMelodiaSetLoop(){  // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ СОХРАНЕНИЯ НОВОЙ ЗАПИСАНОЙ МЕЛОДИИ
+
+	bool cikl1 = 1;
+	int mCounter = 0;
+	Serial1.print("*l"); // отправка признака индикатора
+    Serial1.println("R255G255B255*"); // отправка цвета индикатора
+	Serial1.println("*t select slot for save ↓↑ *");
+
 	while(cikl1){
+
 		if(Serial1.available());
 		b_d = Serial1.read();
 
-		if(b_d == 'S'){
+		if(b_d == 'S'){  // если нажат селект то закончить цикл выбора номера мелодии и перейти к следующему шагу
 			break;
-		}else if(b_d == 'U'){
+		}else if(b_d == 'U'){  // если нажата кнопка вверх то уменшить счетчик номера мелодии
 			Serial1.print("*p"); // отправка звукового сигнала
     		mCounter --;
     		if(mCounter < 0){
-    			mCounter = 40;
+    			mCounter = 44;
     		}
     		Serial1.print("*t");
     		if(mCounter != 0){
-    			Serial1.print(indexToNameFileSD(mCounter));
+    			Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
+    			if(SD.exists(indexToNameFileSD(mCounter))){
+    				Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    			}
     		}else{
     			Serial1.println("cancel");
     		}
     		Serial1.println("*");
-		}else if(b_d == 'D'){
+		}else if(b_d == 'D'){  // если нажата кнопка вниз то увеличить счетчик номера мелодии
 			Serial1.print("*p"); // отправка звукового сигнала
     		mCounter ++;
-    		if(mCounter > 40){
+    		if(mCounter > 44){
     			mCounter = 0;
     		}
     		Serial1.print("*t");
     		if(mCounter != 0){
-    			Serial1.print(indexToNameFileSD(mCounter));
+    			Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
+    			if(SD.exists(indexToNameFileSD(mCounter))){
+    				Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    			}
     		}else{
     			Serial1.println("cancel");
     		}
@@ -281,26 +493,24 @@ void FmasMelodiaSetLoop(){
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R255G130B0*"); // отправка цвета индикатора
 		Serial1.print("*t");
-		Serial1.print(indexToNameFileSD(mCounter));
+		Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
 		Serial1.println(" SAVED OK*");
 		Serial1.println("MELODY SAVED OK");
 	}else{
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R255G130B0*"); // отправка цвета индикатора
-		Serial1.println("*t CANCEL SAVE *");
+		Serial1.println("*t CANCELED *");
 	}
 }
 
-void sheduleSetLoop(){
 
-}
 
-void playMelodyForMemoryLoop(){
+void playMelodyForMemoryLoop(){ // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ ПРОИГРЫВАНИЯ ВЫБРАННОЙ МЕЛОДИИ ИЗ ПАМЯТИ ФЛЭШКИ
 	bool cikl1 = 1;
 	int mCounter = 0;
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R0G255B0*"); // отправка цвета индикатора
-    Serial1.println("*t PLAY FOR MEMORY MODE *"); // отправка строки меню
+    Serial1.println("*t PLAY FROM MEMORY  *"); // отправка строки меню
     Serial1.println("*s PLAY *");
     while(cikl1){
     	if(Serial1.available());
@@ -316,7 +526,10 @@ void playMelodyForMemoryLoop(){
     		}
     		Serial1.print("*t");
     		if(mCounter != 0){
-    			Serial1.print(indexToNameFileSD(mCounter));
+    			Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
+    			if(SD.exists(indexToNameFileSD(mCounter))){
+    				Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    			}
     			Serial1.print(" PLAY");
     		}else{
     			Serial1.print("cancel");
@@ -330,7 +543,10 @@ void playMelodyForMemoryLoop(){
     		}
     		Serial1.print("*t");
     		if(mCounter != 0){
-    			Serial1.print(indexToNameFileSD(mCounter));
+    			Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
+    			if(SD.exists(indexToNameFileSD(mCounter))){
+    				Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    			}
     			Serial1.print(" PLAY");
     		}else{
     			Serial1.print("cancel");
@@ -344,7 +560,7 @@ void playMelodyForMemoryLoop(){
 		Serial1.print("*t");
 		Serial1.print(indexToNameFileSD(mCounter));
 		Serial1.println(" PLAYED*");
-		playMelodyToIndex(mCounter);
+		playMelodyByIndex(mCounter);
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R0G150B150*"); // отправка цвета индикатора
 		Serial1.println("MELODY PLAY OK");
@@ -356,7 +572,7 @@ void playMelodyForMemoryLoop(){
 	menuDraw();
 }
 
-void FmasMelodiaPlay(){
+void FmasMelodiaPlay(){  // ФУНКЦИЯ ПРОИГРЫВАНИЯ МЕЛОДИИ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ
 	for(int i=1; i < DEFMaxMasSize; i++){
 		if(masMelodiaMas[0][i] == 0){
 			break;
@@ -397,16 +613,16 @@ void FmasMelodiaPlay(){
 	timeToDisplay();
 }
 
-void FmasMelodiaPlayForFile(byte _indexM){
+void FmasMelodiaPlayFromFile(byte _indexM){  // ФУНКЦИЯ ПРОИГРЫВАНИЯ МЕЛОДИИ ИЗ ПАМЯТИ ФЛЭШКИ, ПО НОМЕРУ МЕЛОДИИ 1-44
 	byte indexM = _indexM;
 
-	FmasMelodiaGetForFile(indexM);
+	FmasMelodiaGetFromFile(indexM);
 	FmasMelodiaPlay();
-	FmasMelodiaClear();
+	//FmasMelodiaClear();
 }
 
 
-void menuDraw(){
+void menuDraw(){  // ФУНКЦИЯ ОТРИСОВКИ БЛЮТУЗ МЕНЮ
 	if(flagMenu == 1){
 		Serial1.println("*s MEM *");
     	Serial1.print("*l"); // отправка признака индикатора
@@ -466,7 +682,7 @@ void menuDraw(){
 }
 
 
-void BTloop(){
+void BTloop(){  // ОСНОВНОЙ БЛЮТУЗ ЦИКЛ.
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R255G255B255*"); // отправка цвета индикатора
     flagMenu = 1;
@@ -494,7 +710,7 @@ void BTloop(){
 
 
 
-    	  					// 1
+    	  					// 1  ЕСЛИ РЕЖИМ ПЕРЕЗВОН
     	  					if(flagMenu == 1){  // здесь отслеживание флага меню
     	  						if(counterComboMas == 1){
     	  							nota(masComboMas[1], TESTDELAY);
@@ -524,7 +740,7 @@ void BTloop(){
 
 
 
-    	  						// 2
+    	  						// 2  ЕСЛИ РЕЖИМ ПРИНТ 1
     	  					}else if(flagMenu == 2){
     	  						if(counterComboMas == 1){
     	  							BTstopMill = millis();
@@ -704,50 +920,57 @@ void BTloop(){
 
 
 
-    	  						// 3
+    	  						// 3  ЕСЛИ РЕЖИМ ПРИНТ 2
     	  					}else if(flagMenu == 3){
     	  						if(counterComboMas == 1){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							nota(masComboMas[1], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("nota(");
     	  							Serial.print(bt_not);
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 2){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo2(masComboMas[1], masComboMas[2], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 3){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo3(masComboMas[1], masComboMas[2], masComboMas[3], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
@@ -756,17 +979,19 @@ void BTloop(){
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 4){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo4(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+    	  							
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
@@ -777,17 +1002,19 @@ void BTloop(){
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 5){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo5(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+    	  							
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
@@ -800,17 +1027,19 @@ void BTloop(){
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 6){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo6(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+    	  							
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
@@ -825,17 +1054,19 @@ void BTloop(){
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 7){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo7(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+    	  							
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
@@ -852,17 +1083,19 @@ void BTloop(){
     	  							Serial.print(", ");
     	  						}
     	  						else if(counterComboMas == 8){
+    	  							
     	  							BTstopMill = millis();
+    	  							
     	  							combo8(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], masComboMas[8], TESTDELAY);
+    	  							
     	  							BTresMill = BTstopMill - BTstartMill;
+
     	  							if(BTresMill != BTstopMill){
     	  								Serial.print(BTresMill - popravkaDelay);
-    	  								Serial.println(");");
+    	  								Serial.println(".");
     	  							}
     	  							BTstartMill = millis();
-    	  							Serial.print("combo");
-    	  							Serial.print(counterComboMas);
-    	  							Serial.print("(");
+    	  							
     	  							Serial.print(masComboMas[1]);
     	  							Serial.print(",");
     	  							Serial.print(masComboMas[2]);
@@ -884,19 +1117,23 @@ void BTloop(){
 
 
 
-    	  						// 4
+    	  						// 4  ЕСЛИ РЕЖИМ ЗАПИСИ НОВОЙ МЕЛОДИИ
     	  					}else if(flagMenu == 4){
 
     	  						if(flagRecord == 1){
 
     	  							if(counterComboMas == 1){
+    	  								
     	  								BTstopMill = millis();
+
     	  								nota(masComboMas[1], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									if(recordCounter2 > 0){
@@ -908,7 +1145,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 2){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo2(masComboMas[1], masComboMas[2], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -916,7 +1155,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[2];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -926,7 +1167,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 3){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo3(masComboMas[1], masComboMas[2], masComboMas[3], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -936,7 +1179,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[3];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -946,7 +1191,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 4){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo4(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -958,7 +1205,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[4];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -968,7 +1217,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 5){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo5(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -982,7 +1233,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[5];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -992,7 +1245,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 6){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo6(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], TESTDELAY);
     	  								
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -1008,7 +1263,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[6];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -1018,7 +1275,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 7){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo7(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -1036,7 +1295,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[7];
     	  								
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -1046,7 +1307,9 @@ void BTloop(){
     	  								recordCounter ++;
     	  							}
     	  							else if(counterComboMas == 8){
+    	  								
     	  								BTstopMill = millis();
+
     	  								combo8(masComboMas[1], masComboMas[2], masComboMas[3], masComboMas[4], masComboMas[5], masComboMas[6], masComboMas[7], masComboMas[8], TESTDELAY);
 
     	  								masMelodiaMas[0][recordCounter] = masComboMas[1];
@@ -1066,7 +1329,9 @@ void BTloop(){
     	  								masMelodiaMas[0][recordCounter] = masComboMas[8];
 
     	  								BTresMill = BTstopMill - BTstartMill;
+
     	  								if(BTresMill != BTstopMill){
+
     	  									BTresMill -= popravkaDelay;
     	  									recordCounter2 = recordCounter - counterComboMas;
     	  									masMelodiaMas[1][recordCounter2] = BTresMill;
@@ -1095,7 +1360,7 @@ void BTloop(){
 
 
 
-    	  					}else if(flagMenu == 5){
+    	  					}else if(flagMenu == 5){  //  ЕСЛИ РЕЖИМ ВОСПРОИЗВЕДЕНИЯ НОВОЙ ЗАПИСАНОЙ МЕЛОДИИ
 
     	  					}else if(flagMenu == 6){
 
@@ -1114,27 +1379,35 @@ void BTloop(){
     		}
 
 
-    		else if (b_d == 'S'){  // селект
-    			if(flagMenu == 1){
+    		else if (b_d == 'S'){  // ЕСЛИ НАЖАТА КНОПККА СЕЛЕКТ В БЛЮТУЗ МЕНЮ:
+
+    			if(flagMenu == 1){  // ЕСЛИ РЕЖИМ ПЕРЕЗВОН
+
     				Serial1.print("*p"); // отправка звукового сигнала
     				flagPlayForMemory = 1;
     				if(flagPlayForMemory == 1){
     					playMelodyForMemoryLoop();
     					flagPlayForMemory = 0;
     				}
-    			}else if(flagMenu == 2){
+    			}else if(flagMenu == 2){  // ЕСЛИ РЕЖИМ ПРИНТ 1
+
     				Serial1.print("*p"); // отправка звукового сигнала
     				Serial.println("1000);");
     				Serial.println("");
     				BTstartMill = 0;
-    			}else if(flagMenu == 3){
+    			}else if(flagMenu == 3){  // ЕСЛИ РЕЖИМ ПРИНТ 2
+
     				Serial1.print("*p"); // отправка звукового сигнала
-    			}else if(flagMenu == 4){
+    				Serial.println("1000.");
+    				Serial.println("");
+    				BTstartMill = 0;
+    			}else if(flagMenu == 4){  // ЕСЛИ РЕЖИМ ЗАПИСИ НОВОЙ МЕЛОДИИ В ОПЕРАТИВНУЮ ПАМЯТЬ
+
     				Serial1.print("*p"); // отправка звукового сигнала
     				flagRecord = !flagRecord;
     				if(flagRecord == 1){
-    					Serial1.println("*s STOP *");
     					FmasMelodiaClear();
+    					Serial1.println("*s STOP *");
     					recordCounter = 1;
     					Serial1.print("*l"); // отправка признака строки меню
     					Serial1.println("R255G200B0*"); // отправка строки меню
@@ -1148,19 +1421,20 @@ void BTloop(){
     					Serial1.println("R255G0B0*"); // отправка цвета индикатора
     				}
     				BTstartMill = 0;
-    			}else if(flagMenu == 5){
+    			}else if(flagMenu == 5){  // ЕСЛИ РЕЖИМ ПРОИГРЫВАНИЯ МЕЛОДИИ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ
+
     				Serial1.print("*p"); // отправка звукового сигнала
     				FmasMelodiaPlay();
-    			}else if (flagMenu == 6){
+    			}else if (flagMenu == 6){  // ЕСЛИ РЕЖИМ СОХРАНЕНИЯ МЕЛОДИИ НА ФЛЭШКУ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ
     				Serial1.print("*p"); // отправка звукового сигнала
     				FmasMelodiaSetLoop();
-    			}else if(flagMenu == 7){
+    			}else if(flagMenu == 7){  // ЕСЛИ РЕЖИМ НАСТРОЙКИ РАСПИСАНИЯ
     				Serial1.print("*p"); // отправка звукового сигнала
     				sheduleSetLoop();
-    			}else if(flagMenu == 8){
+    			}else if(flagMenu == 8){  // ЕСЛИ РЕЖИМ EXIT
     				Serial1.print("*p"); // отправка звукового сигнала
     				flagBT = 0;
-    				Serial1.println("*t EXIT OK. MEGAFON SHEDULE ACTIVE *");
+    				Serial1.println("*t EXIT OK. MEGAFON ACTIVATED *");
     				Serial.println("x");
     				rminute = 61;
 					timeToDisplay();
@@ -1169,7 +1443,9 @@ void BTloop(){
     		}
 
 
-    		else if (b_d == 'U'){
+    		else if (b_d == 'U'){  // ЕСЛИ НАЖАТА КНОПКА ВВЕРХ В БЛЮТУЗ МЕНЮ
+
+    			//BTstartMill = 0;
     			Serial1.print("*p"); // отправка звукового сигнала
     			flagMenu --;
     			if(flagMenu < 1){
@@ -1179,7 +1455,9 @@ void BTloop(){
     		}
 
 
-    		else if (b_d == 'D'){
+    		else if (b_d == 'D'){  // ЕСЛИ НАЖАТА КНОПКА ВНИЗ В БЛЮТУЗ МЕНЮ
+
+    			//BTstartMill = 0;
     			Serial1.print("*p"); // отправка звукового сигнала
     			flagMenu ++;
     			if(flagMenu > 8){
@@ -1189,22 +1467,40 @@ void BTloop(){
     		}
 
 
-    		else if (b_d == 'm'){
-    			playMelodyToIndex(Serial1.parseInt());  // усли в сериал отправить m1 то будет проиграна мелодия с индексом 1
-    			rminute = 61;
-				timeToDisplay();
+    		else if (b_d == 'm'){  // ЕСЛИ ПРИШЛА БУКВА 'm' И ЧИСЛО ОТ 1 ДО 70 ТО ВОСПРОИЗВЕСТИ МЕЛОДИЮ СООТВЕТСТВУЮЩУЮ ЧИСЛУ
+
+    			int mNindex = Serial1.parseInt();
+
+    			if(mNindex > 0 && mNindex <= 70){
+
+    				playMelodyByIndex(mNindex);  // усли в сериал отправить m1 то будет проиграна мелодия с индексом 1
+    				rminute = 61;
+					timeToDisplay();
+    			}
     		}
 
 
-    		else if(b_d == 'd'){
+    		else if(b_d == 'd'){  // ЕСЛИ ПРИШЛА БУКВА 'd' СДЕЛАТЬ ЗАДЕРЖКУ
+
     			delayFor_d = Serial1.parseInt();
+
     			delay(delayFor_d);
+    		}
+
+
+    		else if(b_d == 'B'){  // ЕСЛИ ПРИШЛА БУКВА BS=0,1,3,...31. АНГЛИЙСКАЯ ВКЛЮЧИТЬ РЕЖИМ ЗАПИСИ РАСПИСАНИЯ С ЧИСЛА
+
+				// BS=1,0,0,0,0,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,1,67,68,69,1,0,70.
+				// BH=0,0,0,0,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48.
+				// BM=67,68,69.
+
+    			sheduleChangeFromB();
     		}
   		}
 	}
+
 	Serial1.print("*l"); // отправка признака строки меню
     Serial1.println("R0G0B0*"); // отправка строки меню
     Serial1.println("EXIT OK"); // отправка строки меню
-    Serial1.println("MEGAZVON ACTIVE"); // отправка строки меню
     Serial1.println("RASPISANIE RABOTAET"); // отправка строки меню
 }

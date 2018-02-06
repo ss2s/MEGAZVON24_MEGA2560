@@ -14,18 +14,18 @@
 
                                             // ВАЖНАЯ ИНФОРМАЦИЯ //
 
-// ВСЕ НАСТРОЙКИ ВЫНЕСЕНЫ В ОТДЕЛЬНЫЙ ФАЙЛ "MEGAZVON24_CONFIG.h"
-// НАСТРОЙКА ДЛИТЕЛЬНОСТИ КАЖДОЙ НОТЫ В ФАЙЛЕ "MEGAZVON24_CONFIG.h"
+// ВСЕ НАСТРОЙКИ ВЫНЕСЕНЫ В ОТДЕЛЬНЫЙ ФАЙЛ "config24.h"
+// НАСТРОЙКА СИЛЫ УДАРА КАЖДОЙ НОТЫ В ФАЙЛЕ "config.h"
 // НАСТРОЙКИ МЕЛОДИЙ В ФАЙЛЕ "melody24.h"
 
-// НАСТРОЙКИ ТЕРМОРЕГУЛЯТОРА В ОСНОВНОЙ ПРОГРАММЕ
+// НАСТРОЙКИ ТЕРМОРЕГУЛЯТОРА В ФАЙЛЕ "config.h"
 
 // все нужные файлы находятся в папке с прошивкой
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <SPI.h>
 #include <SD.h>
-File dataFile;
+File dataFile;                  // переменная для работы с флэшкой
 #include "Arduino.h"            // Arduino lib
 #include <Wire.h>               // библиотека I2C
 #include "DS3231.h"             // библиотека часов
@@ -1252,8 +1252,17 @@ void setup() {
 	#endif
 	timeOfBlowUnicNotaGetPak();  // чтение длительностей нот из EEPROM в переменную (выполняется при старте МК)
 
+	lcd.begin(16, 2);
+    lcd.clear();
+    lcd.clear();
+	lcd.print("PROVERTE CHASI");
+
+	Wire.begin();
 	// ЧАСЫ:
 	clock.begin();         // Инициализируем работу с объектом библиотеки DS3231
+
+	lcd.clear();
+	lcd.print("   MEGAZVON24");
 
 	#if SET_CLOK_FOR_PROG == 1
  	clock.setDateTime(__DATE__, __TIME__);      // Устанавливаем время на часах, основываясь на времени компиляции скетча
@@ -1271,7 +1280,6 @@ void setup() {
 	delay(50);
 
 
-	Wire.begin();
 
 	// инициализация пользовательских символов
   	lcd.createChar(0, customCharBell0);
@@ -1344,10 +1352,6 @@ void setup() {
 		analogWrite(DEF_LCD_LIGHT_PIN, DEF_YARKOST_DISPLEYA_DEF);  // установка яркости
 	#endif
 
-	lcd.begin(16, 2);
-    lcd.clear();
-    lcd.clear();
-	lcd.print("   MEGAZVON24");
 	delay(500);
 	if (!SD.begin(CHIPSELEKT)) {
     	Serial.println("initialization failed!");
@@ -1358,6 +1362,8 @@ void setup() {
     		while(1){
     		}
     	}
+  	}else{
+  		sheduleBegin();
   	}
 }
 
