@@ -178,8 +178,10 @@ void FmasMelodiaGetFromFile(int _indexM){  // ФУНКЦИЯ ЗАПИСИ МЕЛ
 	char simvol = 'y';
 
 
-	Serial. println(indexM);  //--------------------------------------------------------------------------------->>
-	Serial.println(indexToNameFileSD(indexM));
+    //--------------------------------------------------------------------------------->>
+	Serial.println("");
+	Serial.print(indexToNameFileSD(indexM));
+	Serial.println(" GET");
 	Serial.println("");
 
 	if (SD.exists(indexToNameFileSD(indexM))){
@@ -224,42 +226,6 @@ void FmasMelodiaGetFromFile(int _indexM){  // ФУНКЦИЯ ЗАПИСИ МЕЛ
 	}	
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//byte raspisanie[32] = {1,0,0,0,0,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,1,67,68,69,1,0,70};
-// ЗНАЧЕНИЕ ЯЧЕЕК МАСИВА
-// 0 разрешить почасовое расписание 1, запретить 0
-// 1  индекс мелодии для 01:00
-// 2  индекс мелодии для 02:00
-// 3  индекс мелодии для 03:00
-// 4  индекс мелодии для 04:00
-// 5  индекс мелодии для 05:00
-// 6  индекс мелодии для 06:00
-// 7  индекс мелодии для 07:00
-// 8  индекс мелодии для 08:00
-// 9  индекс мелодии для 09:00
-// 10 индекс мелодии для 10:00
-// 11 индекс мелодии для 11:00
-// 12 индекс мелодии для 12:00
-// 13 индекс мелодии для 13:00
-// 14 индекс мелодии для 14:00
-// 15 индекс мелодии для 15:00
-// 16 индекс мелодии для 16:00
-// 17 индекс мелодии для 17:00
-// 18 индекс мелодии для 18:00
-// 19 индекс мелодии для 19:00
-// 20 индекс мелодии для 20:00
-// 21 индекс мелодии для 21:00
-// 22 индекс мелодии для 22:00
-// 23 индекс мелодии для 23:00
-// 24 индекс мелодии для 24:00
-// 25 разрешить поминутное расписание 1, запретить 0
-// 26 индекс мелодии для 15 минут
-// 27 индекс мелодии для 30 минут
-// 28 индекс мелодии для 45 минут
-// 29 разрешить отбивать время колоколом 1, запретить 0
-// 30 разрешить отбивать будничный
-// 31 индекс мелодии для будничный
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sheduleSet(){  // ФУНКЦИЯ ЗАПИСИ РАСПИСАНИЯ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ НА ФЛЭШКУ
 
@@ -400,17 +366,6 @@ void sheduleGet(){  // ФУНКЦИЯ ЗАПИСИ РАСПИСАНИЯ ИЗ Ф�
     	  				}
     	  			}
     	  		}
-
-    	  		if (isDigit(simvol)){
-
-    	  			simvolInt = (simvolInt * 10) + (simvol - '0');
-    	  		}
-    	  		else if(simvol == ']'){
-
-    	  			raspisanie[Scounter] = simvolInt;
-    	  			simvolInt = 0;
-    	  			Scounter ++;
-    	  		}
     		}
 
    			dataFile.close();
@@ -437,16 +392,229 @@ void sheduleBegin(){  // ФУНКЦИЯ СЕТАП ДЛЯ РАСПИСАНИЯ
 	}
 }
 
-void sheduleChangeFromB(){}
-
 void sheduleSetLoop(){  // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ НАСТРОЙКИ РАСПИСАНИЯ
 
 	bool cikl1 = 1;
 	int mCounter = 0;
+	int mCounter2 = 0;
+	int MmCount = 0;
+	int prevRaspVal = 0;
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R255G255B255*"); // отправка цвета индикатора
-	Serial1.println("*t select slot for save ↓↑ *");
-	//while(cikl1){}
+	Serial1.println("*t up or down for loop ^ *");
+	for (int i = 0; i < 32; ++i)
+	{
+		Serial.println(raspisanie[i]);
+	}
+	Serial.println("");
+	while(cikl1){
+		if(Serial1.available());
+		b_d = Serial1.read();
+
+		if(b_d == 'S'){
+			Serial1.print("*p"); // отправка звукового сигнала
+			break;
+		}else if(b_d == 'U'){
+			Serial1.print("*p"); // отправка звукового сигнала
+    		mCounter --;
+    		if(mCounter < 0){
+    			mCounter = 27;
+    		}
+    		Serial1.print("*t");
+    		if(mCounter != 0 && mCounter <= 24){
+    			Serial1.print(mCounter);  // отправка имени файла в формате строки
+    			Serial1.print(" HOUR");
+    			Serial1.print(" -> melody ");
+    			Serial1.print(raspisanie[mCounter]);
+    		}else if(mCounter == 25){
+    			Serial1.print("15 MIN");
+    			Serial1.print(" -> melody ");
+    			MmCount = mCounter + 1;
+    			Serial1.print(raspisanie[MmCount]);
+    		}else if(mCounter == 26){
+    			Serial1.print("30 MIN");
+    			Serial1.print(" -> melody ");
+    			MmCount = mCounter + 1;
+    			Serial1.print(raspisanie[MmCount]);
+    		}else if(mCounter == 27){
+    			Serial1.print("45 MIN");
+    			Serial1.print(" -> melody ");
+    			MmCount = mCounter + 1;
+    			Serial1.print(raspisanie[MmCount]);
+    		}else{
+    			Serial1.print("cancel");
+    		}
+    		Serial1.println("*");
+		}else if(b_d == 'D'){
+			Serial1.print("*p"); // отправка звукового сигнала
+    		mCounter ++;
+    		if(mCounter > 27){
+    			mCounter = 0;
+    		}
+    		Serial1.print("*t");
+    		if(mCounter != 0 && mCounter <= 24){
+    			Serial1.print(mCounter);  // отправка имени файла в формате строки
+    			Serial1.print(" HOUR");
+    			Serial1.print(" -> melody ");
+    			Serial1.print(raspisanie[mCounter]);
+    		}else if(mCounter == 25){
+    			Serial1.print("15 MIN");
+    			Serial1.print(" -> melody ");
+    			MmCount = mCounter + 1;
+    			Serial1.print(raspisanie[MmCount]);
+    		}else if(mCounter == 26){
+    			Serial1.print("30 MIN");
+    			Serial1.print(" -> melody ");
+    			MmCount = mCounter + 1;
+    			Serial1.print(raspisanie[MmCount]);
+    		}else if(mCounter == 27){
+    			Serial1.print("45 MIN");
+    			Serial1.print(" -> melody ");
+    			MmCount = mCounter + 1;
+    			Serial1.print(raspisanie[MmCount]);
+    		}else{
+    			Serial1.print("cancel");
+    		}
+    		Serial1.println("*");
+		}
+	}
+
+	if(mCounter == 0){
+		Serial1.print("*t CANCELED *");
+		return;
+	}
+
+	mCounter2 = raspisanie[mCounter];
+
+	Serial1.print("*p"); // отправка звукового сигнала
+    Serial1.print("*t");
+    if(mCounter2 != 0){
+    	Serial1.print(indexToNameFileSD(mCounter2));  // отправка имени файла в формате строки
+    	if(mCounter2 > 44){
+
+    		Serial1.print("[HD]");
+    	}else{
+
+    		if(SD.exists(indexToNameFileSD(mCounter2))){
+    			Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    		}
+    	}
+    			
+    	Serial1.print(" SET");
+    }else{
+    	Serial1.print("X");
+    }
+    Serial1.println("*");
+
+	while(cikl1){
+		if(Serial1.available());
+		b_d = Serial1.read();
+
+		if(b_d == 'S'){
+			Serial1.print("*p"); // отправка звукового сигнала
+			break;
+		}else if(b_d == 'U'){
+			Serial1.print("*p"); // отправка звукового сигнала
+    		mCounter2 --;
+    		if(mCounter2 < 0){
+    			mCounter2 = 70;
+    		}
+    		Serial1.print("*t");
+    		if(mCounter2 != 0){
+    			Serial1.print(indexToNameFileSD(mCounter2));  // отправка имени файла в формате строки
+    			if(mCounter2 > 44){
+    				Serial1.print("[HD]");
+    			}else{
+
+    				if(SD.exists(indexToNameFileSD(mCounter2))){
+    					Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    				}
+    			}
+
+    			Serial1.print(" SET");
+    		}else{
+    			Serial1.print("X");
+    		}
+    		Serial1.println("*");
+		}else if(b_d == 'D'){
+			Serial1.print("*p"); // отправка звукового сигнала
+    		mCounter2 ++;
+    		if(mCounter2 > 70){
+    			mCounter2 = 0;
+    		}
+    		Serial1.print("*t");
+    		if(mCounter2 != 0){
+    			Serial1.print(indexToNameFileSD(mCounter2));  // отправка имени файла в формате строки
+    			if(mCounter2 > 44){
+    				Serial1.print("[HD]");
+    			}else{
+
+    				if(SD.exists(indexToNameFileSD(mCounter2))){
+    					Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    				}
+    			}
+    			
+    			Serial1.print(" SET");
+    		}else{
+    			Serial1.print("X");
+    		}
+    		Serial1.println("*");
+		}
+	}
+
+	if(mCounter > 24){
+		mCounter ++;
+	}
+
+	prevRaspVal = raspisanie[mCounter];
+	raspisanie[mCounter] = mCounter2;
+	sheduleSet();
+
+	Serial1.print("*t");
+	Serial1.print(indexToNameFileSD(mCounter));
+	Serial1.println(" SAVED OK*");
+
+	delay(500);
+
+	Serial1.print("*t");
+	if(mCounter <= 24){
+		Serial1.print(mCounter);
+		Serial1.print(" - HOUR CHANGED: ");
+	}else if(mCounter == 26){
+		Serial1.print("15 - MINUTE CHANGED: ");
+	}else if(mCounter == 27){
+		Serial1.print("30 - MINUTE CHANGED: ");
+	}else if(mCounter == 28){
+		Serial1.print("45 - MINUTE CHANGED: ");
+	}
+	Serial1.print(prevRaspVal);
+	Serial1.print(" -> ");
+	Serial1.println(raspisanie[mCounter]);
+
+	delay(1000);
+	///////////////////////////////////
+
+	Serial.println("");
+	if(mCounter <= 24){
+		Serial.print(mCounter);
+		Serial.print(" - HOUR CHANGED: ");
+	}else if(mCounter == 26){
+		Serial.print("15 - MINUTE CHANGED: ");
+	}else if(mCounter == 27){
+		Serial.print("30 - MINUTE CHANGED: ");
+	}else if(mCounter == 28){
+		Serial.print("45 - MINUTE CHANGED: ");
+	}
+	Serial.print(prevRaspVal);
+	Serial.print(" -> ");
+	Serial.println(raspisanie[mCounter]);
+	Serial.println("");
+	for (int i = 0; i < 32; ++i)
+	{
+		Serial.println(raspisanie[i]);
+	}
+	Serial.println("");
+
 }
 
 void FmasMelodiaSetLoop(){  // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ СОХРАНЕНИЯ НОВОЙ ЗАПИСАНОЙ МЕЛОДИИ
@@ -455,7 +623,7 @@ void FmasMelodiaSetLoop(){  // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ СОХРАН
 	int mCounter = 0;
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R255G255B255*"); // отправка цвета индикатора
-	Serial1.println("*t select slot for save ↓↑ *");
+	Serial1.println("*t select slot for save ^ *");
 
 	while(cikl1){
 
@@ -463,6 +631,7 @@ void FmasMelodiaSetLoop(){  // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ СОХРАН
 		b_d = Serial1.read();
 
 		if(b_d == 'S'){  // если нажат селект то закончить цикл выбора номера мелодии и перейти к следующему шагу
+			Serial1.print("*p"); // отправка звукового сигнала
 			break;
 		}else if(b_d == 'U'){  // если нажата кнопка вверх то уменшить счетчик номера мелодии
 			Serial1.print("*p"); // отправка звукового сигнала
@@ -522,13 +691,14 @@ void playMelodyForMemoryLoop(){ // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ ПРОИ
 	int mCounter = 0;
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R0G255B0*"); // отправка цвета индикатора
-    Serial1.println("*t PLAY FROM MEMORY  *"); // отправка строки меню
+    Serial1.println("*t PLAY MELODY FROM MEMORY  *"); // отправка строки меню
     Serial1.println("*s PLAY *");
     while(cikl1){
     	if(Serial1.available());
 		b_d = Serial1.read();
 
 		if(b_d == 'S'){
+			Serial1.print("*p"); // отправка звукового сигнала
 			break;
 		}else if(b_d == 'U'){
 			Serial1.print("*p"); // отправка звукового сигнала
@@ -539,9 +709,15 @@ void playMelodyForMemoryLoop(){ // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ ПРОИ
     		Serial1.print("*t");
     		if(mCounter != 0){
     			Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
-    			if(SD.exists(indexToNameFileSD(mCounter))){
-    				Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    			if(mCounter > 44){
+    				Serial1.print("[HD]");
+    			}else{
+
+    				if(SD.exists(indexToNameFileSD(mCounter))){
+    					Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    				}
     			}
+    			
     			Serial1.print(" PLAY");
     		}else{
     			Serial1.print("cancel");
@@ -556,9 +732,15 @@ void playMelodyForMemoryLoop(){ // ЦИКЛ БЛЮТУЗ ПОДМЕНЮ ПРОИ
     		Serial1.print("*t");
     		if(mCounter != 0){
     			Serial1.print(indexToNameFileSD(mCounter));  // отправка имени файла в формате строки
-    			if(SD.exists(indexToNameFileSD(mCounter))){
-    				Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    			if(mCounter > 44){
+    				Serial1.print("[HD]");
+    			}else{
+
+    				if(SD.exists(indexToNameFileSD(mCounter))){
+    					Serial1.print("[>]");                   // если файл существует то добавить [ ]
+    				}
     			}
+    			
     			Serial1.print(" PLAY");
     		}else{
     			Serial1.print("cancel");
@@ -630,7 +812,6 @@ void FmasMelodiaPlayFromFile(byte _indexM){  // ФУНКЦИЯ ПРОИГРЫВ�
 
 	FmasMelodiaGetFromFile(indexM);
 	FmasMelodiaPlay();
-	//FmasMelodiaClear();
 }
 
 
@@ -682,8 +863,7 @@ void menuDraw(){  // ФУНКЦИЯ ОТРИСОВКИ БЛЮТУЗ МЕНЮ
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R100G0B200*"); // отправка цвета индикатора
 		Serial1.println("*t SHEDULE CONFIGURATION *"); // отправка строки меню
-		Serial1.println("PRESS OK TO SETTING CONFIG SHEDULE"); // отправка справочной информации
-		Serial1.println("NASTROYKA RASPISANIYA"); // отправка справочной информации
+		Serial1.println("PRESS OK TO SET SHEDULE"); // отправка справочной информации
 	}else if(flagMenu == 8){
 		Serial1.println("*s EXIT *");
 		Serial1.print("*l"); // отправка признака индикатора
@@ -695,10 +875,16 @@ void menuDraw(){  // ФУНКЦИЯ ОТРИСОВКИ БЛЮТУЗ МЕНЮ
 
 
 void BTloop(){  // ОСНОВНОЙ БЛЮТУЗ ЦИКЛ.
+
+	while(!Serial1.available()){
+	}
+	Serial1.read();
+
 	Serial1.print("*l"); // отправка признака индикатора
     Serial1.println("R255G255B255*"); // отправка цвета индикатора
     flagMenu = 1;
     menuDraw();
+    delay(1000);
 
 	while(1){
 
@@ -1404,13 +1590,13 @@ void BTloop(){  // ОСНОВНОЙ БЛЮТУЗ ЦИКЛ.
     			}else if(flagMenu == 2){  // ЕСЛИ РЕЖИМ ПРИНТ 1
 
     				Serial1.print("*p"); // отправка звукового сигнала
-    				Serial.println("1000);");
+    				Serial.println("100);");
     				Serial.println("");
     				BTstartMill = 0;
     			}else if(flagMenu == 3){  // ЕСЛИ РЕЖИМ ПРИНТ 2
 
     				Serial1.print("*p"); // отправка звукового сигнала
-    				Serial.println("1000.");
+    				Serial.println("100.");
     				Serial.println("");
     				BTstartMill = 0;
     			}else if(flagMenu == 4){  // ЕСЛИ РЕЖИМ ЗАПИСИ НОВОЙ МЕЛОДИИ В ОПЕРАТИВНУЮ ПАМЯТЬ
@@ -1426,7 +1612,7 @@ void BTloop(){  // ОСНОВНОЙ БЛЮТУЗ ЦИКЛ.
     				}else if(flagRecord == 0){
     					Serial1.println("*s REC *");
     					recordCounter2 = recordCounter - 1;
-    					masMelodiaMas[1][recordCounter2] = 1000;
+    					masMelodiaMas[1][recordCounter2] = 100;
     					masMelodiaMas[0][recordCounter] = 0;
     	  				recordCounter = 0;
     					Serial1.print("*l"); // отправка признака индикатора
@@ -1440,16 +1626,25 @@ void BTloop(){  // ОСНОВНОЙ БЛЮТУЗ ЦИКЛ.
     			}else if (flagMenu == 6){  // ЕСЛИ РЕЖИМ СОХРАНЕНИЯ МЕЛОДИИ НА ФЛЭШКУ ИЗ ОПЕРАТИВНОЙ ПАМЯТИ
     				Serial1.print("*p"); // отправка звукового сигнала
     				FmasMelodiaSetLoop();
+    				menuDraw();
     			}else if(flagMenu == 7){  // ЕСЛИ РЕЖИМ НАСТРОЙКИ РАСПИСАНИЯ
     				Serial1.print("*p"); // отправка звукового сигнала
     				sheduleSetLoop();
+    				menuDraw();
     			}else if(flagMenu == 8){  // ЕСЛИ РЕЖИМ EXIT
     				Serial1.print("*p"); // отправка звукового сигнала
-    				flagBT = 0;
+    				delay(500);
+    				Serial1.print("*p"); // отправка звукового сигнала
+    				Serial1.println("*s ON *");
     				Serial1.println("*t EXIT OK. MEGAFON ACTIVATED *");
     				Serial.println("x");
+    				Serial1.print("*l"); // отправка признака строки меню
+    				Serial1.println("R0G0B0*"); // отправка строки меню
+    				Serial1.println("EXIT OK"); // отправка строки меню
+    				Serial1.println("RASPISANIE RABOTAET"); // отправка строки меню
+    				flagBT = 0;
     				rminute = 61;
-					timeToDisplay();
+    				delay(1000);
     				break;
     			}
     		}
@@ -1498,21 +1693,6 @@ void BTloop(){  // ОСНОВНОЙ БЛЮТУЗ ЦИКЛ.
 
     			delay(delayFor_d);
     		}
-
-
-    		else if(b_d == 'B'){  // ЕСЛИ ПРИШЛА БУКВА BS=0,1,3,...31. АНГЛИЙСКАЯ ВКЛЮЧИТЬ РЕЖИМ ЗАПИСИ РАСПИСАНИЯ С ЧИСЛА
-
-				// BS=1,0,0,0,0,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,1,67,68,69,1,0,70.
-				// BH=0,0,0,0,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48.
-				// BM=67,68,69.
-
-    			sheduleChangeFromB();
-    		}
   		}
 	}
-
-	Serial1.print("*l"); // отправка признака строки меню
-    Serial1.println("R0G0B0*"); // отправка строки меню
-    Serial1.println("EXIT OK"); // отправка строки меню
-    Serial1.println("RASPISANIE RABOTAET"); // отправка строки меню
 }

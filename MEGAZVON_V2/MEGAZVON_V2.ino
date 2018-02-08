@@ -1330,6 +1330,8 @@ void setup() {
 	pinMode(RELE_K23, OUTPUT);
 	pinMode(RELE_K24, OUTPUT);
 
+	pinMode(DEF_BT_PWR_PIN, OUTPUT);
+
 	digitalWrite(RELE_K1, LLL);
 	digitalWrite(RELE_K2, LLL);
 	digitalWrite(RELE_K3, LLL);
@@ -1354,6 +1356,8 @@ void setup() {
 	digitalWrite(RELE_K22, LLL);
 	digitalWrite(RELE_K23, LLL);
 	digitalWrite(RELE_K24, LLL);
+
+	digitalWrite(DEF_BT_PWR_PIN, LLL);
 
 	#if DEF_TEMP_ENABLE == 1
 	pinMode(DEF_TEMP_RELE_PIN, OUTPUT);
@@ -1385,22 +1389,28 @@ void setup() {
 
 void loop() {
 
-	timeToDisplay();            // вывод времени на дисплей
+	while(1){
 
-	buttonChekForLoop();        // проверка кнопок
+	    timeToDisplay();            // вывод времени на дисплей
 
-	if(flagBT == 0){            // если блютуз неразрешен то
-		chekPerezvonEXT();      	// проверка расписания
-	}else if(flagBT == 1){      // если блютуз разрешен то
-		BTloop();               	// обработка блютуз соединения
+		buttonChekForLoop();        // проверка кнопок
+
+		if(flagBT == 0){            // если блютуз неразрешен то
+			chekPerezvonEXT();      	// проверка расписания
+			digitalWrite(DEF_BT_PWR_PIN, LLL);
+		}else if(flagBT == 1){      // если блютуз разрешен то
+			digitalWrite(DEF_BT_PWR_PIN, HHH);
+			BTloop();               	// обработка блютуз соединения
+		}
+
+
+		#if DEF_TEMP_ENABLE == 1
+		termoregulator();
+		#endif
+
+		delay(50);
 	}
 
-
-	#if DEF_TEMP_ENABLE == 1
-	termoregulator();
-	#endif
-
-	delay(100);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

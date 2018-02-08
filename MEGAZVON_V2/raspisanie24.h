@@ -261,6 +261,8 @@ void playMelodyByIndex(byte _index){
 			break;
 		}
 	}
+
+	timeToDisplay();
 }
 
 void chekRaspisanie(int _CRhour, int _CRminute){
