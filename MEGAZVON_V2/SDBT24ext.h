@@ -820,7 +820,7 @@ void menuDraw(){  // ФУНКЦИЯ ОТРИСОВКИ БЛЮТУЗ МЕНЮ
 		Serial1.println("*s MEM *");
     	Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R0G150B150*"); // отправка цвета индикатора
-    	Serial1.println("*t PEREZVON MODE *"); // отправка строки меню
+    	Serial1.println("*t PEREZVON *"); // отправка строки меню
     	Serial1.print("PRESS COLOR BUTTON TO PLAY. "); // отправка справочной информации
     	Serial1.print("SEND m AND NUMBER 1-70 FOR PLAY MELODY ON MEMORY. "); // отправка справочной информации
     	Serial1.print("SEND m1 TO PLAY MELODY m1. m2 TO PLAY m2... "); // отправка справочной информации
@@ -829,40 +829,40 @@ void menuDraw(){  // ФУНКЦИЯ ОТРИСОВКИ БЛЮТУЗ МЕНЮ
 		Serial1.println("*s STOP *");
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R0G100B200*"); // отправка цвета индикатора
-		Serial1.println("*t SERIAL PRINT MODE 1 *"); // отправка строки меню
+		Serial1.println("*t PRINT 1 *"); // отправка строки меню
 		Serial1.println("PRESS COLOR BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR MODE 1. PRESS STOP TO STOP PRINT"); // отправка справочной информации
 		Serial1.println("PLEASE CONNECT TO PC"); // отправка справочной информации
 	}else if(flagMenu == 3){
 		Serial1.println("*s STOP *");
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R0G50B250*"); // отправка цвета индикатора
-		Serial1.println("*t SERIAL PRINT MODE 2 *"); // отправка строки меню
-		Serial1.println("PRESS COLOR BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR 	MODE 2. PRESS STOP TO STOP PRINT"); // отправка справочной информации
+		Serial1.println("*t PRINT 2 *"); // отправка строки меню
+		Serial1.println("PRESS COLOR BUTTON TO PLAY AND PRINT MELODY CODE FOR SERIAL MONITOR MODE 2. PRESS STOP TO STOP PRINT"); // отправка справочной информации
 		Serial1.println("PLEASE CONNECT TO PC"); // отправка справочной информации
 	}else if(flagMenu == 4){
 		Serial1.println("*s REC *");
     	Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R255G0B0*"); // отправка цвета индикатора
-		Serial1.println("*t RECORD NEW MELODY. PRESS REC *"); // отправка строки меню
+		Serial1.println("*t RECORD NEW MELODY *"); // отправка строки меню
     	Serial1.println("PRESS REC TO START AND STOP TO STOP RECORDING"); // отправка справочной информации
     	Serial1.println("PRESS COLOR BUTTON TO PLAY AND RECORD NEW MELODY"); // отправка справочной информации
 	}else if(flagMenu == 5){
 		Serial1.println("*s PLAY *");
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R0G255B0*"); // отправка цвета индикатора
-		Serial1.println("*t PLAY RECORDED MELODY. PRESS PLAY *"); // отправка строки меню
+		Serial1.println("*t PLAY NEW MELODY *"); // отправка строки меню
 		Serial1.println("PRESS PLAY TO PLAY RECORDED MELODY"); // отправка справочной информации
 	}else if(flagMenu == 6){
-		Serial1.println("*s SAVE *");
+		Serial1.println("*s SAVE  *");
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R255G130B0*"); // отправка цвета индикатора
-		Serial1.println("*t SAVE RECORDED MELODY. PRESS SAVE *"); // отправка строки меню
+		Serial1.println("*t SAVE NEW MELODY *"); // отправка строки меню
 		Serial1.println("PRESS SAVE TO SAVE RECORDED MELODY"); // отправка справочной информации
 	}else if(flagMenu == 7){
 		Serial1.println("*s OK *");
 		Serial1.print("*l"); // отправка признака индикатора
     	Serial1.println("R100G0B200*"); // отправка цвета индикатора
-		Serial1.println("*t SHEDULE CONFIGURATION *"); // отправка строки меню
+		Serial1.println("*t RASPISANIE *"); // отправка строки меню
 		Serial1.println("PRESS OK TO SET SHEDULE"); // отправка справочной информации
 	}else if(flagMenu == 8){
 		Serial1.println("*s EXIT *");
