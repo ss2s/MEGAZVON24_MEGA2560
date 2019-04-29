@@ -102,11 +102,10 @@ void timeToDisplay(){
 		if(flagManualPR == 0){
 			if(rdayOfWeek>5){
 				prazdnik = 1;
-		}else{
-			prazdnik = 0;
-		}
-	}
-		
+			}else{
+				prazdnik = 0;
+			}
+		}	
 	}
 	if(prazdnik == 1 && flagBT == 0){
 		lcd.setCursor(12,1);
